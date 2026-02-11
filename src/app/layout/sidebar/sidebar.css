@@ -1,15 +1,17 @@
 .sidebar {
   width: var(--sidebar-width);
-  background: #fff;
-  transition: width .3s ease;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  transition: width .3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .3s ease;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: visible;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.06);
 }
 
 .sidebar.collapsed {
   width: var(--sidebar-collapsed);
+  box-shadow: 4px 0 20px rgba(0,0,0,0.08);
 }
 
 /* LINKS */
@@ -18,18 +20,48 @@
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  height: 60px; /* altura padrão de botão */
+  padding: 12px 16px;
+  border-radius: 12px;
+  height: 64px;
+  font-weight: 500;
+  color: #374151;
+
+  text-decoration: none;   /* 👈 FALTAVA ISSO */
+  cursor: pointer;         /* 👈 opcional, deixa com cara de botão */
+
+  transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+
+.menu-link::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: transparent;
+  transition: background .2s ease, width .2s ease;
 }
 
 .menu-link:hover {
-  background: var(--bg-hover);
+  background: rgba(248, 250, 252, 0.8);
+  transform: translateX(2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.menu-link:hover::before {
+  background: rgba(107, 114, 128, 0.4);
+  width: 4px;
 }
 
 /* TEXTO */
 .menu-text {
-  transition: opacity .2s ease;
+  transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 .sidebar.collapsed .menu-text {
@@ -43,10 +75,13 @@
   list-style: none;
   padding-left: 2rem;
   display: none;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
 }
 
 .submenu.show {
   display: block;
+  animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 🔥 SUBMENU QUANDO COLAPSADO */
@@ -58,13 +93,16 @@
   position: absolute;
   left: 100%;
   top: 0;
-  background: #fff;
-  min-width: 220px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  padding: 10px 15px;
-  border-radius: 8px;
+  background: rgba(255,255,255,0.98);
+  backdrop-filter: blur(20px);
+  min-width: 240px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1);
+  padding: 12px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.2);
   display: none;
   z-index: 1000;
+  animation: slideInRight 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar.collapsed .has-submenu:hover .submenu {
@@ -76,12 +114,23 @@
   position: absolute;
   top: 20px;
   right: -14px;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  border: 1px solid #eaeaea;
-  background: white;
+  border: 2px solid rgba(229,231,235,0.8);
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
   cursor: pointer;
   z-index: 10;
+  transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+.toggle-btn:hover {
+  transform: scale(1.05) rotate(180deg);
+  border-color: rgba(107, 114, 128, 0.6);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.toggle-btn:active {
+  transform: scale(0.98);
+}
