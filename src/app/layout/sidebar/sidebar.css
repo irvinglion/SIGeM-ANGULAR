@@ -1,35 +1,44 @@
+.sidebar {
+  width: var(--sidebar-width);
+  background: #fff;
+  transition: width .3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: visible;
+}
+
 .sidebar.collapsed {
   width: var(--sidebar-collapsed);
 }
 
-.sidebar-nav {
-  padding-top: 1rem;
-}
-
+/* LINKS */
 .menu-link {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 12px;
   padding: 10px 12px;
   border-radius: 8px;
-  text-decoration: none;
-  color: #333;
-  transition: background .2s ease;
+  height: 60px; /* altura padrão de botão */
 }
 
 .menu-link:hover {
   background: var(--bg-hover);
 }
 
+/* TEXTO */
 .menu-text {
-  white-space: nowrap;
   transition: opacity .2s ease;
 }
 
 .sidebar.collapsed .menu-text {
   opacity: 0;
+  width: 0;
+  overflow: hidden;
 }
 
+/* SUBMENU NORMAL */
 .submenu {
   list-style: none;
   padding-left: 2rem;
@@ -40,42 +49,39 @@
   display: block;
 }
 
-.submenu-text {
-  display: block;
-  padding: 6px 0;
-  font-size: 0.9rem;
-  text-decoration: none;
-  color: #555;
+/* 🔥 SUBMENU QUANDO COLAPSADO */
+.sidebar.collapsed .has-submenu {
+  position: relative;
 }
 
-.submenu-text:hover {
-  color: var(--primary);
-}
-
-.toggle-btn {
-  position: fixed;
-  top: calc(var(--header-height) + 15px);
-  left: calc(var(--sidebar-width) - 15px);
-  border: none;
-  background: white;
-  font-size: 22px;
-  transition: left 0.3s ease;
+.sidebar.collapsed .has-submenu .submenu {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background: #fff;
+  min-width: 220px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: none;
   z-index: 1000;
 }
 
-.sidebar.collapsed+.toggle-btn {
-  left: calc(var(--sidebar-collapsed) - 15px);
+.sidebar.collapsed .has-submenu:hover .submenu {
+  display: block;
 }
 
-.content {
-  flex: 1;
-  padding: 32px;
-  background: #f4f7fb;
-  overflow-y: auto;
-
-  transition: margin-left .3s ease;
+/* BOTÃO */
+.toggle-btn {
+  position: absolute;
+  top: 20px;
+  right: -14px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #eaeaea;
+  background: white;
+  cursor: pointer;
+  z-index: 10;
 }
 
-.content.collapsed {
-  margin-left: var(--sidebar-collapsed);
-}
