@@ -1,0 +1,29 @@
+:root {
+  --header-height: 90px;
+  --sidebar-width: 280px;
+  --sidebar-collapsed: 70px;
+  --primary: #1976d2;
+  --bg-hover: #e3f2fd;
+}
+
+body {
+  margin: 0;
+  background: #f5f7fa;
+  overflow-x: hidden;
+}
+
+
+/* container principal */
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+
+/* CONTEÚDO */
+.content {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 32px;
+  background: #f4f7fb;
+}

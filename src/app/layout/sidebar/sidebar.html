@@ -1,0 +1,232 @@
+<!-- Sidebar COMPLETA -->
+<aside [class.collapsed]="collapsed" class="sidebar bg-white shadow-sm d-none d-md-block">
+
+  <!-- BOTÃO DE COLAPSAR -->
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    <i class="bi bi-chevron-left"></i>
+  </button>
+  <nav class="sidebar-nav p-3">
+
+    <!-- INÍCIO (ATIVO) -->
+    <div class="menu-item mb-3">
+      <a routerLink="/" routerLinkActive="active" class="menu-link">
+        <i class="bi bi-house-door-fill fs-5"></i>
+        <span class="menu-text">Início</span>
+      </a>
+    </div>
+
+    <hr class="my-3 mx-2 opacity-75">
+
+    <!-- 1. ADMINISTRAÇÃO -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-gear-fill fs-5 text-primary"></i>
+        <span class="menu-text">Administração</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li>
+          <a routerLink="/admin/usuarios" class="submenu-text">
+            Gerenciar Usuários e Perfis
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- 2. CICLO DE VIDA -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-arrow-repeat fs-5 text-warning"></i>
+        <span class="menu-text">Ciclo de Vida e Restrição</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li>
+          <a routerLink="/ciclo/restricao" class="submenu-text">
+            Registrar Restrição Operacional
+          </a>
+        </li>
+        <li>
+          <a routerLink="/ciclo/disponibilidade" class="submenu-text">
+            Consultar Disponibilidade
+          </a>
+        </li>
+        <li>
+          <a routerLink="/ciclo/registrar-disponibilidade" class="submenu-text">
+            Registrar Disponibilidade da Viatura
+          </a>
+        </li>
+        <li>
+          <a routerLink="/ciclo/incorporacao" class="submenu-text">
+            Registrar Incorporação/Transferência
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+
+    <!-- 3. LIVRO REGISTRO -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-journal-text fs-5 text-success"></i>
+        <span class="menu-text">Livro Registro Mobiliamento</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li>
+          <a routerLink="/livro/evento" class="submenu-text">
+            Registrar Evento
+          </a>
+        </li>
+        <li>
+          <a routerLink="/livro/ocorrencia" class="submenu-text">
+            Registrar Ocorrência
+          </a>
+        </li>
+        <li>
+          <a routerLink="/livro/consultar-eventos" class="submenu-text">
+            Consultar Eventos
+          </a>
+        </li>
+        <li>
+          <a routerLink="/livro/mobiliamento" class="submenu-text">
+            Registrar Mobiliamento
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- 4. GESTÃO DE VIATURAS -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-truck-front fs-5 text-secondary"></i>
+        <span class="menu-text">Gestão de Viaturas</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li>
+          <a routerLink="/viaturas/cadastro" class="submenu-text">
+            Cadastrar Viatura
+          </a>
+        </li>
+        <li>
+          <a routerLink="/viaturas/editar" class="submenu-text">
+            Editar Viatura
+          </a>
+        </li>
+        <li>
+          <a routerLink="/viaturas/historico" class="submenu-text">
+            Histórico
+          </a>
+        </li>
+        <li>
+          <a routerLink="/viaturas/documentos" class="submenu-text">
+            Documentos
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- 5. GESTÃO CENTRALIZADA -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-building-fill fs-5 text-secondary"></i>
+        <span class="menu-text">Gestão Centralizada</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li>
+          <a routerLink="/central/modelo-viatura" class="submenu-text">
+            Cadastrar Modelo de Viatura
+          </a>
+        </li>
+        <li>
+          <a routerLink="/central/rotina-manutencao" class="submenu-text">
+            Cadastrar Rotina de Manutenção/Lubrificação
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- 6. MOVIMENTAÇÃO E OPERAÇÕES -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-box-seam-fill fs-5 text-danger"></i>
+        <span class="menu-text">Movimentação e Operações</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li>
+          <a routerLink="/operacoes/ordem-movimentacao" class="submenu-text">
+            Criar Ordem de Movimentação
+          </a>
+        </li>
+        <li>
+          <a routerLink="/operacoes/saida" class="submenu-text">
+            Registrar Saída
+          </a>
+        </li>
+        <li>
+          <a routerLink="/operacoes/retorno" class="submenu-text">
+            Registrar Retorno
+          </a>
+        </li>
+        <li>
+          <a routerLink="/operacoes/historico" class="submenu-text">
+            Histórico de Utilização
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- 7. CHECKLISTS -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-clipboard2-check fs-5 text-success"></i>
+        <span class="menu-text">CheckLists</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li>
+          <a routerLink="/checklists/validar" class="submenu-text">
+            <i class="bi bi-clipboard-check me-2"></i>
+            Validar CheckList
+          </a>
+        </li>
+      </ul>
+    </div>
+
+
+    <!-- 8. CONFIGURAÇÕES -->
+    <div class="menu-item mb-3">
+      <a (click)="toggleSubmenu($event)" class="menu-link">
+        <i class="bi bi-sliders fs-5 text-warning"></i>
+        <span class="menu-text">Configurações</span>
+
+      </a>
+
+      <ul class="submenu">
+        <li><a routerLink="/config/sistema" class="submenu-text">Sistema</a></li>
+        <li><a routerLink="/config/usuario" class="submenu-text">Usuário</a></li>
+        <li><a routerLink="/config/backup" class="submenu-text">Backup</a></li>
+        <li><a routerLink="/logout" class="submenu-text">Sair</a></li>
+      </ul>
+    </div>
+
+
+    <button class="toggle-btn d-none d-md-block" (click)="toggleSidebar()">
+      <i class="bi bi-chevron-left"></i>
+    </button>

@@ -1,0 +1,165 @@
+<!-- Cards Responsivos -->
+<div class="row g-4 mb-5">
+    <div class="col-12 col-sm-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm text-center p-4" style="min-height: 140px;">
+        <h6 class="text-muted mb-2">Total de Viaturas</h6>
+        <div class="h3 fw-bold text-primary mb-1 d-flex align-items-baseline justify-content-center">
+          <span class="fs-1 me-1">182</span>
+          <small class="text-muted fs-6">viaturas</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm text-center p-4" style="min-height: 140px;">
+        <h6 class="text-muted mb-2">Em Manutenção</h6>
+        <div class="h3 fw-bold text-warning mb-1 d-flex align-items-baseline justify-content-center">
+          <span class="fs-1 me-1">12</span>
+          <small class="text-muted fs-6">em oficina</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm text-center p-4" style="min-height: 140px;">
+        <h6 class="text-muted mb-2">Pendências</h6>
+        <div class="h3 fw-bold text-danger mb-1 d-flex align-items-baseline justify-content-center">
+          <span class="fs-1 me-1">3</span>
+          <small class="text-muted fs-6">críticas</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ações Rápidas -->
+  <div class="card border-0 shadow-sm mb-5">
+    <div class="card-body p-4">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="d-flex flex-wrap gap-2">
+            <a href="/cadastro-viatura.html" class="btn btn-success btn-lg px-4">
+              <i class="bi bi-plus-circle me-2"></i>Cadastrar Viatura
+            </a>
+            <button class="btn btn-primary btn-lg px-4">
+              <i class="bi bi-file-earmark-arrow-down me-2"></i>Exportar Lista
+            </button>
+            <button class="btn btn-outline-secondary btn-lg px-4">
+              <i class="bi bi-funnel me-2"></i>Filtros
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-search"></i></span>
+            <input type="text" class="form-control" placeholder="Buscar por placa ou modelo...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Abas -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header pb-0">
+      <ul class="nav nav-tabs mb-0" id="viaturasTabs">
+        <li class="nav-item">
+          <button class="nav-link active px-4 py-2" data-bs-toggle="tab" data-bs-target="#disponiveis">
+            <i class="bi bi-check-circle me-1"></i>Disponíveis
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link px-4 py-2" data-bs-toggle="tab" data-bs-target="#manutencao">
+            <i class="bi bi-tools me-1"></i>Em Manutenção
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-link px-4 py-2" data-bs-toggle="tab" data-bs-target="#inativas">
+            <i class="bi bi-x-circle me-1"></i>Inativas
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body p-0">
+      <div class="tab-content p-4">
+        <!-- Disponíveis -->
+        <div class="tab-pane fade show active" id="disponiveis">
+          <h5 class="fw-semibold mb-4 pb-2 border-bottom">Lista de Viaturas - Disponíveis</h5>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Placa</th>
+                  <th>Modelo</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>ABC1D23</strong></td>
+                  <td>Hilux 4x4</td>
+                  <td><span class="badge bg-success">Ativa</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Manutenção -->
+        <div class="tab-pane fade" id="manutencao">
+          <h5 class="fw-semibold mb-4 pb-2 border-bottom">Lista de Viaturas - Em Manutenção</h5>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Placa</th>
+                  <th>Modelo</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>XYZ9K88</strong></td>
+                  <td>L200 Triton</td>
+                  <td><span class="badge bg-warning">Em manutenção</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Inativas -->
+        <div class="tab-pane fade" id="inativas">
+          <h5 class="fw-semibold mb-4 pb-2 border-bottom">Lista de Viaturas - Inativas</h5>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Placa</th>
+                  <th>Modelo</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>JKL3H56</strong></td>
+                  <td>Jeep Renegade</td>
+                  <td><span class="badge bg-secondary">Inativa</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
