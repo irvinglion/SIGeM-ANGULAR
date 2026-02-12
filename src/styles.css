@@ -1,8 +1,9 @@
 /* A PÁGINA NÃO ROLA */
 html, body {
   height: 100%;
-  overflow: hidden;
+  margin: 0;
 }
+
 
 /* LAYOUT ABAIXO DO HEADER */
 .layout {
@@ -16,6 +17,7 @@ app-sidebar {
   width: var(--sidebar-width);
   flex-shrink: 0;
 }
+
 
 /* CONTEÚDO É A ÚNICA ÁREA QUE ROLA */
 .content {
