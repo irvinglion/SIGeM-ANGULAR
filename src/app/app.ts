@@ -7,8 +7,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [HeaderComponent, SidebarComponent, RouterOutlet],
-  templateUrl: './app.html',
+  templateUrl: './app.html'
 })
-export class AppComponent {
-  sidebarCollapsed = false;
-}
+export class AppComponent {}

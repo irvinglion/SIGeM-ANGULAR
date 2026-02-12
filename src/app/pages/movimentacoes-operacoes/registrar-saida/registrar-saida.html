@@ -1,0 +1,156 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <!-- TÍTULO -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h2 class="h3 fw-bold text-dark mb-0">
+        <i class="bi bi-file-earmark-text-fill text-primary me-2"></i>
+        Emitir Ordem de Saída
+      </h2>
+    </div>
+  
+    <div class="card shadow-lg border-0">
+      <div class="card-body p-4">
+  
+        <!-- IDENTIFICAÇÃO -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="numeroOrdem">
+              <label>Nº da Ordem</label>
+            </div>
+          </div>
+  
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input type="date" class="form-control" formControlName="data">
+              <label>Data</label>
+            </div>
+          </div>
+  
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input type="time" class="form-control" formControlName="horaSaidaPlanejada">
+              <label>Hora prevista de saída</label>
+            </div>
+          </div>
+        </div>
+  
+        <hr>
+  
+        <!-- VIATURA -->
+        <h6 class="fw-bold text-primary mb-3">
+          <i class="bi bi-truck-front me-2"></i>Dados da Viatura
+        </h6>
+  
+        <div class="row g-4 mb-4 align-items-end">
+          <div class="col-md-8">
+            <div class="card border-0 shadow-sm text-center p-4 h-100">
+              <div class="fw-semibold text-muted mb-2">
+                Identificação da Viatura
+              </div>
+  
+              <img
+                [src]="qrCodeUrl"
+                alt="QR Code Viatura"
+                class="img-fluid rounded shadow-sm"
+                style="max-width:100px;"
+              >
+            </div>
+          </div>
+  
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input type="number" class="form-control" formControlName="hodometroSaida">
+              <label>Hodômetro de saída (km)</label>
+            </div>
+          </div>
+        </div>
+  
+        <hr>
+  
+        <!-- MISSÃO -->
+        <h6 class="fw-bold text-primary mb-3">
+          <i class="bi bi-target me-2"></i>Missão
+        </h6>
+  
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="destino">
+              <label>Destino</label>
+            </div>
+          </div>
+  
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="missao">
+              <label>Missão</label>
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" formControlName="referencia">
+          <label>Referência</label>
+        </div>
+  
+        <hr>
+  
+        <!-- ENVOLVIDOS -->
+        <h6 class="fw-bold text-primary mb-3">
+          <i class="bi bi-people me-2"></i>Envolvidos
+        </h6>
+  
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="motorista">
+              <label>Motorista</label>
+            </div>
+          </div>
+  
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="controladorExpedicao">
+              <label>Controlador de Expedição</label>
+            </div>
+          </div>
+  
+          <div class="col-md-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" formControlName="utilizador">
+              <label>Utilizador da viatura</label>
+            </div>
+          </div>
+        </div>
+  
+        <hr>
+  
+        <!-- OBSERVAÇÕES -->
+        <h6 class="fw-bold text-primary mb-3">
+          <i class="bi bi-card-text me-2"></i>Observações
+        </h6>
+  
+        <div class="form-floating mb-4">
+          <textarea
+            class="form-control"
+            formControlName="observacoes"
+            style="height:120px">
+          </textarea>
+          <label>Observações</label>
+        </div>
+  
+        <div class="d-flex gap-3 justify-content-end">
+          <button type="button" class="btn btn-outline-secondary" (click)="form.reset()">
+            Limpar
+          </button>
+  
+          <button type="submit" class="btn btn-success px-5" [disabled]="form.invalid">
+            Emitir Ordem
+          </button>
+        </div>
+  
+      </div>
+    </div>
+  </form>
+  
