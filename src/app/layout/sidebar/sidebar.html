@@ -79,23 +79,44 @@
       </ul>
     </div>
 
+
     <!-- 6. MOVIMENTAÇÃO -->
-    <div class="menu-item  has-submenu">
+    <div class="menu-item has-submenu">
       <a (click)="toggleSubmenu($event)" class="menu-link">
         <i class="bi bi-box-seam-fill fs-5 text-danger"></i>
         <span class="menu-text">Movimentação e Operações</span>
       </a>
+
       <ul class="submenu">
-        <li><a routerLink="/operacoes/ordem-movimentacao" routerLinkActive="active" class="submenu-text">Criar Ordem de
-            Movimentação</a></li>
-        <li><a routerLink="/movimentacoes/registrar-saida" style="cursor:pointer;">
-          Registrar Saída
-        </a>
-        
+
+        <!-- Criar Ordem -->
+        <li>
+          <a routerLink="/movimentacoes/criar-ordem-movimentacao" routerLinkActive="active" class="submenu-text">
+            Criar Ordem de Movimentação
+          </a>
         </li>
-        <li><a routerLink="/operacoes/retorno" routerLinkActive="active" class="submenu-text">Registrar Retorno</a></li>
-        <li><a routerLink="/operacoes/historico" routerLinkActive="active" class="submenu-text">Histórico de
-            Utilização</a></li>
+
+        <!-- Registrar Saída -->
+        <li>
+          <a routerLink="/movimentacoes/registrar-saida" routerLinkActive="active" class="submenu-text">
+            Registrar Saída
+          </a>
+        </li>
+
+        <!-- Registrar Retorno (ajuste quando criar rota) -->
+        <li>
+          <a routerLink="/movimentacoes/retorno" routerLinkActive="active" class="submenu-text">
+            Registrar Retorno
+          </a>
+        </li>
+
+        <!-- Histórico -->
+        <li>
+          <a routerLink="/movimentacoes/historico" routerLinkActive="active" class="submenu-text">
+            Histórico de Utilização
+          </a>
+        </li>
+
       </ul>
     </div>
 

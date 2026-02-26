@@ -1,0 +1,177 @@
+<main class="main-content">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h2 class="h3 fw-bold text-dark mb-0">
+        <i class="bi bi-arrow-return-left-circle text-success me-2"></i>
+        Ordem de Movimentação
+      </h2>
+    </div>
+  
+    <div class="container-fluid px-3">
+      <div class="row">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+  
+              <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  
+                <!-- ORDEM DE MOVIMENTAÇÃO -->
+                <h6 class="fw-bold text-primary mb-3">📦 Ordem de Movimentação</h6>
+  
+                <div class="row g-3">
+  
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="numeroOrdem">
+                      <label>Nº da Ordem</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <select class="form-select"
+                        formControlName="tipo">
+                        <option value="">Selecione</option>
+                        <option value="SIMPLES">SIMPLES</option>
+                        <option value="COMPLETA">COMPLETA</option>
+                      </select>
+                      <label>Tipo</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="omResponsavel">
+                      <label>OM Responsável</label>
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <div class="row g-3 mt-2">
+  
+                  <div class="col-md-3">
+                    <div class="form-floating">
+                      <input type="datetime-local" class="form-control"
+                        formControlName="dataInicio">
+                      <label>Data Início</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <div class="form-floating">
+                      <input type="datetime-local" class="form-control"
+                        formControlName="dataTermino">
+                      <label>Data Término</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="documento">
+                      <label>Documento / Referência</label>
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <div class="form-floating mt-3">
+                  <textarea class="form-control"
+                    style="height: 100px;"
+                    formControlName="descricaoMov"></textarea>
+                  <label>Descrição da movimentação</label>
+                </div>
+  
+                <hr>
+  
+                <!-- TIPO OPERAÇÃO -->
+                <h6 class="fw-bold text-primary mb-3">⚔ Tipo de Operação</h6>
+  
+                <div class="row g-3">
+  
+                  <div class="col-md-3">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="tipoOpCodigo">
+                      <label>Código</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-9">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="tipoOpDescricao">
+                      <label>Descrição</label>
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <hr>
+  
+                <!-- OPERAÇÃO MILITAR -->
+                <h6 class="fw-bold text-primary mb-3">🎖 Operação Militar</h6>
+  
+                <div class="row g-3">
+  
+                  <div class="col-md-5">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="opNome">
+                      <label>Nome da Operação</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="opSigla">
+                      <label>Sigla</label>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <div class="form-floating">
+                      <input type="text" class="form-control"
+                        formControlName="opTipo">
+                      <label>Tipo</label>
+                    </div>
+                  </div>
+  
+                </div>
+  
+                <div class="form-floating mt-3">
+                  <textarea class="form-control"
+                    style="height: 100px;"
+                    formControlName="opDescricao"></textarea>
+                  <label>Descrição da operação</label>
+                </div>
+  
+                <hr>
+  
+                <!-- BOTÕES -->
+                <div class="d-flex justify-content-end gap-2">
+                  <button type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="form.reset()">
+                    <i class="bi bi-eraser"></i> Limpar
+                  </button>
+  
+                  <button type="submit"
+                    class="btn btn-success px-4"
+                    [disabled]="form.invalid">
+                    <i class="bi bi-check-circle"></i> Emitir Ordem
+                  </button>
+                </div>
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
