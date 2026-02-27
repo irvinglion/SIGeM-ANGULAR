@@ -1,0 +1,21 @@
+.user-menu {
+  position: relative;
+}
+
+.user-trigger {
+  color: #6c757d;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user-trigger:hover {
+  color: #495057;
+}
+
+.user-dropdown {
+  right: 0;
+  left: auto;
+  min-width: 140px;
+}

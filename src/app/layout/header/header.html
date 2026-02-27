@@ -13,5 +13,17 @@
     <h1 class="h4 mb-0 fw-bold text-dark">SIGeM 3.0 - Painel</h1>
   </div>
 
-  <div class="small text-muted">Gestor CMatFN</div>
+  <div class="user-menu">
+    <button
+      class="btn btn-link user-trigger text-decoration-none p-0"
+      type="button"
+      (click)="toggleUserMenu($event)">
+      <span>Gestor CMatFN</span>
+      <i class="bi bi-chevron-down small"></i>
+    </button>
+
+    <div class="dropdown-menu user-dropdown" [class.show]="isUserMenuOpen" (click)="$event.stopPropagation()">
+      <a class="dropdown-item" routerLink="/logout" (click)="closeUserMenu()">Sair</a>
+    </div>
+  </div>
 </header>
