@@ -1,5 +1,6 @@
 .user-menu {
   position: relative;
+  margin-left: 12px;
 }
 
 .user-trigger {
@@ -18,4 +19,22 @@
   right: 0;
   left: auto;
   min-width: 140px;
+}
+
+.brand-logo {
+  height: 40px;
+}
+
+@media (max-width: 991.98px) {
+  .brand-title {
+    font-size: 1.1rem;
+  }
+
+  .brand-logo {
+    height: 32px;
+  }
+
+  .user-trigger span {
+    display: none;
+  }
 }

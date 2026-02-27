@@ -1,20 +1,12 @@
-/* SIDEBAR */
 .sidebar {
-  width: var(--sidebar-width, 280px);
+  width: 100%;
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  transition: width .3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow .3s ease;
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 100%;
-  max-height: 100%;
+  max-height: 360px;
   overflow: hidden;
-  box-shadow: 2px 0 12px rgba(0,0,0,0.06);
-}
-
-.sidebar.collapsed {
-  width: var(--sidebar-collapsed, 84px);
-  box-shadow: 4px 0 20px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .sidebar-nav {
@@ -25,14 +17,12 @@
   scrollbar-gutter: stable;
 }
 
-/* 🔥 REMOVE ESTILO PADRÃO DE LISTAS */
 .sidebar ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* LINKS PRINCIPAIS */
 .menu-link,
 .menu-link:visited,
 .menu-link:hover,
@@ -45,12 +35,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 10px 12px;
   border-radius: 12px;
-  height: 64px;
+  min-height: 52px;
   font-weight: 500;
   cursor: pointer;
-  transition: all .2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
@@ -63,33 +53,22 @@
   bottom: 0;
   width: 4px;
   background: transparent;
-  transition: background .2s ease;
+  transition: background 0.2s ease;
 }
 
 .menu-link:hover {
   background: rgba(248, 250, 252, 0.8);
-  transform: translateX(2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
 }
 
 .menu-link:hover::before {
   background: rgba(107, 114, 128, 0.4);
 }
 
-/* TEXTO */
 .menu-text {
-  transition: all .25s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 0.95rem;
   white-space: nowrap;
 }
 
-.sidebar.collapsed .menu-text {
-  opacity: 0;
-  width: 0;
-  overflow: hidden;
-}
-
-/* SUBMENU */
 .submenu {
   display: none;
   padding-left: 0;
@@ -97,10 +76,8 @@
 
 .submenu.show {
   display: block;
-  animation: slideDown 0.2s ease;
 }
 
-/* LINKS DO SUBMENU */
 .submenu a,
 .submenu a:visited,
 .submenu a:hover,
@@ -113,37 +90,65 @@
   display: block;
   padding: 10px 18px;
   border-radius: 8px;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
-.submenu a:hover {
+.submenu a:hover,
+.submenu a.active {
   background: rgba(243, 244, 246, 0.8);
-  transform: translateX(4px);
   color: #111827;
 }
 
-/* SUBMENU QUANDO COLAPSADO */
-.sidebar.collapsed .has-submenu {
-  position: relative;
+@media (min-width: 992px) {
+  .sidebar {
+    width: var(--sidebar-width, 280px);
+    height: 100%;
+    max-height: 100%;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.06);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  }
+
+  .sidebar.collapsed {
+    width: var(--sidebar-collapsed, 84px);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .menu-link {
+    padding: 12px 16px;
+    min-height: 64px;
+  }
+
+  .menu-link:hover {
+    transform: translateX(2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .sidebar.collapsed .menu-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+  }
+
+  .sidebar.collapsed .has-submenu {
+    position: relative;
+  }
+
+  .sidebar.collapsed .has-submenu .submenu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    min-width: 240px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: none;
+    z-index: 1000;
+  }
+
+  .sidebar.collapsed .has-submenu:hover .submenu {
+    display: block;
+  }
 }
-
-.sidebar.collapsed .has-submenu .submenu {
-  position: absolute;
-  left: 100%;
-  top: 0;
-  background: rgba(255,255,255,0.98);
-  backdrop-filter: blur(20px);
-  min-width: 240px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1);
-  padding: 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.2);
-  display: none;
-  z-index: 1000;
-}
-
-.sidebar.collapsed .has-submenu:hover .submenu {
-  display: block;
-}
-
-

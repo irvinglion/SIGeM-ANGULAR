@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -9,19 +9,21 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrls: ['./sidebar.css']
 })
 export class SidebarComponent {
-
   collapsed = true;
+  private isDesktop = true;
 
-  @Output() collapsedChange = new EventEmitter<boolean>();
+  constructor() {
+    this.updateViewportState();
+  }
 
   onMouseEnter(): void {
+    if (!this.isDesktop) return;
     this.collapsed = false;
-    this.collapsedChange.emit(this.collapsed);
   }
 
   onMouseLeave(): void {
+    if (!this.isDesktop) return;
     this.collapsed = true;
-    this.collapsedChange.emit(this.collapsed);
   }
 
   toggleSubmenu(event: Event): void {
@@ -34,5 +36,15 @@ export class SidebarComponent {
     if (!submenu || !submenu.classList.contains('submenu')) return;
 
     submenu.classList.toggle('show');
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.updateViewportState();
+  }
+
+  private updateViewportState(): void {
+    this.isDesktop = window.matchMedia('(min-width: 992px)').matches;
+    this.collapsed = this.isDesktop;
   }
 }

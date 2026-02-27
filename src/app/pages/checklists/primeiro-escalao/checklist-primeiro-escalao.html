@@ -1,0 +1,39 @@
+<main class="main-content">
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <h4 class="fw-bold text-center mb-4">CHECK LIST DE PRIMEIRO ESCAL&atilde;O</h4>
+      <p class="text-center text-muted">Assinale os itens observados na Viatura</p>
+
+      <form>
+        <div class="border rounded p-3 mb-4">
+          <h5 class="fw-bold text-primary mb-3">A) Inspe&ccedil;&atilde;o Antes da Partida</h5>
+
+          <div class="row row-cols-1 row-cols-md-2 g-2">
+            <div class="col" *ngFor="let item of itensInspecaoAntesPartida; let i = index">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" [id]="'a' + i">
+                <label class="form-check-label" [for]="'a' + i">{{ i + 1 }}) {{ item }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-end">
+          <button type="button" class="btn btn-success me-2" (click)="aprovar()">
+            <i class="bi bi-check-lg me-1"></i>
+            Aprovar
+          </button>
+
+          <button type="button" class="btn btn-danger" (click)="reprovar()">
+            <i class="bi bi-x-lg me-1"></i>
+            Reprovar
+          </button>
+        </div>
+
+        <div class="alert alert-info mt-3 mb-0" *ngIf="submitMessage">
+          {{ submitMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

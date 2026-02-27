@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-registrar-saida',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './registrar-saida.html',
   styleUrls: ['./registrar-saida.css']
 })
 export class RegistrarSaidaComponent {
-
   form: FormGroup;
+  submitMessage = '';
 
   qrCodeUrl =
     'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=SIGEM-DEMO-VIATURA-001';
@@ -33,11 +34,11 @@ export class RegistrarSaidaComponent {
 
   onSubmit(): void {
     if (this.form.invalid) return;
+    this.submitMessage = 'Ordem de saída registrada localmente com sucesso.';
+  }
 
-    console.log('Dados da ordem de saída:', this.form.value);
-
-    // futuramente:
-    // this.service.salvar(this.form.value)
-    // this.router.navigate(['/alguma-rota'])
+  clearForm(): void {
+    this.form.reset();
+    this.submitMessage = '';
   }
 }

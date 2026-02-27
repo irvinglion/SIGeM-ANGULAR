@@ -11,10 +11,6 @@ import { RouterLink } from '@angular/router';
 export class HeaderComponent {
   isUserMenuOpen = false;
 
-  openMobileMenu() {
-    console.log('abrir menu mobile');
-  }
-
   toggleUserMenu(event: MouseEvent): void {
     event.stopPropagation();
     this.isUserMenuOpen = !this.isUserMenuOpen;

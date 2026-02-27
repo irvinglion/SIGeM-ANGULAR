@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-criar-ordem-movimentacao',
@@ -10,8 +10,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./criar-ordem-movimentacao.css']
 })
 export class CriarOrdemMovimentacaoComponent {
-
   form: FormGroup;
+  submitMessage = '';
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -31,9 +31,13 @@ export class CriarOrdemMovimentacaoComponent {
     });
   }
 
-  onSubmit() {
-    if (this.form.valid) {
-      console.log('Dados da Ordem:', this.form.value);
-    }
+  onSubmit(): void {
+    if (this.form.invalid) return;
+    this.submitMessage = 'Ordem de movimentação registrada localmente com sucesso.';
+  }
+
+  clearForm(): void {
+    this.form.reset();
+    this.submitMessage = '';
   }
 }

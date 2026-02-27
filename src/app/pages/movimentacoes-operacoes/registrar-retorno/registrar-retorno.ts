@@ -1,20 +1,18 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-retorno',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './registrar-retorno.html',
   styleUrls: ['./registrar-retorno.css']
 })
 export class RegistrarRetornoComponent {
-
   form: FormGroup;
+  submitMessage = '';
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -29,12 +27,11 @@ export class RegistrarRetornoComponent {
   }
 
   onSubmit(): void {
-    console.log('Clicou no botão');
-    console.log(this.form.value);
-    alert('Botão funcionando!');
+    this.submitMessage = 'Retorno registrado localmente com sucesso.';
   }
 
   limparForm(): void {
     this.form.reset();
+    this.submitMessage = '';
   }
 }
