@@ -1,0 +1,132 @@
+<main class="main-content">
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h2 class="h3 fw-bold text-dark mb-0">
+        <i class="bi bi-arrow-return-left-circle text-success me-2"></i>
+        Registrar Retorno da Viatura
+      </h2>
+  
+      <!-- IMPORTANTE: usar routerLink -->
+      <a routerLink="/" class="btn btn-outline-primary px-4">
+        <i class="bi bi-arrow-left me-1"></i>
+        Voltar ao Painel
+      </a>
+    </div>
+  
+    <div class="form-section">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  
+        <div class="row g-4">
+  
+          <div class="col-lg-4 col-md-6">
+            <div class="form-floating">
+              <input type="datetime-local"
+                     class="form-control"
+                     formControlName="dataHoraRetorno">
+              <label>
+                <i class="bi bi-clock-history me-1 text-primary"></i>
+                Data/Hora do Retorno
+              </label>
+            </div>
+          </div>
+  
+          <div class="col-lg-4 col-md-6">
+            <div class="form-floating">
+              <input type="number"
+                     class="form-control"
+                     formControlName="hodometroRetorno">
+              <label>
+                <i class="bi bi-speedometer2 me-1 text-warning"></i>
+                Hodômetro no Retorno (km)
+              </label>
+            </div>
+          </div>
+  
+          <div class="col-lg-4 col-md-6">
+            <div class="form-floating">
+              <input type="text"
+                     class="form-control"
+                     formControlName="motoristaRetorno">
+              <label>
+                <i class="bi bi-person-fill me-1 text-success"></i>
+                Motorista no Retorno
+              </label>
+            </div>
+          </div>
+  
+          <div class="col-lg-4 col-md-6">
+            <div class="form-floating">
+              <input type="text"
+                     class="form-control"
+                     formControlName="controladorExpedicao">
+              <label>
+                <i class="bi bi-shield-check me-1 text-info"></i>
+                Controlador de Expedição
+              </label>
+            </div>
+          </div>
+  
+          <div class="col-lg-4 col-md-6">
+            <div class="form-floating">
+              <input type="text"
+                     class="form-control"
+                     formControlName="referenciaOrdemSaida">
+              <label>
+                <i class="bi bi-file-earmark-text me-1 text-primary"></i>
+                Referência à Ordem de Saída
+              </label>
+            </div>
+          </div>
+  
+          <div class="col-12">
+            <div class="form-floating">
+              <textarea class="form-control"
+                        formControlName="irregularidades"
+                        style="height:120px; resize: vertical;">
+              </textarea>
+              <label>
+                <i class="bi bi-exclamation-triangle me-1 text-warning"></i>
+                Irregularidades
+              </label>
+            </div>
+          </div>
+  
+          <div class="col-12">
+            <div class="form-floating">
+              <textarea class="form-control"
+                        formControlName="observacoes"
+                        style="height:140px; resize: vertical;">
+              </textarea>
+              <label>
+                <i class="bi bi-card-text me-1 text-secondary"></i>
+                Observações do Retorno
+              </label>
+            </div>
+          </div>
+  
+        </div>
+  
+       
+  
+        <div class="d-flex gap-3 justify-content-end flex-wrap">
+  
+          <!-- Angular click -->
+          <button type="button"
+                  class="btn btn-outline-secondary px-5 py-2 fs-6"
+                  (click)="limparForm()">
+            <i class="bi bi-arrow-clockwise me-2"></i>
+            Limpar Formulário
+          </button>
+  
+          <button type="submit"
+                  class="btn btn-success px-5 py-2 fs-6 shadow-lg">
+            <i class="bi bi-check2-circle me-2"></i>
+            Registrar Retorno
+          </button>
+  
+        </div>
+  
+      </form>
+    </div>
+  
+  </main>

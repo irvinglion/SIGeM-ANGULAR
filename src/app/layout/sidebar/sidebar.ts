@@ -10,12 +10,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class SidebarComponent {
 
-  collapsed = false;
+  collapsed = true;
 
   @Output() collapsedChange = new EventEmitter<boolean>();
 
-  toggleSidebar(): void {
-    this.collapsed = !this.collapsed;
+  onMouseEnter(): void {
+    this.collapsed = false;
+    this.collapsedChange.emit(this.collapsed);
+  }
+
+  onMouseLeave(): void {
+    this.collapsed = true;
     this.collapsedChange.emit(this.collapsed);
   }
 

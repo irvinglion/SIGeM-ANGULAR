@@ -1,8 +1,8 @@
-<aside class="sidebar" [class.collapsed]="collapsed">
-
-  <button class="toggle-btn" (click)="toggleSidebar()">
-    <i class="bi" [class.bi-chevron-left]="!collapsed" [class.bi-chevron-right]="collapsed"></i>
-  </button>
+<aside
+  class="sidebar"
+  [class.collapsed]="collapsed"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()">
 
   <nav class="sidebar-nav p-3">
 
@@ -105,7 +105,7 @@
 
         <!-- Registrar Retorno (ajuste quando criar rota) -->
         <li>
-          <a routerLink="/movimentacoes/retorno" routerLinkActive="active" class="submenu-text">
+          <a routerLink="/movimentacoes/registrar-retorno" routerLinkActive="active" class="submenu-text">
             Registrar Retorno
           </a>
         </li>
