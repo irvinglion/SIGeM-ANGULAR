@@ -1,0 +1,111 @@
+<main class="main-content">
+  <div class="validation-hero mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+      <div>
+        <p class="hero-kicker mb-1">Controladoria</p>
+        <h2 class="hero-title mb-0">Valida&ccedil;&atilde;o de Checklists</h2>
+      </div>
+      <a routerLink="/" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-arrow-left me-1"></i>
+        Voltar ao Painel
+      </a>
+    </div>
+  </div>
+
+  <section class="panel card border-0 shadow-sm mb-4">
+    <div class="panel-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">
+        <i class="bi bi-clipboard-check text-warning me-2"></i>
+        Checklist 1&ordm; Escal&atilde;o
+      </h5>
+      <span class="badge rounded-pill text-bg-light border" *ngIf="checklistsPrimeiroEscalao$ | async as primeiroList">
+        Pendentes: {{ primeiroList.length }}
+      </span>
+    </div>
+
+    <div class="table-responsive" *ngIf="checklistsPrimeiroEscalao$ | async as primeiroEscalao">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>CFN</th>
+            <th>Modelo</th>
+            <th>Motorista</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of primeiroEscalao" [class.row-focus]="isItemEmFoco(item, (focoId$ | async))">
+            <td><strong>{{ item.cfn }}</strong></td>
+            <td>{{ item.modelo }}</td>
+            <td>{{ item.motorista }}</td>
+            <td>{{ item.data }}</td>
+            <td>
+              <span *ngIf="item.status === 'Aguardando Conferencia'" class="badge rounded-pill text-bg-warning">
+                Aguardando Confer&ecirc;ncia
+              </span>
+              <span *ngIf="item.status === 'Inconsistencia Detectada'" class="badge rounded-pill text-bg-danger">
+                Inconsist&ecirc;ncia Detectada
+              </span>
+            </td>
+            <td>
+              <div class="d-flex gap-2 flex-wrap">
+                <button type="button" class="btn btn-sm btn-outline-success" (click)="aprovar(item)">Aprovar</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="reprovar(item)">Recusar</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="primeiroEscalao.length === 0">
+            <td colspan="6" class="text-center py-4 text-muted">Sem checklists de 1&ordm; escal&atilde;o pendentes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel card border-0 shadow-sm">
+    <div class="panel-header d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">
+        <i class="bi bi-clipboard2-check text-secondary me-2"></i>
+        Checklist de Retorno
+      </h5>
+      <span class="badge rounded-pill text-bg-light border" *ngIf="checklistsRetorno$ | async as retornoList">
+        Pendentes: {{ retornoList.length }}
+      </span>
+    </div>
+
+    <div class="table-responsive" *ngIf="checklistsRetorno$ | async as retorno">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>CFN</th>
+            <th>Modelo</th>
+            <th>Motorista</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th>A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of retorno" [class.row-focus]="isItemEmFoco(item, (focoId$ | async))">
+            <td><strong>{{ item.cfn }}</strong></td>
+            <td>{{ item.modelo }}</td>
+            <td>{{ item.motorista }}</td>
+            <td>{{ item.data }}</td>
+            <td><span class="badge rounded-pill text-bg-warning">Aguardando Confer&ecirc;ncia</span></td>
+            <td>
+              <div class="d-flex gap-2 flex-wrap">
+                <button type="button" class="btn btn-sm btn-outline-success" (click)="aprovar(item)">Aprovar</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="reprovar(item)">Recusar</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="retorno.length === 0">
+            <td colspan="6" class="text-center py-4 text-muted">Sem checklists de retorno pendentes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>

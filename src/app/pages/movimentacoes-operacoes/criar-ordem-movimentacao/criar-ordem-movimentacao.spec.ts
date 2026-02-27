@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CriarOrdemMovimentacao } from './criar-ordem-movimentacao';
+import { CriarOrdemMovimentacaoComponent } from './criar-ordem-movimentacao';
 
 describe('CriarOrdemMovimentacao', () => {
-  let component: CriarOrdemMovimentacao;
-  let fixture: ComponentFixture<CriarOrdemMovimentacao>;
+  let component: CriarOrdemMovimentacaoComponent;
+  let fixture: ComponentFixture<CriarOrdemMovimentacaoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CriarOrdemMovimentacao]
+      imports: [CriarOrdemMovimentacaoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CriarOrdemMovimentacao);
+    fixture = TestBed.createComponent(CriarOrdemMovimentacaoComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

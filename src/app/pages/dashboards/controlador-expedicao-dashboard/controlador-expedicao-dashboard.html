@@ -1,4 +1,4 @@
-<main class="main-content">
+<main class="main-content" *ngIf="dashboardData$ | async as dashboard">
   <div class="controller-hero mb-4">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
       <div>
@@ -25,7 +25,7 @@
           <h6 class="metric-label">Ordens Pendentes</h6>
           <i class="bi bi-clock-history metric-icon text-primary"></i>
         </div>
-        <div class="metric-value text-primary">{{ ordensPendentes }}</div>
+        <div class="metric-value text-primary">{{ dashboard.ordensPendentes }}</div>
         <small class="metric-caption">Aguardando emiss&atilde;o</small>
       </div>
     </div>
@@ -36,7 +36,7 @@
           <h6 class="metric-label">Checklists 1&ordm; Escal&atilde;o</h6>
           <i class="bi bi-clipboard-check metric-icon text-warning"></i>
         </div>
-        <div class="metric-value text-warning">{{ checklistsPrimeiroEscalao }}</div>
+        <div class="metric-value text-warning">{{ dashboard.checklistsPrimeiroEscalao }}</div>
         <small class="metric-caption">Aguardando valida&ccedil;&atilde;o</small>
       </div>
     </div>
@@ -47,7 +47,7 @@
           <h6 class="metric-label">Em Miss&atilde;o</h6>
           <i class="bi bi-sign-turn-right metric-icon text-info"></i>
         </div>
-        <div class="metric-value text-info">{{ emMissao }}</div>
+        <div class="metric-value text-info">{{ dashboard.emMissao }}</div>
         <small class="metric-caption">Atualmente em opera&ccedil;&atilde;o</small>
       </div>
     </div>
@@ -58,7 +58,7 @@
           <h6 class="metric-label">Viaturas Dispon&iacute;veis</h6>
           <i class="bi bi-check2-circle metric-icon text-success"></i>
         </div>
-        <div class="metric-value text-success">{{ viaturasDisponiveis }}</div>
+        <div class="metric-value text-success">{{ dashboard.viaturasDisponiveis }}</div>
         <small class="metric-caption">Liberadas para uso</small>
       </div>
     </div>
@@ -83,16 +83,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let retorno of retornosAguardandoValidacao">
+          <tr *ngFor="let retorno of dashboard.retornosAguardandoValidacao">
             <td><strong>{{ retorno.cfn }}</strong></td>
             <td>{{ retorno.modelo }}</td>
             <td>{{ retorno.ultimaMissao }}</td>
             <td><span class="badge rounded-pill text-bg-warning">Aguardando Valida&ccedil;&atilde;o</span></td>
             <td>
               <div class="d-flex gap-2 flex-wrap">
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-primary">Visualizar</a>
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-success">Validar</a>
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-danger">Reprovar</a>
+                <a
+                  [routerLink]="['/checklists/validacao']"
+                  [queryParams]="{ tipo: 'retorno', id: retorno.id }"
+                  class="btn btn-sm btn-outline-primary">
+                  Visualizar
+                </a>
               </div>
             </td>
           </tr>
@@ -121,7 +124,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let checklist of checklistsAguardandoValidacao">
+          <tr *ngFor="let checklist of dashboard.checklistsAguardandoValidacao">
             <td><strong>{{ checklist.cfn }}</strong></td>
             <td>{{ checklist.modelo }}</td>
             <td>{{ checklist.motorista }}</td>
@@ -136,14 +139,11 @@
             </td>
             <td>
               <div class="d-flex gap-2 flex-wrap">
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-primary">
-                  {{ checklist.status === 'Inconsistencia Detectada' ? 'Revisar' : 'Visualizar' }}
-                </a>
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-success">
-                  {{ checklist.status === 'Inconsistencia Detectada' ? 'Aprovar' : 'Validar' }}
-                </a>
-                <a *ngIf="checklist.status !== 'Inconsistencia Detectada'" routerLink="/checklists/validacao" class="btn btn-sm btn-outline-danger">
-                  Reprovar
+                <a
+                  [routerLink]="['/checklists/validacao']"
+                  [queryParams]="{ tipo: 'primeiro_escalao', id: checklist.id }"
+                  class="btn btn-sm btn-outline-primary">
+                  Visualizar
                 </a>
               </div>
             </td>
@@ -173,7 +173,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let checklistRetorno of checklistsRetornoAguardandoValidacao">
+          <tr *ngFor="let checklistRetorno of dashboard.checklistsRetornoAguardandoValidacao">
             <td><strong>{{ checklistRetorno.cfn }}</strong></td>
             <td>{{ checklistRetorno.modelo }}</td>
             <td>{{ checklistRetorno.motorista }}</td>
@@ -181,9 +181,12 @@
             <td><span class="badge rounded-pill text-bg-warning">Aguardando Confer&ecirc;ncia</span></td>
             <td>
               <div class="d-flex gap-2 flex-wrap">
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-primary">Visualizar</a>
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-success">Validar</a>
-                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-danger">Reprovar</a>
+                <a
+                  [routerLink]="['/checklists/validacao']"
+                  [queryParams]="{ tipo: 'retorno', id: checklistRetorno.id }"
+                  class="btn btn-sm btn-outline-primary">
+                  Visualizar
+                </a>
               </div>
             </td>
           </tr>
@@ -211,7 +214,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let viatura of viaturas">
+          <tr *ngFor="let viatura of dashboard.viaturas">
             <td><strong>{{ viatura.cfn }}</strong></td>
             <td>{{ viatura.modelo }}</td>
             <td>{{ viatura.atividade }}</td>
