@@ -1,4 +1,8 @@
 /* A PÁGINA NÃO ROLA */
+:root {
+  --header-height: 84px;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -8,7 +12,7 @@ html, body {
 /* LAYOUT ABAIXO DO HEADER */
 .layout {
   display: flex;
-  height: calc(100vh - 70px); /* altura do header */
+  height: calc(100vh - var(--header-height)); /* altura do header */
   
 }
 

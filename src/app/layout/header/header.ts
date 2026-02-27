@@ -11,5 +11,4 @@ export class HeaderComponent {
   openMobileMenu() {
     console.log('abrir menu mobile');
   }
-
 }
