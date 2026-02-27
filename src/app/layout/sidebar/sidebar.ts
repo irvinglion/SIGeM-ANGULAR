@@ -13,6 +13,8 @@ import { UserService } from '../../core/services/user.service';
 })
 export class SidebarComponent implements OnDestroy {
   showOnlyGestorItem = false;
+  showOnlyMotoristaItems = false;
+  showOnlyControladorItem = false;
   collapsed = true;
   private isDesktop = true;
   private modeSub?: Subscription;
@@ -21,6 +23,8 @@ export class SidebarComponent implements OnDestroy {
     this.updateViewportState();
     this.modeSub = this.userService.mode$.subscribe((mode) => {
       this.showOnlyGestorItem = mode === 'gestor';
+      this.showOnlyMotoristaItems = mode === 'motorista';
+      this.showOnlyControladorItem = mode === 'controlador_expedicao';
     });
   }
 
@@ -53,10 +57,6 @@ export class SidebarComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.modeSub?.unsubscribe();
-  }
-
-  returnToFullMode(): void {
-    this.userService.setAdminGeralMode();
   }
 
   private updateViewportState(): void {

@@ -1,8 +1,229 @@
 <main class="main-content">
-  <div class="card border-0 shadow-sm">
-    <div class="card-body p-4">
-      <h4 class="fw-bold mb-2">Dashboard do Controlador de Expedi&ccedil;&atilde;o</h4>
-      <p class="text-muted mb-0">Estrutura inicial pronta para receber dados mockados e integra&ccedil;&atilde;o futura.</p>
+  <div class="controller-hero mb-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div>
+        <p class="hero-kicker mb-1">Centro Operacional</p>
+        <h2 class="hero-title mb-0">
+          <i class="bi bi-truck me-2"></i>
+          Painel do Controlador de Expedi&ccedil;&atilde;o
+        </h2>
+      </div>
+      <div class="d-flex align-items-center gap-2 flex-wrap">
+        <span class="badge text-bg-light border">Atualiza&ccedil;&atilde;o em tempo real</span>
+        <a routerLink="/movimentacoes/registrar-saida" class="btn btn-primary btn-sm px-3">
+          <i class="bi bi-plus-circle me-1"></i>
+          Registrar Sa&iacute;da
+        </a>
+      </div>
     </div>
   </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card border-0 shadow-sm h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <h6 class="metric-label">Ordens Pendentes</h6>
+          <i class="bi bi-clock-history metric-icon text-primary"></i>
+        </div>
+        <div class="metric-value text-primary">{{ ordensPendentes }}</div>
+        <small class="metric-caption">Aguardando emiss&atilde;o</small>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card border-0 shadow-sm h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <h6 class="metric-label">Checklists 1&ordm; Escal&atilde;o</h6>
+          <i class="bi bi-clipboard-check metric-icon text-warning"></i>
+        </div>
+        <div class="metric-value text-warning">{{ checklistsPrimeiroEscalao }}</div>
+        <small class="metric-caption">Aguardando valida&ccedil;&atilde;o</small>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card border-0 shadow-sm h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <h6 class="metric-label">Em Miss&atilde;o</h6>
+          <i class="bi bi-sign-turn-right metric-icon text-info"></i>
+        </div>
+        <div class="metric-value text-info">{{ emMissao }}</div>
+        <small class="metric-caption">Atualmente em opera&ccedil;&atilde;o</small>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="metric-card border-0 shadow-sm h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <h6 class="metric-label">Viaturas Dispon&iacute;veis</h6>
+          <i class="bi bi-check2-circle metric-icon text-success"></i>
+        </div>
+        <div class="metric-value text-success">{{ viaturasDisponiveis }}</div>
+        <small class="metric-caption">Liberadas para uso</small>
+      </div>
+    </div>
+  </div>
+
+  <section class="panel-card card border-0 shadow-sm p-0 mb-4">
+    <div class="panel-header">
+      <h5 class="fw-semibold mb-0">
+        <i class="bi bi-arrow-repeat text-primary me-2"></i>
+        Retornos Aguardando Valida&ccedil;&atilde;o
+      </h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>CFN</th>
+            <th>Modelo</th>
+            <th>&Uacute;ltima Miss&atilde;o</th>
+            <th>Status</th>
+            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let retorno of retornosAguardandoValidacao">
+            <td><strong>{{ retorno.cfn }}</strong></td>
+            <td>{{ retorno.modelo }}</td>
+            <td>{{ retorno.ultimaMissao }}</td>
+            <td><span class="badge rounded-pill text-bg-warning">Aguardando Valida&ccedil;&atilde;o</span></td>
+            <td>
+              <div class="d-flex gap-2 flex-wrap">
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-primary">Visualizar</a>
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-success">Validar</a>
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-danger">Reprovar</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel-card card border-0 shadow-sm p-0 mb-4">
+    <div class="panel-header">
+      <h5 class="fw-semibold mb-0">
+        <i class="bi bi-clipboard-check text-warning me-2"></i>
+        Checklists 1&ordm; Escal&atilde;o - Aguardando Valida&ccedil;&atilde;o
+      </h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>CFN</th>
+            <th>Modelo</th>
+            <th>Motorista</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let checklist of checklistsAguardandoValidacao">
+            <td><strong>{{ checklist.cfn }}</strong></td>
+            <td>{{ checklist.modelo }}</td>
+            <td>{{ checklist.motorista }}</td>
+            <td>{{ checklist.data }}</td>
+            <td>
+              <span *ngIf="checklist.status === 'Aguardando Conferencia'" class="badge rounded-pill text-bg-warning">
+                Aguardando Confer&ecirc;ncia
+              </span>
+              <span *ngIf="checklist.status === 'Inconsistencia Detectada'" class="badge rounded-pill text-bg-danger">
+                Inconsist&ecirc;ncia Detectada
+              </span>
+            </td>
+            <td>
+              <div class="d-flex gap-2 flex-wrap">
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-primary">
+                  {{ checklist.status === 'Inconsistencia Detectada' ? 'Revisar' : 'Visualizar' }}
+                </a>
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-success">
+                  {{ checklist.status === 'Inconsistencia Detectada' ? 'Aprovar' : 'Validar' }}
+                </a>
+                <a *ngIf="checklist.status !== 'Inconsistencia Detectada'" routerLink="/checklists/validacao" class="btn btn-sm btn-outline-danger">
+                  Reprovar
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel-card card border-0 shadow-sm p-0 mb-4">
+    <div class="panel-header">
+      <h5 class="fw-semibold mb-0">
+        <i class="bi bi-clipboard2-check text-secondary me-2"></i>
+        Checklists de Retorno - Aguardando Valida&ccedil;&atilde;o
+      </h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>CFN</th>
+            <th>Modelo</th>
+            <th>Motorista</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let checklistRetorno of checklistsRetornoAguardandoValidacao">
+            <td><strong>{{ checklistRetorno.cfn }}</strong></td>
+            <td>{{ checklistRetorno.modelo }}</td>
+            <td>{{ checklistRetorno.motorista }}</td>
+            <td>{{ checklistRetorno.data }}</td>
+            <td><span class="badge rounded-pill text-bg-warning">Aguardando Confer&ecirc;ncia</span></td>
+            <td>
+              <div class="d-flex gap-2 flex-wrap">
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-primary">Visualizar</a>
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-success">Validar</a>
+                <a routerLink="/checklists/validacao" class="btn btn-sm btn-outline-danger">Reprovar</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel-card card border-0 shadow-sm p-0">
+    <div class="panel-header">
+      <h5 class="fw-semibold mb-0">
+        <i class="bi bi-check-circle text-success me-2"></i>
+        Viaturas Dispon&iacute;veis
+      </h5>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>CFN</th>
+            <th>Modelo</th>
+            <th>Atividade</th>
+            <th>Status</th>
+            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let viatura of viaturas">
+            <td><strong>{{ viatura.cfn }}</strong></td>
+            <td>{{ viatura.modelo }}</td>
+            <td>{{ viatura.atividade }}</td>
+            <td><span class="badge rounded-pill text-bg-success">Dispon&iacute;vel</span></td>
+            <td>
+              <a routerLink="/movimentacoes/registrar-saida" class="btn btn-sm btn-outline-primary">
+                Emitir Ordem de Sa&iacute;da
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </main>

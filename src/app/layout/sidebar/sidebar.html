@@ -4,13 +4,9 @@
   (mouseenter)="onMouseEnter()"
   (mouseleave)="onMouseLeave()">
   <nav class="sidebar-nav p-3">
-    <ng-container *ngIf="showOnlyGestorItem; else fullSidebar">
+    <ng-container *ngIf="showOnlyGestorItem; else motoristaOrFull">
       <div class="menu-item">
-        <a
-          routerLink="/"
-          routerLinkActive="active"
-          class="menu-link"
-          (click)="returnToFullMode()">
+        <a routerLink="/" routerLinkActive="active" class="menu-link">
           <i class="bi bi-house-door-fill fs-5"></i>
           <span class="menu-text">In&iacute;cio</span>
         </a>
@@ -33,102 +29,172 @@
       </div>
     </ng-container>
 
+    <ng-template #motoristaOrFull>
+      <ng-container *ngIf="showOnlyControladorItem; else motoristaOrFullSidebar">
+        <div class="menu-item">
+          <a routerLink="/" routerLinkActive="active" class="menu-link">
+            <i class="bi bi-house-door-fill fs-5"></i>
+            <span class="menu-text">In&iacute;cio</span>
+          </a>
+        </div>
+
+        <hr class="my-3 mx-2 opacity-75">
+
+        <div class="menu-item has-submenu">
+          <a (click)="toggleSubmenu($event)" class="menu-link">
+            <i class="bi bi-box-seam-fill fs-5 text-danger"></i>
+            <span class="menu-text">Movimenta&ccedil;&otilde;es e Opera&ccedil;&otilde;es</span>
+          </a>
+          <ul class="submenu show">
+            <li>
+              <a routerLink="/movimentacoes/registrar-saida" routerLinkActive="active" class="submenu-text">
+                Registrar Sa&iacute;da de Viatura
+              </a>
+            </li>
+            <li>
+              <a routerLink="/checklists/validacao" routerLinkActive="active" class="submenu-text">
+                Validar Checklist
+              </a>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+
+      <ng-template #motoristaOrFullSidebar>
+      <ng-container *ngIf="showOnlyMotoristaItems; else fullSidebar">
+        <div class="menu-item">
+          <a routerLink="/" routerLinkActive="active" class="menu-link">
+            <i class="bi bi-house-door-fill fs-5"></i>
+            <span class="menu-text">In&iacute;cio</span>
+          </a>
+        </div>
+
+        <hr class="my-3 mx-2 opacity-75">
+
+        <div class="menu-item has-submenu">
+          <a (click)="toggleSubmenu($event)" class="menu-link">
+            <i class="bi bi-box-seam-fill fs-5 text-danger"></i>
+            <span class="menu-text">Movimenta&ccedil;&otilde;es e Opera&ccedil;&otilde;es</span>
+          </a>
+          <ul class="submenu show">
+            <li>
+              <a routerLink="/movimentacoes/registrar-retorno" routerLinkActive="active" class="submenu-text">
+                Emitir Retorno de Viatura
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="menu-item has-submenu">
+          <a (click)="toggleSubmenu($event)" class="menu-link">
+            <i class="bi bi-clipboard2-check fs-5 text-success"></i>
+            <span class="menu-text">Checklists</span>
+          </a>
+          <ul class="submenu show">
+            <li><a routerLink="/checklists/primeiro-escalao" routerLinkActive="active" class="submenu-text">Checklist primeiro escal&atilde;o</a></li>
+            <li><a routerLink="/checklists/retorno" routerLinkActive="active" class="submenu-text">Checklist retorno</a></li>
+          </ul>
+        </div>
+      </ng-container>
+      </ng-template>
+    </ng-template>
+
     <ng-template #fullSidebar>
-    <div class="menu-item">
-      <a routerLink="/" routerLinkActive="active" class="menu-link">
-        <i class="bi bi-house-door-fill fs-5"></i>
-        <span class="menu-text">In&iacute;cio</span>
-      </a>
-    </div>
+      <div class="menu-item">
+        <a routerLink="/" routerLinkActive="active" class="menu-link">
+          <i class="bi bi-house-door-fill fs-5"></i>
+          <span class="menu-text">In&iacute;cio</span>
+        </a>
+      </div>
 
-    <hr class="my-3 mx-2 opacity-75">
+      <hr class="my-3 mx-2 opacity-75">
 
-    <div class="menu-item has-submenu">
-      <a (click)="toggleSubmenu($event)" class="menu-link">
-        <i class="bi bi-arrow-repeat fs-5 text-warning"></i>
-        <span class="menu-text">Ciclo de Vida e Restri&ccedil;&atilde;o</span>
-      </a>
-      <ul class="submenu">
-        <li><a routerLink="/ciclo/restricao" routerLinkActive="active" class="submenu-text">Registrar Restri&ccedil;&atilde;o Operacional</a></li>
-        <li><a routerLink="/ciclo/disponibilidade" routerLinkActive="active" class="submenu-text">Consultar Disponibilidade</a></li>
-        <li><a routerLink="/ciclo/registrar-disponibilidade" routerLinkActive="active" class="submenu-text">Registrar Disponibilidade da Viatura</a></li>
-        <li><a routerLink="/ciclo/incorporacao" routerLinkActive="active" class="submenu-text">Registrar Incorpora&ccedil;&atilde;o/Transfer&ecirc;ncia</a></li>
-      </ul>
-    </div>
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-arrow-repeat fs-5 text-warning"></i>
+          <span class="menu-text">Ciclo de Vida e Restri&ccedil;&atilde;o</span>
+        </a>
+        <ul class="submenu">
+          <li><a routerLink="/ciclo/restricao" routerLinkActive="active" class="submenu-text">Registrar Restri&ccedil;&atilde;o Operacional</a></li>
+          <li><a routerLink="/ciclo/disponibilidade" routerLinkActive="active" class="submenu-text">Consultar Disponibilidade</a></li>
+          <li><a routerLink="/ciclo/registrar-disponibilidade" routerLinkActive="active" class="submenu-text">Registrar Disponibilidade da Viatura</a></li>
+          <li><a routerLink="/ciclo/incorporacao" routerLinkActive="active" class="submenu-text">Registrar Incorpora&ccedil;&atilde;o/Transfer&ecirc;ncia</a></li>
+        </ul>
+      </div>
 
-    <div class="menu-item has-submenu">
-      <a (click)="toggleSubmenu($event)" class="menu-link">
-        <i class="bi bi-journal-text fs-5 text-success"></i>
-        <span class="menu-text">Livro Registro Mobiliamento</span>
-      </a>
-      <ul class="submenu">
-        <li><a routerLink="/livro/evento" routerLinkActive="active" class="submenu-text">Registrar Evento</a></li>
-        <li><a routerLink="/livro/ocorrencia" routerLinkActive="active" class="submenu-text">Registrar Ocorr&ecirc;ncia</a></li>
-        <li><a routerLink="/livro/consultar-eventos" routerLinkActive="active" class="submenu-text">Consultar Eventos</a></li>
-        <li><a routerLink="/livro/mobiliamento" routerLinkActive="active" class="submenu-text">Registrar Mobiliamento</a></li>
-      </ul>
-    </div>
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-journal-text fs-5 text-success"></i>
+          <span class="menu-text">Livro Registro Mobiliamento</span>
+        </a>
+        <ul class="submenu">
+          <li><a routerLink="/livro/evento" routerLinkActive="active" class="submenu-text">Registrar Evento</a></li>
+          <li><a routerLink="/livro/ocorrencia" routerLinkActive="active" class="submenu-text">Registrar Ocorr&ecirc;ncia</a></li>
+          <li><a routerLink="/livro/consultar-eventos" routerLinkActive="active" class="submenu-text">Consultar Eventos</a></li>
+          <li><a routerLink="/livro/mobiliamento" routerLinkActive="active" class="submenu-text">Registrar Mobiliamento</a></li>
+        </ul>
+      </div>
 
-    <div class="menu-item has-submenu">
-      <a (click)="toggleSubmenu($event)" class="menu-link">
-        <i class="bi bi-truck-front fs-5 text-secondary"></i>
-        <span class="menu-text">Gest&atilde;o de Viaturas</span>
-      </a>
-      <ul class="submenu">
-        <li><a routerLink="/viaturas/cadastro" routerLinkActive="active" class="submenu-text">Cadastrar Viatura</a></li>
-        <li><a routerLink="/viaturas/editar" routerLinkActive="active" class="submenu-text">Editar Viatura</a></li>
-        <li><a routerLink="/viaturas/historico" routerLinkActive="active" class="submenu-text">Hist&oacute;rico</a></li>
-        <li><a routerLink="/viaturas/documentos" routerLinkActive="active" class="submenu-text">Documentos</a></li>
-      </ul>
-    </div>
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-truck-front fs-5 text-secondary"></i>
+          <span class="menu-text">Gest&atilde;o de Viaturas</span>
+        </a>
+        <ul class="submenu">
+          <li><a routerLink="/viaturas/cadastro" routerLinkActive="active" class="submenu-text">Cadastrar Viatura</a></li>
+          <li><a routerLink="/viaturas/editar" routerLinkActive="active" class="submenu-text">Editar Viatura</a></li>
+          <li><a routerLink="/viaturas/historico" routerLinkActive="active" class="submenu-text">Hist&oacute;rico</a></li>
+          <li><a routerLink="/viaturas/documentos" routerLinkActive="active" class="submenu-text">Documentos</a></li>
+        </ul>
+      </div>
 
-    <div class="menu-item has-submenu">
-      <a (click)="toggleSubmenu($event)" class="menu-link">
-        <i class="bi bi-building-fill fs-5 text-secondary"></i>
-        <span class="menu-text">Gest&atilde;o Centralizada</span>
-      </a>
-      <ul class="submenu">
-        <li><a routerLink="/central/modelo-viatura" routerLinkActive="active" class="submenu-text">Cadastrar Modelo de Viatura</a></li>
-        <li><a routerLink="/central/rotina-manutencao" routerLinkActive="active" class="submenu-text">Cadastrar Rotina de Manuten&ccedil;&atilde;o</a></li>
-      </ul>
-    </div>
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-building-fill fs-5 text-secondary"></i>
+          <span class="menu-text">Gest&atilde;o Centralizada</span>
+        </a>
+        <ul class="submenu">
+          <li><a routerLink="/central/modelo-viatura" routerLinkActive="active" class="submenu-text">Cadastrar Modelo de Viatura</a></li>
+          <li><a routerLink="/central/rotina-manutencao" routerLinkActive="active" class="submenu-text">Cadastrar Rotina de Manuten&ccedil;&atilde;o</a></li>
+        </ul>
+      </div>
 
-    <div class="menu-item has-submenu">
-      <a (click)="toggleSubmenu($event)" class="menu-link">
-        <i class="bi bi-box-seam-fill fs-5 text-danger"></i>
-        <span class="menu-text">Movimenta&ccedil;&otilde;es e Opera&ccedil;&otilde;es</span>
-      </a>
-      <ul class="submenu">
-        <li><a routerLink="/movimentacoes/criar-ordem-movimentacao" routerLinkActive="active" class="submenu-text">Criar Ordem de Movimenta&ccedil;&atilde;o</a></li>
-        <li><a routerLink="/movimentacoes/registrar-saida" routerLinkActive="active" class="submenu-text">Registrar Sa&iacute;da</a></li>
-        <li><a routerLink="/movimentacoes/registrar-retorno" routerLinkActive="active" class="submenu-text">Registrar Retorno</a></li>
-        <li><a routerLink="/movimentacoes/historico" routerLinkActive="active" class="submenu-text">Hist&oacute;rico de Utiliza&ccedil;&atilde;o</a></li>
-      </ul>
-    </div>
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-box-seam-fill fs-5 text-danger"></i>
+          <span class="menu-text">Movimenta&ccedil;&otilde;es e Opera&ccedil;&otilde;es</span>
+        </a>
+        <ul class="submenu">
+          <li><a routerLink="/movimentacoes/criar-ordem-movimentacao" routerLinkActive="active" class="submenu-text">Criar Ordem de Movimenta&ccedil;&atilde;o</a></li>
+          <li><a routerLink="/movimentacoes/registrar-saida" routerLinkActive="active" class="submenu-text">Registrar Sa&iacute;da</a></li>
+          <li><a routerLink="/movimentacoes/registrar-retorno" routerLinkActive="active" class="submenu-text">Registrar Retorno</a></li>
+          <li><a routerLink="/movimentacoes/historico" routerLinkActive="active" class="submenu-text">Hist&oacute;rico de Utiliza&ccedil;&atilde;o</a></li>
+        </ul>
+      </div>
 
-    <div class="menu-item has-submenu">
-      <a (click)="toggleSubmenu($event)" class="menu-link">
-        <i class="bi bi-clipboard2-check fs-5 text-success"></i>
-        <span class="menu-text">Checklists</span>
-      </a>
-      <ul class="submenu">
-        <li><a routerLink="/checklists/primeiro-escalao" routerLinkActive="active" class="submenu-text">Checklist primeiro escal&atilde;o</a></li>
-        <li><a routerLink="/checklists/retorno" routerLinkActive="active" class="submenu-text">Checklist retorno</a></li>
-      </ul>
-    </div>
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-clipboard2-check fs-5 text-success"></i>
+          <span class="menu-text">Checklists</span>
+        </a>
+        <ul class="submenu">
+          <li><a routerLink="/checklists/primeiro-escalao" routerLinkActive="active" class="submenu-text">Checklist primeiro escal&atilde;o</a></li>
+          <li><a routerLink="/checklists/retorno" routerLinkActive="active" class="submenu-text">Checklist retorno</a></li>
+        </ul>
+      </div>
 
-    <div class="menu-item has-submenu">
-      <a (click)="toggleSubmenu($event)" class="menu-link">
-        <i class="bi bi-sliders fs-5 text-warning"></i>
-        <span class="menu-text">Configura&ccedil;&otilde;es</span>
-      </a>
-      <ul class="submenu">
-        <li><a routerLink="/config/sistema" routerLinkActive="active" class="submenu-text">Sistema</a></li>
-        <li><a routerLink="/config/usuario" routerLinkActive="active" class="submenu-text">Usu&aacute;rio</a></li>
-        <li><a routerLink="/config/backup" routerLinkActive="active" class="submenu-text">Backup</a></li>
-        <li><a routerLink="/logout" class="submenu-text">Sair</a></li>
-      </ul>
-    </div>
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-sliders fs-5 text-warning"></i>
+          <span class="menu-text">Configura&ccedil;&otilde;es</span>
+        </a>
+        <ul class="submenu">
+          <li><a routerLink="/config/sistema" routerLinkActive="active" class="submenu-text">Sistema</a></li>
+          <li><a routerLink="/config/usuario" routerLinkActive="active" class="submenu-text">Usu&aacute;rio</a></li>
+          <li><a routerLink="/config/backup" routerLinkActive="active" class="submenu-text">Backup</a></li>
+          <li><a routerLink="/logout" class="submenu-text">Sair</a></li>
+        </ul>
+      </div>
     </ng-template>
   </nav>
 </aside>
