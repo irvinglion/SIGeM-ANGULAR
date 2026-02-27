@@ -1,0 +1,117 @@
+<main class="main-content">
+  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <h2 class="fw-bold mb-0">
+      <i class="bi bi-clock-history text-primary me-2"></i>
+      Hist&oacute;rico de Ordens de Movimenta&ccedil;&atilde;o
+    </h2>
+
+    <button type="button" class="btn btn-success px-4" (click)="goToNovaOrdem()">
+      <i class="bi bi-plus-circle me-2"></i>
+      Nova Ordem
+    </button>
+  </div>
+
+  <div class="row g-4 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm border-0 text-center p-4 h-100">
+        <h6 class="text-muted">Total de Ordens</h6>
+        <h2 class="fw-bold text-primary">{{ totalOrdens }}</h2>
+        <small class="text-muted">ordens registradas</small>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm border-0 text-center p-4 h-100">
+        <h6 class="text-muted">Ordens Conclu&iacute;das</h6>
+        <h2 class="fw-bold text-success">{{ ordensConcluidas }}</h2>
+        <small class="text-muted">finalizadas</small>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm border-0 text-center p-4 h-100">
+        <h6 class="text-muted">Ordens Pendentes</h6>
+        <h2 class="fw-bold text-warning">{{ ordensPendentes }}</h2>
+        <small class="text-muted">em andamento</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Buscar por n&uacute;mero da ordem, placa ou respons&aacute;vel..."
+              (input)="onSearch($any($event.target).value)">
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <select class="form-select" (change)="onStatusChange($any($event.target).value)">
+            <option value="Todos">Status</option>
+            <option value="Concluida">Conclu&iacute;da</option>
+            <option value="Pendente">Pendente</option>
+            <option value="Cancelada">Cancelada</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <button class="btn btn-outline-secondary w-100" type="button">
+            <i class="bi bi-funnel me-2"></i>
+            Aplicar Filtro
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>N&ordm; Ordem</th>
+              <th>CFN</th>
+              <th>Viatura</th>
+              <th>Data</th>
+              <th>Respons&aacute;vel</th>
+              <th>Status</th>
+              <th class="text-center">A&ccedil;&otilde;es</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ordem of filteredOrdens">
+              <td><strong>{{ ordem.numero }}</strong></td>
+              <td>{{ ordem.cfn }}</td>
+              <td>{{ ordem.viatura }}</td>
+              <td>{{ ordem.data }}</td>
+              <td>{{ ordem.responsavel }}</td>
+              <td>
+                <span class="badge bg-success" *ngIf="ordem.status === 'Concluida'">Conclu&iacute;da</span>
+                <span class="badge bg-warning text-dark" *ngIf="ordem.status === 'Pendente'">Pendente</span>
+                <span class="badge bg-danger" *ngIf="ordem.status === 'Cancelada'">Cancelada</span>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-primary px-3" type="button">
+                  <i class="bi bi-eye me-1"></i>
+                  Visualizar
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="filteredOrdens.length === 0">
+              <td colspan="7" class="text-center text-muted py-4">Nenhum registro encontrado.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>

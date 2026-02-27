@@ -4,6 +4,36 @@
   (mouseenter)="onMouseEnter()"
   (mouseleave)="onMouseLeave()">
   <nav class="sidebar-nav p-3">
+    <ng-container *ngIf="showOnlyGestorItem; else fullSidebar">
+      <div class="menu-item">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          class="menu-link"
+          (click)="returnToFullMode()">
+          <i class="bi bi-house-door-fill fs-5"></i>
+          <span class="menu-text">In&iacute;cio</span>
+        </a>
+      </div>
+
+      <hr class="my-3 mx-2 opacity-75">
+
+      <div class="menu-item has-submenu">
+        <a (click)="toggleSubmenu($event)" class="menu-link">
+          <i class="bi bi-box-seam-fill fs-5 text-danger"></i>
+          <span class="menu-text">Movimenta&ccedil;&otilde;es e Opera&ccedil;&otilde;es</span>
+        </a>
+        <ul class="submenu show">
+          <li>
+            <a routerLink="/movimentacoes/criar-ordem-movimentacao" routerLinkActive="active" class="submenu-text">
+              Criar Ordem de Movimenta&ccedil;&atilde;o
+            </a>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+
+    <ng-template #fullSidebar>
     <div class="menu-item">
       <a routerLink="/" routerLinkActive="active" class="menu-link">
         <i class="bi bi-house-door-fill fs-5"></i>
@@ -99,5 +129,6 @@
         <li><a routerLink="/logout" class="submenu-text">Sair</a></li>
       </ul>
     </div>
+    </ng-template>
   </nav>
 </aside>

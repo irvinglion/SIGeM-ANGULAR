@@ -13,11 +13,18 @@
       class="btn btn-link user-trigger text-decoration-none p-0"
       type="button"
       (click)="toggleUserMenu($event)">
-      <span>Gestor CMatFN</span>
+      <span>{{ currentUserLabel }}</span>
       <i class="bi bi-chevron-down small"></i>
     </button>
 
     <div class="dropdown-menu user-dropdown" [class.show]="isUserMenuOpen" (click)="$event.stopPropagation()">
+      <button class="dropdown-item" type="button" (click)="setAdminGeralMode()">Admin - Tela geral</button>
+      <div class="dropdown-divider"></div>
+      <h6 class="dropdown-header">Usu&aacute;rios</h6>
+      <button class="dropdown-item" type="button" (click)="setGestorMode()">Gestor</button>
+      <button class="dropdown-item" type="button" (click)="setMotoristaMode()">Motorista</button>
+      <button class="dropdown-item" type="button" (click)="setControladorExpedicaoMode()">Controlador de Expedi&ccedil;&atilde;o</button>
+      <div class="dropdown-divider"></div>
       <a class="dropdown-item" routerLink="/logout" (click)="closeUserMenu()">Sair</a>
     </div>
   </div>

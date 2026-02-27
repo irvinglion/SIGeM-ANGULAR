@@ -1,19 +1,27 @@
-import { Component, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { UserService } from '../../core/services/user.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive], // 🔥 O QUE FALTAVA
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy {
+  showOnlyGestorItem = false;
   collapsed = true;
   private isDesktop = true;
+  private modeSub?: Subscription;
 
-  constructor() {
+  constructor(private readonly userService: UserService) {
     this.updateViewportState();
+    this.modeSub = this.userService.mode$.subscribe((mode) => {
+      this.showOnlyGestorItem = mode === 'gestor';
+    });
   }
 
   onMouseEnter(): void {
@@ -41,6 +49,14 @@ export class SidebarComponent {
   @HostListener('window:resize')
   onWindowResize(): void {
     this.updateViewportState();
+  }
+
+  ngOnDestroy(): void {
+    this.modeSub?.unsubscribe();
+  }
+
+  returnToFullMode(): void {
+    this.userService.setAdminGeralMode();
   }
 
   private updateViewportState(): void {

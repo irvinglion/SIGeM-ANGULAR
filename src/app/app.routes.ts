@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './pages/dashboard/dashboard';
+import { DashboardHomeComponent } from './pages/dashboards/dashboard-home/dashboard-home';
 import { RegistrarSaidaComponent } from './pages/movimentacoes-operacoes/registrar-saida/registrar-saida';
 import { CriarOrdemMovimentacaoComponent } from './pages/movimentacoes-operacoes/criar-ordem-movimentacao/criar-ordem-movimentacao';
 import { RegistrarRetornoComponent } from './pages/movimentacoes-operacoes/registrar-retorno/registrar-retorno';
@@ -7,7 +7,7 @@ import { ChecklistPrimeiroEscalaoComponent } from './pages/checklists/primeiro-e
 import { PlaceholderPageComponent } from './pages/placeholder/placeholder-page';
 
 export const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: '', component: DashboardHomeComponent },
   { path: 'ciclo/restricao', component: PlaceholderPageComponent, data: { title: 'Registrar Restrição Operacional' } },
   { path: 'ciclo/disponibilidade', component: PlaceholderPageComponent, data: { title: 'Consultar Disponibilidade' } },
   { path: 'ciclo/registrar-disponibilidade', component: PlaceholderPageComponent, data: { title: 'Registrar Disponibilidade da Viatura' } },
