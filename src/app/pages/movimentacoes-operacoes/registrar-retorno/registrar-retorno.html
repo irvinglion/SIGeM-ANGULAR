@@ -1,111 +1,125 @@
-<main class="main-content">
-  <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-2">
-    <h2 class="h3 fw-bold text-dark mb-0">
-      <i class="bi bi-arrow-return-left-circle text-success me-2"></i>
-      Registrar Retorno da Viatura
-    </h2>
-
-    <a routerLink="/" class="btn btn-outline-primary px-4">
-      <i class="bi bi-arrow-left me-1"></i>
-      Voltar ao Painel
-    </a>
-  </div>
-
-  <div class="form-section">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="row g-4">
-        <div class="col-lg-4 col-md-6">
-          <div class="form-floating">
-            <input type="datetime-local" class="form-control" formControlName="dataHoraRetorno">
-            <label>
-              <i class="bi bi-clock-history me-1 text-primary"></i>
-              Data/Hora do Retorno
-            </label>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6">
-          <div class="form-floating">
-            <input type="number" class="form-control" formControlName="hodometroRetorno">
-            <label>
-              <i class="bi bi-speedometer2 me-1 text-warning"></i>
-              Hod&ocirc;metro no Retorno (km)
-            </label>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6">
-          <div class="form-floating">
-            <input type="text" class="form-control" formControlName="motoristaRetorno">
-            <label>
-              <i class="bi bi-person-fill me-1 text-success"></i>
-              Motorista no Retorno
-            </label>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6">
-          <div class="form-floating">
-            <input type="text" class="form-control" formControlName="controladorExpedicao">
-            <label>
-              <i class="bi bi-shield-check me-1 text-info"></i>
-              Controlador de Expedi&ccedil;&atilde;o
-            </label>
-          </div>
-        </div>
-
-        <div class="col-lg-4 col-md-6">
-          <div class="form-floating">
-            <input type="text" class="form-control" formControlName="referenciaOrdemSaida">
-            <label>
-              <i class="bi bi-file-earmark-text me-1 text-primary"></i>
-              Refer&ecirc;ncia da Ordem de Sa&iacute;da
-            </label>
-          </div>
-        </div>
-
-        <div class="col-12">
-          <div class="form-floating">
-            <textarea
-              class="form-control"
-              formControlName="irregularidades"
-              style="height: 120px; resize: vertical;"></textarea>
-            <label>
-              <i class="bi bi-exclamation-triangle me-1 text-warning"></i>
-              Irregularidades
-            </label>
-          </div>
-        </div>
-
-        <div class="col-12">
-          <div class="form-floating">
-            <textarea
-              class="form-control"
-              formControlName="observacoes"
-              style="height: 140px; resize: vertical;"></textarea>
-            <label>
-              <i class="bi bi-card-text me-1 text-secondary"></i>
-              Observa&ccedil;&otilde;es do Retorno
-            </label>
-          </div>
-        </div>
+<main class="mov-page">
+  <form class="mov-form-shell" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <header class="mov-page-header">
+      <div class="page-icon">
+        <i class="bi bi-box-arrow-in-left"></i>
       </div>
 
-      <div class="alert alert-success mt-4" *ngIf="submitMessage">
-        {{ submitMessage }}
+      <div>
+        <h1 class="page-title">Registrar Retorno</h1>
+        <p class="page-subtitle">Preencha os dados abaixo para registrar o retorno da viatura.</p>
+      </div>
+    </header>
+
+    <section class="mov-panel">
+      <div class="panel-header">
+        <i class="bi bi-clock-history"></i>
+        <h2>Dados do Retorno</h2>
       </div>
 
-      <div class="d-flex gap-3 justify-content-end flex-wrap mt-3">
-        <button type="button" class="btn btn-outline-secondary px-5 py-2 fs-6" (click)="limparForm()">
-          <i class="bi bi-arrow-clockwise me-2"></i>
-          Limpar Formul&aacute;rio
-        </button>
+      <div class="row g-3">
+        <div class="col-lg-4">
+          <label class="form-label" for="dataHoraRetorno">Data/Hora do Retorno</label>
+          <input
+            id="dataHoraRetorno"
+            type="datetime-local"
+            class="form-control form-control-lg"
+            formControlName="dataHoraRetorno">
+        </div>
 
-        <button type="submit" class="btn btn-success px-5 py-2 fs-6 shadow-lg">
-          <i class="bi bi-check2-circle me-2"></i>
-          Registrar Retorno
-        </button>
+        <div class="col-lg-4">
+          <label class="form-label" for="hodometroRetorno">Hod&ocirc;metro no Retorno (km)</label>
+          <input
+            id="hodometroRetorno"
+            type="number"
+            class="form-control form-control-lg"
+            formControlName="hodometroRetorno"
+            placeholder="Informe a quilometragem">
+        </div>
+
+        <div class="col-lg-4">
+          <label class="form-label" for="motoristaRetorno">Motorista no Retorno</label>
+          <input
+            id="motoristaRetorno"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="motoristaRetorno"
+            placeholder="Informe o motorista">
+        </div>
       </div>
-    </form>
-  </div>
+    </section>
+
+    <section class="mov-panel">
+      <div class="panel-header">
+        <i class="bi bi-person-badge-fill"></i>
+        <h2>Respons&aacute;veis e Refer&ecirc;ncia</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <label class="form-label" for="controladorExpedicao">Controlador de Expedi&ccedil;&atilde;o</label>
+          <input
+            id="controladorExpedicao"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="controladorExpedicao"
+            placeholder="Informe o controlador">
+        </div>
+
+        <div class="col-lg-6">
+          <label class="form-label" for="referenciaOrdemSaida">Refer&ecirc;ncia da Ordem de Sa&iacute;da</label>
+          <input
+            id="referenciaOrdemSaida"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="referenciaOrdemSaida"
+            placeholder="Informe a refer&ecirc;ncia">
+        </div>
+      </div>
+    </section>
+
+    <section class="mov-panel">
+      <div class="panel-header">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <h2>Irregularidades</h2>
+      </div>
+
+      <label class="form-label" for="irregularidades">Irregularidades</label>
+      <textarea
+        id="irregularidades"
+        class="form-control form-control-lg textarea-control"
+        formControlName="irregularidades"
+        placeholder="Descreva irregularidades encontradas, se houver"></textarea>
+    </section>
+
+    <section class="mov-panel">
+      <div class="panel-header">
+        <i class="bi bi-card-text"></i>
+        <h2>Observa&ccedil;&otilde;es do Retorno</h2>
+      </div>
+
+      <label class="form-label" for="observacoes">Observa&ccedil;&otilde;es</label>
+      <textarea
+        id="observacoes"
+        class="form-control form-control-lg textarea-control textarea-lg"
+        formControlName="observacoes"
+        placeholder="Informe observa&ccedil;&otilde;es do retorno"></textarea>
+    </section>
+
+    <div class="alert alert-success mov-alert" *ngIf="submitMessage">
+      {{ submitMessage }}
+    </div>
+
+    <footer class="mov-actions">
+      <button type="button" class="btn btn-outline-secondary btn-lg action-btn" (click)="limparForm()">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        Limpar
+      </button>
+
+      <button type="submit" class="btn btn-success btn-lg action-btn px-4">
+        <i class="bi bi-check-circle"></i>
+        Registrar Retorno
+      </button>
+    </footer>
+  </form>
 </main>

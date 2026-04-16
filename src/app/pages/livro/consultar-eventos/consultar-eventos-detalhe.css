@@ -1,14 +1,14 @@
-.checklist-page {
+.eventos-page {
   padding: 0;
 }
 
-.checklist-shell {
+.eventos-shell {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-.checklist-header {
+.eventos-header {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
@@ -45,7 +45,7 @@
   font-size: 0.98rem;
 }
 
-.checklist-panel {
+.eventos-panel {
   padding: 1rem 1rem 1.1rem;
   background: #fff;
   border: 1px solid #e6edf7;
@@ -57,7 +57,7 @@
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.95rem;
   color: #1f6fff;
 }
 
@@ -67,70 +67,121 @@
   font-weight: 700;
 }
 
-.checklist-grid {
+.summary-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.85rem;
 }
 
-.check-item {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  align-items: center;
-  gap: 0.75rem;
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   padding: 0.95rem 1rem;
   background: linear-gradient(180deg, #fbfdff 0%, #f6f9fd 100%);
   border: 1px solid #dbe7f5;
   border-radius: 0.9rem;
-  cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.check-item:hover {
-  border-color: #b9d1f8;
-  box-shadow: 0 10px 22px rgba(47, 125, 246, 0.08);
-  transform: translateY(-1px);
+.summary-item-wide {
+  grid-column: 1 / -1;
 }
 
-.check-item .form-check-input {
-  margin: 0;
-  width: 1.15rem;
-  height: 1.15rem;
+.summary-label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
-.item-number {
-  width: 2rem;
-  height: 2rem;
+.summary-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.summary-highlight {
+  color: #1f6fff;
+}
+
+.table-meta {
+  margin-bottom: 0.85rem;
+  color: #64748b;
+  font-size: 0.92rem;
+}
+
+.table-card {
+  overflow: hidden;
+  border: 1px solid #e6edf7;
+  border-radius: 0.9rem;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.empty-row td {
+  height: 2.75rem;
+  background: #fbfcfe;
+}
+
+.status-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 60px;
+  padding: 0.28rem 0.65rem;
   border-radius: 999px;
-  background: rgba(47, 125, 246, 0.12);
-  color: #1f6fff;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
 }
 
-.item-text {
-  color: #334155;
-  font-weight: 500;
-  line-height: 1.35;
+.status-badge.is-open {
+  background: rgba(31, 111, 255, 0.12);
+  color: #1f6fff;
 }
 
-.checklist-alert {
-  margin: 0;
-  border-radius: 0.85rem;
+.status-badge.is-done {
+  background: rgba(25, 135, 84, 0.12);
+  color: #198754;
 }
 
-.checklist-actions {
+.footer-panel {
+  padding-bottom: 1rem;
+}
+
+.footer-info {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.footer-label {
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  color: #64748b;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.footer-text {
+  margin: 0;
+  color: #475569;
+}
+
+.footer-actions {
+  display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .action-btn {
-  min-width: 150px;
+  min-width: 140px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -145,13 +196,17 @@
     font-size: 1.6rem;
   }
 
-  .checklist-grid {
+  .summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .summary-item-wide {
+    grid-column: auto;
   }
 }
 
 @media (max-width: 767.98px) {
-  .checklist-header {
+  .eventos-header {
     padding: 1rem;
   }
 
@@ -163,23 +218,16 @@
     font-size: 0.92rem;
   }
 
-  .checklist-panel {
+  .eventos-panel {
     padding: 0.9rem;
   }
 
-  .checklist-actions {
-    flex-direction: column-reverse;
+  .footer-actions {
+    width: 100%;
+    flex-direction: column;
   }
 
   .action-btn {
     width: 100%;
-  }
-
-  .check-item {
-    grid-template-columns: auto 1fr;
-  }
-
-  .item-number {
-    display: none;
   }
 }

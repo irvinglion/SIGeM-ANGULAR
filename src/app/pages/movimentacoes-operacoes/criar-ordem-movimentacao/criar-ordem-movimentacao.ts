@@ -33,7 +33,7 @@ export class CriarOrdemMovimentacaoComponent {
 
   onSubmit(): void {
     if (this.form.invalid) return;
-    this.submitMessage = 'Ordem de movimentação registrada localmente com sucesso.';
+    this.submitMessage = 'Ordem de movimenta\u00e7\u00e3o registrada localmente com sucesso.';
   }
 
   clearForm(): void {

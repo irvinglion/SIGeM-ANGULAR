@@ -7,6 +7,16 @@ import { ChecklistPrimeiroEscalaoComponent } from './pages/checklists/primeiro-e
 import { ChecklistRetornoComponent } from './pages/checklists/retorno/checklist-retorno';
 import { ChecklistValidacaoComponent } from './pages/checklists/validacao/checklist-validacao';
 import { PlaceholderPageComponent } from './pages/placeholder/placeholder-page';
+import { ModeloViaturaComponent } from './pages/viaturas/modelo-viatura/modelo-viatura';
+import { FabricanteListaComponent } from './pages/viaturas/modelo-viatura/fabricante-lista';
+import { ModeloGenericoListaComponent } from './pages/viaturas/modelo-viatura/modelo-generico-lista';
+import { ModeloViaturaItemComponent } from './pages/viaturas/modelo-viatura/modelo-viatura-item';
+import { ModelosViaturaListaComponent } from './pages/viaturas/modelo-viatura/modelos-viatura-lista';
+import { CadastrarModeloViaturaComponent } from './pages/viaturas/modelo-viatura/cadastrar-modelo-viatura';
+import { CadastrarViaturaComponent } from './pages/viaturas/cadastrar-viatura/cadastrar-viatura';
+import { HistoricoViaturaComponent } from './pages/viaturas/historico-viatura/historico-viatura';
+import { ConsultarEventosComponent } from './pages/livro/consultar-eventos/consultar-eventos';
+import { ConsultarEventosDetalheComponent } from './pages/livro/consultar-eventos/consultar-eventos-detalhe';
 import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
@@ -17,13 +27,39 @@ export const routes: Routes = [
   { path: 'ciclo/incorporacao', component: PlaceholderPageComponent, data: { title: 'Registrar Incorporacao/Transferencia' } },
   { path: 'livro/evento', component: PlaceholderPageComponent, data: { title: 'Registrar Evento' } },
   { path: 'livro/ocorrencia', component: PlaceholderPageComponent, data: { title: 'Registrar Ocorrencia' } },
-  { path: 'livro/consultar-eventos', component: PlaceholderPageComponent, data: { title: 'Consultar Eventos' } },
+  { path: 'livro/consultar-eventos', component: ConsultarEventosComponent, data: { title: 'Consultar Eventos' } },
+  { path: 'livro/consultar-eventos/detalhe/:id', component: ConsultarEventosDetalheComponent, data: { title: 'Detalhe de Eventos' } },
   { path: 'livro/mobiliamento', component: PlaceholderPageComponent, data: { title: 'Registrar Mobiliamento' } },
-  { path: 'viaturas/cadastro', component: PlaceholderPageComponent, data: { title: 'Cadastrar Viatura' } },
+  { path: 'viaturas/cadastro', component: CadastrarViaturaComponent, data: { title: 'Cadastrar Viatura' } },
   { path: 'viaturas/editar', component: PlaceholderPageComponent, data: { title: 'Editar Viatura' } },
-  { path: 'viaturas/historico', component: PlaceholderPageComponent, data: { title: 'Historico de Viatura' } },
+  {
+    path: 'viaturas/modelo',
+    component: ModeloViaturaComponent,
+    data: { title: 'Modelo de Viatura' },
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'modelos-de-viatura' },
+      { path: 'modelos-de-viatura', component: ModelosViaturaListaComponent },
+      { path: 'cadastrar-modelo-viatura', component: CadastrarModeloViaturaComponent },
+      { path: 'modelo-generico', component: ModeloGenericoListaComponent },
+      { path: 'fabricante', component: FabricanteListaComponent },
+      {
+        path: 'utilizacao-especifica',
+        component: ModeloViaturaItemComponent,
+        data: { title: 'Utilização Específica' }
+      },
+      { path: 'tracao', component: ModeloViaturaItemComponent, data: { title: 'Tração' } },
+      { path: 'numero-de-rodas', component: ModeloViaturaItemComponent, data: { title: 'Número de Rodas' } },
+      { path: 'pais', component: ModeloViaturaItemComponent, data: { title: 'País' } },
+      {
+        path: 'fotografia',
+        component: ModeloViaturaItemComponent,
+        data: { title: 'Fotografia do Modelo de Viatura' }
+      }
+    ]
+  },
+  { path: 'viaturas/historico', component: HistoricoViaturaComponent, data: { title: 'Historico de Viatura' } },
   { path: 'viaturas/documentos', component: PlaceholderPageComponent, data: { title: 'Documentos de Viatura' } },
-  { path: 'central/modelo-viatura', component: PlaceholderPageComponent, data: { title: 'Cadastrar Modelo de Viatura' } },
+  { path: 'central/modelo-viatura', redirectTo: 'viaturas/modelo' },
   { path: 'central/rotina-manutencao', component: PlaceholderPageComponent, data: { title: 'Cadastrar Rotina de Manutencao' } },
   {
     path: 'movimentacoes/registrar-saida',

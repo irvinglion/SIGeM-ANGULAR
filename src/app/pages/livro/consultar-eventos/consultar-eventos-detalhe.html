@@ -1,0 +1,127 @@
+<main class="eventos-page">
+  <section class="eventos-shell">
+    <header class="eventos-header">
+      <div class="page-icon">
+        <i class="bi bi-journal-text"></i>
+      </div>
+
+      <div>
+        <h1 class="page-title">Livro Registro de Viatura</h1>
+        <p class="page-subtitle">Detalhamento da escrituração selecionada da viatura.</p>
+      </div>
+    </header>
+
+    <section class="eventos-panel">
+      <div class="panel-header">
+        <i class="bi bi-card-list"></i>
+        <h2>Dados da Escrituração</h2>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <span class="summary-label">Viatura</span>
+          <span class="summary-value summary-highlight">{{ resumo.viatura }}</span>
+        </div>
+
+        <div class="summary-item">
+          <span class="summary-label">Página</span>
+          <span class="summary-value">{{ resumo.pagina }}</span>
+        </div>
+
+        <div class="summary-item">
+          <span class="summary-label">Odômetro</span>
+          <span class="summary-value">{{ resumo.odometro }}</span>
+        </div>
+
+        <div class="summary-item">
+          <span class="summary-label">Total de HH Gastos</span>
+          <span class="summary-value">{{ resumo.totalHHGastos }}</span>
+        </div>
+
+        <div class="summary-item summary-item-wide">
+          <span class="summary-label">Data da Escrituração</span>
+          <span class="summary-value">{{ resumo.dataEscrituracao }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="eventos-panel">
+      <div class="panel-header">
+        <i class="bi bi-table"></i>
+        <h2>Eventos desta Escrituração</h2>
+      </div>
+
+      <div class="table-meta">3 registros preenchidos. Demais linhas reservadas para futura integração com banco de dados.</div>
+
+      <div class="table-card">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Evento</th>
+                <th>Documento de Referência</th>
+                <th>Descrição Sumária</th>
+                <th>Data do Evento</th>
+                <th>Concluído?</th>
+                <th>HH</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of eventos">
+                <td class="text-primary fw-semibold">{{ item.evento }}</td>
+                <td>{{ item.documentoReferencia }}</td>
+                <td>{{ item.descricaoSumaria }}</td>
+                <td>{{ item.dataEvento }}</td>
+                <td>
+                  <span class="status-badge" [class.is-open]="item.concluido === 'Não'" [class.is-done]="item.concluido === 'Sim'">
+                    {{ item.concluido }}
+                  </span>
+                </td>
+                <td>{{ item.hh }}</td>
+              </tr>
+
+              <tr *ngFor="let _ of emptyRows" class="empty-row">
+                <td>&nbsp;</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="eventos-panel footer-panel">
+      <div class="panel-header">
+        <i class="bi bi-clock-history"></i>
+        <h2>Controle do Registro</h2>
+      </div>
+
+      <div class="footer-info">
+        <div>
+          <span class="footer-label">Criação / Alteração</span>
+          <p class="footer-text">Criação: 08/02/2018 11:42</p>
+          <p class="footer-text">Última alteração: 08/02/2018 11:42</p>
+        </div>
+
+        <div class="footer-actions">
+          <button type="button" class="btn btn-outline-danger btn-lg action-btn">
+            <i class="bi bi-trash"></i>
+            Excluir
+          </button>
+          <button type="button" class="btn btn-success btn-lg action-btn">
+            <i class="bi bi-plus-circle"></i>
+            Novo Evento
+          </button>
+          <button type="button" class="btn btn-outline-primary btn-lg action-btn">
+            <i class="bi bi-clock-history"></i>
+            Histórico
+          </button>
+        </div>
+      </div>
+    </section>
+  </section>
+</main>

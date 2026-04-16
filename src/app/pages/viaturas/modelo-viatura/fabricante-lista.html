@@ -1,0 +1,79 @@
+<section class="fabricante-page">
+  <div class="section-heading">
+    <div>
+      <h2 class="section-title">Fabricante</h2>
+      <p class="section-subtitle">Consulta de fabricantes associados aos modelos de viatura.</p>
+    </div>
+
+    <button type="button" class="btn btn-outline-secondary" (click)="toggleActionButtons()">
+      <i class="bi bi-list me-2"></i>
+      Exibir Bot&otilde;es
+    </button>
+  </div>
+
+  <div class="action-buttons-panel" *ngIf="showActionButtons">
+    <button type="button" class="btn btn-primary">
+      <i class="bi bi-plus-circle me-2"></i>
+      Cadastrar Fabricante
+    </button>
+  </div>
+
+  <div class="content-card">
+    <div class="card-body p-4">
+      <a href="#" class="small text-decoration-none fw-semibold filter-link" (click)="toggleAdvancedFilters($event)">
+        <i class="bi" [class.bi-chevron-down]="!showAdvancedFilters" [class.bi-chevron-up]="showAdvancedFilters"></i>
+        Filtro Avan&ccedil;ado
+      </a>
+
+      <div class="advanced-filter-panel mt-4" *ngIf="showAdvancedFilters">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Nome do fabricante</label>
+            <input type="text" class="form-control" placeholder="Pesquisar por nome">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Pa&iacute;s</label>
+            <input type="text" class="form-control" placeholder="Pesquisar por pa&iacute;s">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-count">
+    <i class="bi bi-check-square-fill"></i>
+    <span>{{ registros.length }} registros encontrados</span>
+  </div>
+
+  <div class="content-card table-card">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th style="width: 70px;">Selecione</th>
+            <th>Nome</th>
+            <th>Pa&iacute;s</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let registro of registros">
+            <td class="text-center">
+              <input type="checkbox" class="form-check-input">
+            </td>
+            <td class="text-primary fw-semibold">{{ registro.nome }}</td>
+            <td class="text-primary">{{ registro.pais }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-bar d-flex justify-content-end align-items-center gap-2 px-3 py-2">
+      <span class="page-number">1</span>
+      <span class="page-number active">2</span>
+      <span class="page-number">3</span>
+      <span class="page-number">4</span>
+      <span class="page-number">5</span>
+      <span class="page-number">6</span>
+    </div>
+  </div>
+</section>

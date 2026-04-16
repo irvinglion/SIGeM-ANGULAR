@@ -34,7 +34,7 @@ export class RegistrarSaidaComponent {
 
   onSubmit(): void {
     if (this.form.invalid) return;
-    this.submitMessage = 'Ordem de saída registrada localmente com sucesso.';
+    this.submitMessage = 'Ordem de sa\u00edda registrada localmente com sucesso.';
   }
 
   clearForm(): void {

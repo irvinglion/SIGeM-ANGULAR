@@ -14,22 +14,22 @@ export class ChecklistRetornoComponent {
   readonly itensInspecaoDuranteMovimento: string[] = [
     'Freio',
     'Embreagem',
-    'Caixa de Mudancas',
-    'Transmissao',
+    'Caixa de mudan\u00e7as',
+    'Transmiss\u00e3o',
     'Funcionamento do motor',
     'Instrumentos do painel',
-    'Direcao',
+    'Dire\u00e7\u00e3o',
     'Particularidades das VtrAnf'
   ];
 
   readonly itensInspecaoAltos: string[] = [
-    'Combustivel, oleo e agua',
+    'Combust\u00edvel, \u00f3leo e \u00e1gua',
     'Aquecimento',
-    'Dispositivo de ventilacao',
+    'Dispositivo de ventila\u00e7\u00e3o',
     'Porcas das rodas/aquecimento',
-    'Pneumaticos ou lagartas',
+    'Pneum\u00e1ticos ou lagartas',
     'Vazamentos em geral',
-    'Ligacoes para reboque',
+    'Liga\u00e7\u00f5es para reboque',
     'Carroceria, carga e toldo',
     'Aspecto geral',
     'Particularidades das VtrAnf'

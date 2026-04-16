@@ -1,147 +1,182 @@
-<main class="main-content">
-  <div class="d-flex justify-content-between align-items-center mb-5">
-    <h2 class="h3 fw-bold text-dark mb-0">
-      <i class="bi bi-arrow-return-left-circle text-success me-2"></i>
-      Ordem de Movimenta&ccedil;&atilde;o
-    </h2>
-  </div>
+<main class="ordem-page">
+  <form class="ordem-form-shell" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <header class="ordem-page-header">
+      <div class="page-icon">
+        <i class="bi bi-file-earmark-text-fill"></i>
+      </div>
 
-  <div class="container-fluid px-3">
-    <div class="row">
-      <div class="col-12">
-        <div class="card border-0 shadow-sm">
-          <div class="card-body p-4">
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
-              <h6 class="fw-bold text-primary mb-3">Ordem de Movimenta&ccedil;&atilde;o</h6>
+      <div>
+        <h1 class="page-title">Ordem de Movimenta&ccedil;&atilde;o</h1>
+        <p class="page-subtitle">Preencha os dados abaixo para criar uma nova ordem de movimenta&ccedil;&atilde;o.</p>
+      </div>
+    </header>
 
-              <div class="row g-3">
-                <div class="col-md-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="numeroOrdem">
-                    <label>N&ordm; da Ordem</label>
-                  </div>
-                </div>
+    <section class="ordem-panel">
+      <div class="panel-header">
+        <i class="bi bi-file-earmark-richtext-fill"></i>
+        <h2>Dados da Ordem</h2>
+      </div>
 
-                <div class="col-md-4">
-                  <div class="form-floating">
-                    <select class="form-select" formControlName="tipo">
-                      <option value="">Selecione</option>
-                      <option value="SIMPLES">SIMPLES</option>
-                      <option value="COMPLETA">COMPLETA</option>
-                    </select>
-                    <label>Tipo</label>
-                  </div>
-                </div>
+      <div class="row g-3">
+        <div class="col-lg-4">
+          <label class="form-label" for="numeroOrdem">N&ordm; da Ordem</label>
+          <input
+            id="numeroOrdem"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="numeroOrdem"
+            placeholder="Informe o n&ordm; da ordem">
+        </div>
 
-                <div class="col-md-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="omResponsavel">
-                    <label>OM Respons&aacute;vel</label>
-                  </div>
-                </div>
-              </div>
+        <div class="col-lg-4">
+          <label class="form-label" for="tipo">Tipo</label>
+          <select id="tipo" class="form-select form-select-lg" formControlName="tipo">
+            <option value="">Selecione</option>
+            <option value="SIMPLES">SIMPLES</option>
+            <option value="COMPLETA">COMPLETA</option>
+          </select>
+        </div>
 
-              <div class="row g-3 mt-2">
-                <div class="col-md-3">
-                  <div class="form-floating">
-                    <input type="datetime-local" class="form-control" formControlName="dataInicio">
-                    <label>Data In&iacute;cio</label>
-                  </div>
-                </div>
+        <div class="col-lg-4">
+          <label class="form-label" for="omResponsavel">OM Respons&aacute;vel</label>
+          <input
+            id="omResponsavel"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="omResponsavel"
+            placeholder="Informe a OM respons&aacute;vel">
+        </div>
 
-                <div class="col-md-3">
-                  <div class="form-floating">
-                    <input type="datetime-local" class="form-control" formControlName="dataTermino">
-                    <label>Data T&eacute;rmino</label>
-                  </div>
-                </div>
+        <div class="col-lg-4">
+          <label class="form-label" for="dataInicio">Data In&iacute;cio</label>
+          <input
+            id="dataInicio"
+            type="date"
+            class="form-control form-control-lg"
+            formControlName="dataInicio">
+        </div>
 
-                <div class="col-md-6">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="documento">
-                    <label>Documento / Refer&ecirc;ncia</label>
-                  </div>
-                </div>
-              </div>
+        <div class="col-lg-4">
+          <label class="form-label" for="dataTermino">Data T&eacute;rmino</label>
+          <input
+            id="dataTermino"
+            type="date"
+            class="form-control form-control-lg"
+            formControlName="dataTermino">
+        </div>
 
-              <div class="form-floating mt-3">
-                <textarea class="form-control" style="height: 100px;" formControlName="descricaoMov"></textarea>
-                <label>Descri&ccedil;&atilde;o da movimenta&ccedil;&atilde;o</label>
-              </div>
+        <div class="col-lg-4">
+          <label class="form-label" for="documento">Documento / Refer&ecirc;ncia</label>
+          <input
+            id="documento"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="documento"
+            placeholder="Informe o documento ou refer&ecirc;ncia">
+        </div>
 
-              <hr>
-
-              <h6 class="fw-bold text-primary mb-3">Tipo de Opera&ccedil;&atilde;o</h6>
-
-              <div class="row g-3">
-                <div class="col-md-3">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="tipoOpCodigo">
-                    <label>C&oacute;digo</label>
-                  </div>
-                </div>
-
-                <div class="col-md-9">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="tipoOpDescricao">
-                    <label>Descri&ccedil;&atilde;o</label>
-                  </div>
-                </div>
-              </div>
-
-              <hr>
-
-              <h6 class="fw-bold text-primary mb-3">Opera&ccedil;&atilde;o Militar</h6>
-
-              <div class="row g-3">
-                <div class="col-md-5">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="opNome">
-                    <label>Nome da Opera&ccedil;&atilde;o</label>
-                  </div>
-                </div>
-
-                <div class="col-md-3">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="opSigla">
-                    <label>Sigla</label>
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" formControlName="opTipo">
-                    <label>Tipo</label>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-floating mt-3">
-                <textarea class="form-control" style="height: 100px;" formControlName="opDescricao"></textarea>
-                <label>Descri&ccedil;&atilde;o da opera&ccedil;&atilde;o</label>
-              </div>
-
-              <hr>
-
-              <div class="alert alert-success" *ngIf="submitMessage">
-                {{ submitMessage }}
-              </div>
-
-              <div class="d-flex justify-content-end gap-2 flex-wrap">
-                <button type="button" class="btn btn-outline-secondary" (click)="clearForm()">
-                  <i class="bi bi-eraser"></i>
-                  Limpar
-                </button>
-
-                <button type="submit" class="btn btn-success px-4" [disabled]="form.invalid">
-                  <i class="bi bi-check-circle"></i>
-                  Emitir Ordem
-                </button>
-              </div>
-            </form>
-          </div>
+        <div class="col-12">
+          <label class="form-label" for="descricaoMov">Descri&ccedil;&atilde;o da movimenta&ccedil;&atilde;o</label>
+          <textarea
+            id="descricaoMov"
+            class="form-control form-control-lg textarea-control"
+            formControlName="descricaoMov"
+            placeholder="Informe a descri&ccedil;&atilde;o da movimenta&ccedil;&atilde;o"></textarea>
         </div>
       </div>
+    </section>
+
+    <section class="ordem-panel">
+      <div class="panel-header">
+        <i class="bi bi-gear-fill"></i>
+        <h2>Tipo de Opera&ccedil;&atilde;o</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-6">
+          <label class="form-label" for="tipoOpCodigo">C&oacute;digo</label>
+          <input
+            id="tipoOpCodigo"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="tipoOpCodigo"
+            placeholder="Informe o c&oacute;digo">
+        </div>
+
+        <div class="col-lg-6">
+          <label class="form-label" for="tipoOpDescricao">Descri&ccedil;&atilde;o</label>
+          <input
+            id="tipoOpDescricao"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="tipoOpDescricao"
+            placeholder="Informe a descri&ccedil;&atilde;o">
+        </div>
+      </div>
+    </section>
+
+    <section class="ordem-panel">
+      <div class="panel-header">
+        <i class="bi bi-shield-fill-check"></i>
+        <h2>Opera&ccedil;&atilde;o Militar</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-lg-5">
+          <label class="form-label" for="opNome">Nome da Opera&ccedil;&atilde;o</label>
+          <input
+            id="opNome"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="opNome"
+            placeholder="Informe o nome da opera&ccedil;&atilde;o">
+        </div>
+
+        <div class="col-lg-4">
+          <label class="form-label" for="opSigla">Sigla</label>
+          <input
+            id="opSigla"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="opSigla"
+            placeholder="Informe a sigla">
+        </div>
+
+        <div class="col-lg-3">
+          <label class="form-label" for="opTipo">Tipo</label>
+          <input
+            id="opTipo"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="opTipo"
+            placeholder="Informe o tipo">
+        </div>
+
+        <div class="col-12">
+          <label class="form-label" for="opDescricao">Descri&ccedil;&atilde;o da opera&ccedil;&atilde;o</label>
+          <textarea
+            id="opDescricao"
+            class="form-control form-control-lg textarea-control"
+            formControlName="opDescricao"
+            placeholder="Informe a descri&ccedil;&atilde;o da opera&ccedil;&atilde;o"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="alert alert-success ordem-alert" *ngIf="submitMessage">
+      {{ submitMessage }}
     </div>
-  </div>
+
+    <footer class="ordem-actions">
+      <button type="button" class="btn btn-outline-secondary btn-lg action-btn" (click)="clearForm()">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        Limpar
+      </button>
+
+      <button type="submit" class="btn btn-success btn-lg action-btn px-4" [disabled]="form.invalid">
+        <i class="bi bi-check-circle"></i>
+        Emitir Ordem
+      </button>
+    </footer>
+  </form>
 </main>

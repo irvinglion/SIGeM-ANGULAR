@@ -1,0 +1,143 @@
+<main class="consulta-page">
+  <section class="consulta-shell">
+    <header class="consulta-header">
+      <div class="page-icon">
+        <i class="bi bi-journal-bookmark-fill"></i>
+      </div>
+
+      <div>
+        <h1 class="page-title">Livro Registro de Viatura</h1>
+        <p class="page-subtitle">Consulte as escriturações registradas e abra o detalhe de cada livro de viatura.</p>
+      </div>
+    </header>
+
+    <section class="consulta-panel">
+      <div class="panel-header">
+        <i class="bi bi-funnel-fill"></i>
+        <h2>Filtro de Consulta</h2>
+      </div>
+
+      <div class="filter-grid">
+        <div class="filter-field">
+          <label class="form-label" for="viaturaFiltro">Viatura</label>
+          <input
+            id="viaturaFiltro"
+            type="text"
+            class="form-control form-control-lg"
+            [(ngModel)]="viaturaFiltro"
+            placeholder="Filtrar por viatura">
+        </div>
+
+        <div class="filter-actions">
+          <button type="button" class="btn btn-primary btn-lg action-btn">
+            <i class="bi bi-search"></i>
+            Pesquisar
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary btn-lg action-btn" (click)="clearFilters()">
+            <i class="bi bi-eraser"></i>
+            Limpar filtro
+          </button>
+        </div>
+      </div>
+
+      <div class="advanced-link-wrap">
+        <a href="#" class="filter-link" (click)="$event.preventDefault()">Filtro Avançado</a>
+      </div>
+    </section>
+
+    <div class="selection-panel" [class.has-selection]="hasSelection">
+      <div class="selection-main">
+        <span class="selection-badge">
+          <i class="bi" [class.bi-stars]="hasSelection" [class.bi-check-lg]="!hasSelection"></i>
+        </span>
+
+        <div class="selection-copy">
+          <span class="selection-title">{{ selectionTitle }}</span>
+          <span class="selection-description">{{ selectionDescription }}</span>
+        </div>
+      </div>
+
+      <div class="selection-meta" *ngIf="hasSelection">
+        <span class="meta-pill">
+          <i class="bi bi-check2-circle"></i>
+          {{ selectedCount }} marcado<span *ngIf="selectedCount > 1">s</span>
+        </span>
+        <span class="meta-pill accent-pill">
+          <i class="bi bi-pin-angle-fill"></i>
+          Última: {{ latestSelectionLabel }}
+        </span>
+      </div>
+
+      <div class="selection-tags" *ngIf="hasSelection">
+        <span class="selection-tag" *ngFor="let registro of selectedRegistros">
+          <i class="bi bi-truck-front-fill"></i>
+          {{ registro.viatura }}
+        </span>
+      </div>
+    </div>
+
+    <div class="result-count">
+      <span>{{ filteredRegistros.length }} registros preenchidos. As demais linhas permanecem vazias para futura integração com banco.</span>
+    </div>
+
+    <section class="consulta-panel table-panel">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0 consulta-table">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 90px;">Selecione</th>
+              <th>Viatura</th>
+              <th>Página</th>
+              <th>Odômetro</th>
+              <th>Total de HH Gastos Por Página</th>
+              <th>Data da Escrituração</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let registro of filteredRegistros; let i = index">
+              <td class="text-center">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="registro.selected">
+              </td>
+              <td>
+                <a
+                  *ngIf="i === 0; else plainViatura"
+                  class="record-link"
+                  [routerLink]="['/livro/consultar-eventos/detalhe', registro.id]">
+                  {{ registro.viatura }}
+                </a>
+                <ng-template #plainViatura>
+                  <span class="text-primary fw-semibold">{{ registro.viatura }}</span>
+                </ng-template>
+              </td>
+              <td>{{ registro.pagina }}</td>
+              <td>{{ registro.odometro }}</td>
+              <td>{{ registro.totalHHGastosPagina }}</td>
+              <td>{{ registro.dataEscrituracao }}</td>
+            </tr>
+
+            <tr *ngFor="let _ of emptyRows" class="empty-row">
+              <td class="text-center"><input type="checkbox" class="form-check-input" disabled></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination-bar">
+        <span class="page-number active">1</span>
+        <span class="page-number">2</span>
+        <span class="page-number">3</span>
+        <span class="page-number">4</span>
+        <span class="page-number">5</span>
+        <span class="page-number">6</span>
+        <span class="page-number">7</span>
+        <span class="page-number">8</span>
+      </div>
+    </section>
+  </section>
+</main>

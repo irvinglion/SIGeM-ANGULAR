@@ -1,0 +1,126 @@
+@startuml
+skinparam backgroundColor white
+skinparam classBackgroundColor #F6F6F6
+skinparam classBorderColor #181818
+skinparam packageBorderColor #181818
+skinparam packageBackgroundColor white
+skinparam classAttributeIconSize 0
+hide empty methods
+
+package "Movimentacao e Operacoes" {
+
+  enum TipoOrdemMovimentacao {
+    SIMPLES
+    COMPLETA
+  }
+
+  enum StatusOrdemMovimentacao {
+    RASCUNHO
+    EM_EXECUCAO
+    CONCLUIDA
+    CANCELADA
+  }
+
+  enum StatusParticipacaoViatura {
+    PREVISTA
+    LIBERADA
+    EM_DESLOCAMENTO
+    RETORNADA
+    CANCELADA
+    INDISPONIVEL
+  }
+
+  class OperacaoMilitar {
+    +id: Long
+    +nome: String
+    +sigla: String
+    +descricao: String
+    +dataInicio: LocalDateTime
+    +dataFim: LocalDateTime
+    +status: String
+  }
+
+  class TipoOperacao {
+    +codigo: String
+    +descricao: String
+  }
+
+  class OrdemMovimentacao {
+    +id: Long
+    +numeroOrdem: String
+    +tipo: TipoOrdemMovimentacao
+    +status: StatusOrdemMovimentacao
+    +descricao: String
+    +dataInicio: LocalDateTime
+    +dataTermino: LocalDateTime
+  }
+
+  class ParticipacaoViaturaMovimentacao {
+    +id: Long
+    +status: StatusParticipacaoViatura
+    +dataApresentacao: LocalDateTime
+    +dataRetornoPrevisto: LocalDateTime
+    +dataRetornoEfetivo: LocalDateTime
+    +observacao: String
+  }
+
+  class OrdemDeSaidaViatura {
+    +id: Long
+    +numeroOrdem: String
+    +dataSaida: LocalDate
+    +horaSaidaPlanejada: LocalTime
+    +horaSaidaEfetiva: LocalDateTime
+    +destino: String
+    +missao: String
+    +referencia: String
+    +hodometroSaida: Integer
+    +observacoes: String
+  }
+
+  class OrdemDeRetornoViatura {
+    +id: Long
+    +dataRetorno: LocalDate
+    +horaRetorno: LocalTime
+    +hodometroRetorno: Integer
+    +observacoesFinais: String
+    +irregularidades: String
+  }
+
+  class DocumentoMovimentacao {
+    +id: Long
+    +tipoDocumento: String
+    +nomeArquivo: String
+    +anexadoEm: LocalDateTime
+  }
+
+  class Viatura
+  class Usuario
+  class OM
+  class ChecklistManutencaoPrimeiroEscalao
+
+  TipoOperacao "1" <-- "*" OperacaoMilitar : tipoOperacao
+  OM "1" <-- "*" OperacaoMilitar : omResponsavel
+
+  OperacaoMilitar "0..1" <-- "*" OrdemMovimentacao : operacaoMilitar
+  OM "1" <-- "*" OrdemMovimentacao : omResponsavel
+  Usuario "1" <-- "*" OrdemMovimentacao : registradoPor
+
+  OrdemMovimentacao "1" <-- "*" ParticipacaoViaturaMovimentacao : ordemMovimentacao
+  Viatura "1" <-- "*" ParticipacaoViaturaMovimentacao : viatura
+
+  ParticipacaoViaturaMovimentacao "1" <-- "0..1" OrdemDeSaidaViatura : participacao
+  OrdemDeSaidaViatura "1" <-- "0..1" OrdemDeRetornoViatura : ordemDeSaida
+
+  Usuario "1" <-- "*" OrdemDeSaidaViatura : motorista
+  Usuario "1" <-- "*" OrdemDeSaidaViatura : controladorExpedicao
+  Usuario "1" <-- "*" OrdemDeSaidaViatura : utilizador
+
+  Usuario "1" <-- "*" OrdemDeRetornoViatura : motorista
+  Usuario "1" <-- "*" OrdemDeRetornoViatura : controladorExpedicao
+
+  ChecklistManutencaoPrimeiroEscalao "1" <-- "1" OrdemDeSaidaViatura : checklistPrimeiroEscalao
+
+  OrdemMovimentacao "1" <-- "*" DocumentoMovimentacao : documentos
+  Usuario "1" <-- "*" DocumentoMovimentacao : anexadoPor
+}
+@enduml

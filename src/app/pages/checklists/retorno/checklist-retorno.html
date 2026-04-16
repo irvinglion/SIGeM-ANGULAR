@@ -1,45 +1,55 @@
-<main class="main-content">
-  <div class="card shadow-sm border-0">
-    <div class="card-body p-4">
-      <h4 class="fw-bold text-center mb-4">CHECK LIST DE PRIMEIRO ESCAL&Atilde;O</h4>
-      <p class="text-center text-muted">Assinale os itens observados na Viatura</p>
+<main class="checklist-page">
+  <form class="checklist-shell" (ngSubmit)="gravarChecklist()">
+    <header class="checklist-header">
+      <div class="page-icon">
+        <i class="bi bi-clipboard2-pulse-fill"></i>
+      </div>
 
-      <form (ngSubmit)="gravarChecklist()">
-        <div class="border rounded p-3 mb-4">
-          <h5 class="fw-bold text-primary mb-3">A) Inspe&ccedil;&atilde;o durante o movimento</h5>
-          <div class="row row-cols-1 row-cols-md-2 g-2">
-            <div class="col" *ngFor="let item of itensInspecaoDuranteMovimento; let i = index">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" [id]="'b' + i">
-                <label class="form-check-label" [for]="'b' + i">{{ i + 18 }}) {{ item }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div>
+        <h1 class="page-title">Checklist de Retorno</h1>
+        <p class="page-subtitle">Assinale os itens verificados durante o movimento e nos altos.</p>
+      </div>
+    </header>
 
-        <div class="border rounded p-3 mb-4">
-          <h5 class="fw-bold text-primary mb-3">B) Inspe&ccedil;&atilde;o nos altos</h5>
-          <div class="row row-cols-1 row-cols-md-2 g-2">
-            <div class="col" *ngFor="let item of itensInspecaoAltos; let i = index">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" [id]="'c' + i">
-                <label class="form-check-label" [for]="'c' + i">{{ i + 26 }}) {{ item }}</label>
-              </div>
-            </div>
-          </div>
-        </div>
+    <section class="checklist-panel">
+      <div class="panel-header">
+        <i class="bi bi-sign-turn-right-fill"></i>
+        <h2>Inspe&ccedil;&atilde;o Durante o Movimento</h2>
+      </div>
 
-        <div class="text-end">
-          <button type="submit" class="btn btn-primary btn-lg">
-            <i class="bi bi-save me-2"></i>
-            Gravar Check List
-          </button>
-        </div>
+      <div class="checklist-grid">
+        <label class="check-item" *ngFor="let item of itensInspecaoDuranteMovimento; let i = index" [for]="'b' + i">
+          <input class="form-check-input" type="checkbox" [id]="'b' + i">
+          <span class="item-number">{{ i + 18 }}</span>
+          <span class="item-text">{{ item }}</span>
+        </label>
+      </div>
+    </section>
 
-        <div class="alert alert-info mt-3 mb-0" *ngIf="submitMessage">
-          {{ submitMessage }}
-        </div>
-      </form>
+    <section class="checklist-panel">
+      <div class="panel-header">
+        <i class="bi bi-stop-circle-fill"></i>
+        <h2>Inspe&ccedil;&atilde;o nos Altos</h2>
+      </div>
+
+      <div class="checklist-grid">
+        <label class="check-item" *ngFor="let item of itensInspecaoAltos; let i = index" [for]="'c' + i">
+          <input class="form-check-input" type="checkbox" [id]="'c' + i">
+          <span class="item-number">{{ i + 26 }}</span>
+          <span class="item-text">{{ item }}</span>
+        </label>
+      </div>
+    </section>
+
+    <div class="alert alert-info checklist-alert" *ngIf="submitMessage">
+      {{ submitMessage }}
     </div>
-  </div>
+
+    <footer class="checklist-actions">
+      <button type="submit" class="btn btn-primary btn-lg action-btn">
+        <i class="bi bi-save"></i>
+        Gravar Checklist
+      </button>
+    </footer>
+  </form>
 </main>

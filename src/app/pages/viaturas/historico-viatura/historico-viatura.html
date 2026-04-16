@@ -1,0 +1,158 @@
+<main class="historico-page">
+  <section class="historico-shell">
+    <header class="historico-header">
+      <div class="page-icon">
+        <i class="bi bi-clock-history"></i>
+      </div>
+
+      <div>
+        <h1 class="page-title">Histórico de Viatura</h1>
+        <p class="page-subtitle">Pesquise uma viatura, veja o histórico de uso e abra o histórico de encarregados dela.</p>
+      </div>
+    </header>
+
+    <section class="historico-panel">
+      <div class="panel-header">
+        <i class="bi bi-search"></i>
+        <h2>Pesquisar Viatura</h2>
+      </div>
+
+      <div class="search-grid">
+        <div>
+          <label class="form-label" for="pesquisa">Viatura, modelo ou OM</label>
+          <input
+            id="pesquisa"
+            type="text"
+            class="form-control form-control-lg"
+            [(ngModel)]="pesquisa"
+            placeholder="Pesquise por número de registro, modelo ou OM">
+        </div>
+
+        <div class="search-actions">
+          <button type="button" class="btn btn-primary btn-lg action-btn">
+            <i class="bi bi-search"></i>
+            Pesquisar
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-lg action-btn" (click)="clearPesquisa()">
+            <i class="bi bi-eraser"></i>
+            Limpar filtro
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <section class="historico-panel list-panel">
+        <div class="panel-header">
+          <i class="bi bi-list-ul"></i>
+          <h2>Lista do Histórico de Uso</h2>
+        </div>
+
+        <div class="result-note">{{ filteredViaturas.length }} viatura(s) encontrada(s)</div>
+
+        <div class="viatura-list">
+          <button
+            type="button"
+            class="viatura-item"
+            *ngFor="let viatura of filteredViaturas"
+            [class.active]="selectedViatura?.id === viatura.id"
+            (click)="selectViatura(viatura.id)">
+            <div class="viatura-item-top">
+              <span class="viatura-registro">{{ viatura.numeroRegistro }}</span>
+              <span class="viatura-status" [class.is-warning]="viatura.statusUso === 'Em manutenção'">
+                {{ viatura.statusUso }}
+              </span>
+            </div>
+            <p class="viatura-modelo">{{ viatura.modelo }}</p>
+            <div class="viatura-meta">
+              <span><i class="bi bi-buildings"></i>{{ viatura.omAtual }}</span>
+              <span><i class="bi bi-calendar3"></i>{{ viatura.ultimoUso }}</span>
+            </div>
+          </button>
+        </div>
+      </section>
+
+      <section class="historico-panel detail-panel" *ngIf="selectedViatura as viatura">
+        <div class="panel-header">
+          <i class="bi bi-truck-front-fill"></i>
+          <h2>Detalhes da Viatura Selecionada</h2>
+        </div>
+
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="summary-label">Número de Registro</span>
+            <span class="summary-value">{{ viatura.numeroRegistro }}</span>
+          </div>
+
+          <div class="summary-item">
+            <span class="summary-label">OM Atual</span>
+            <span class="summary-value">{{ viatura.omAtual }}</span>
+          </div>
+
+          <div class="summary-item summary-item-wide">
+            <span class="summary-label">Modelo</span>
+            <span class="summary-value">{{ viatura.modelo }}</span>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-header">
+            <i class="bi bi-arrow-repeat"></i>
+            <h3>Histórico de Uso</h3>
+          </div>
+
+          <div class="usage-list">
+            <article class="usage-card" *ngFor="let uso of viatura.historicoUso">
+              <div class="usage-date">{{ uso.data }}</div>
+              <div class="usage-body">
+                <h4 class="usage-title">{{ uso.missao }}</h4>
+                <p class="usage-route">{{ uso.origem }} -> {{ uso.destino }}</p>
+                <span class="usage-driver">Motorista: {{ uso.motorista }}</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <div class="subsection-header">
+            <i class="bi bi-people-fill"></i>
+            <h3>Histórico de Encarregados</h3>
+          </div>
+
+          <div class="history-list">
+            <article class="history-card" *ngFor="let item of viatura.historicoEncarregados; let i = index">
+              <div class="history-card-header">
+                <div>
+                  <span class="history-badge">Responsável {{ i + 1 }}</span>
+                  <h4 class="history-name">{{ item.nome }}</h4>
+                  <p class="history-role">{{ item.funcao }}</p>
+                </div>
+
+                <span class="status-badge" [class.is-active]="item.status === 'Ativo'">
+                  {{ item.status }}
+                </span>
+              </div>
+
+              <div class="history-grid">
+                <div class="history-field">
+                  <span class="history-label">Período de início</span>
+                  <span class="history-value">{{ item.periodoInicio }}</span>
+                </div>
+
+                <div class="history-field">
+                  <span class="history-label">Período de fim</span>
+                  <span class="history-value">{{ item.periodoFim || 'Em andamento' }}</span>
+                </div>
+
+                <div class="history-field">
+                  <span class="history-label">OM vinculada</span>
+                  <span class="history-value">{{ item.om }}</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>

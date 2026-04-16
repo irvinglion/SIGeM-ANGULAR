@@ -1,0 +1,146 @@
+<section class="cadastro-page">
+  <form class="cadastro-shell" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <header class="cadastro-header">
+      <div class="page-icon">
+        <i class="bi bi-plus-square-fill"></i>
+      </div>
+
+      <div>
+        <h1 class="page-title">Cadastrar Modelo de Viatura</h1>
+        <p class="page-subtitle">Preencha os dados principais do modelo no padr&atilde;o visual do SIGeM.</p>
+      </div>
+    </header>
+
+    <section class="cadastro-panel">
+      <div class="panel-header">
+        <i class="bi bi-diagram-2-fill"></i>
+        <h2>Classifica&ccedil;&atilde;o</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="tipoEquipamento">Tipo de equipamento</label>
+          <input id="tipoEquipamento" type="text" class="form-control form-control-lg" formControlName="tipoEquipamento">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="equipamentoRelacionado">Equipamento relacionado ao modelo</label>
+          <input id="equipamentoRelacionado" type="text" class="form-control form-control-lg" formControlName="equipamentoRelacionado">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="codeq">CODEQ</label>
+          <input id="codeq" type="text" class="form-control form-control-lg" formControlName="codeq">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="neb">NEB (PI)</label>
+          <input id="neb" type="text" class="form-control form-control-lg" formControlName="neb">
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label" for="cicloOperativo">Ciclo Operativo</label>
+          <input id="cicloOperativo" type="text" class="form-control form-control-lg" formControlName="cicloOperativo">
+        </div>
+
+        <div class="col-12">
+          <label class="form-label" for="nomenclatura">Nomenclatura</label>
+          <input id="nomenclatura" type="text" class="form-control form-control-lg" formControlName="nomenclatura">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="modeloGenerico">Modelo Gen&eacute;rico</label>
+          <input id="modeloGenerico" type="text" class="form-control form-control-lg" formControlName="modeloGenerico">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="versao">Vers&atilde;o</label>
+          <input id="versao" type="text" class="form-control form-control-lg" formControlName="versao">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="classificacaoViatura">Classifica&ccedil;&atilde;o de Viatura</label>
+          <input id="classificacaoViatura" type="text" class="form-control form-control-lg" formControlName="classificacaoViatura">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="utilizacaoEspecifica">Utiliza&ccedil;&atilde;o Espec&iacute;fica</label>
+          <select id="utilizacaoEspecifica" class="form-select form-select-lg" formControlName="utilizacaoEspecifica">
+            <option *ngFor="let option of utilizacaoEspecificaOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="cadastro-panel">
+      <div class="panel-header">
+        <i class="bi bi-gear-fill"></i>
+        <h2>Especifica&ccedil;&otilde;es T&eacute;cnicas</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="nsn">NSN</label>
+          <input id="nsn" type="text" class="form-control form-control-lg" formControlName="nsn">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="ncm">NCM</label>
+          <input id="ncm" type="text" class="form-control form-control-lg" formControlName="ncm">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="fabricante">Fabricante</label>
+          <select id="fabricante" class="form-select form-select-lg" formControlName="fabricante">
+            <option *ngFor="let option of fabricanteOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" for="tracao">Tra&ccedil;&atilde;o</label>
+          <select id="tracao" class="form-select form-select-lg" formControlName="tracao">
+            <option *ngFor="let option of tracaoOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label" for="numeroRodas">N&uacute;mero de Rodas</label>
+          <select id="numeroRodas" class="form-select form-select-lg" formControlName="numeroRodas">
+            <option *ngFor="let option of numeroRodasOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="gerenciaMeios">Ger&ecirc;ncia de Meios</label>
+          <select id="gerenciaMeios" class="form-select form-select-lg" formControlName="gerenciaMeios">
+            <option *ngFor="let option of gerenciaMeiosOptions" [value]="option">{{ option }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="motor">Motor</label>
+          <input id="motor" type="text" class="form-control form-control-lg" formControlName="motor">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="pneu">Pneu</label>
+          <input id="pneu" type="text" class="form-control form-control-lg" formControlName="pneu">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="bateria">Bateria</label>
+          <input id="bateria" type="text" class="form-control form-control-lg" formControlName="bateria">
+        </div>
+      </div>
+    </section>
+
+    <div class="alert alert-success cadastro-alert" *ngIf="submitMessage">
+      {{ submitMessage }}
+    </div>
+
+    <footer class="cadastro-actions">
+      <button type="button" class="btn btn-outline-secondary btn-lg action-btn" (click)="clearForm()">Limpar</button>
+      <button type="submit" class="btn btn-primary btn-lg action-btn">Salvar Modelo</button>
+    </footer>
+  </form>
+</section>

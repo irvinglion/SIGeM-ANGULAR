@@ -1,0 +1,30 @@
+<section class="modelo-viatura-page">
+  <header class="modelo-page-header">
+    <div class="page-icon">
+      <i class="bi bi-diagram-3-fill"></i>
+    </div>
+
+    <div>
+      <h1 class="page-title">Modelos de Viatura</h1>
+      <p class="page-subtitle">Gerencie cadastros, listas auxiliares e atributos do m&oacute;dulo de modelos de viatura.</p>
+    </div>
+  </header>
+
+  <section class="modelo-layout-card">
+    <div class="top-nav-wrap">
+      <div class="nav-scroll">
+        <a
+          *ngFor="let item of navItems"
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          class="top-nav-link">
+          {{ item.label }}
+        </a>
+      </div>
+    </div>
+
+    <div class="content-wrap">
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+</section>

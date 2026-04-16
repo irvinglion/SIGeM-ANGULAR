@@ -1,0 +1,208 @@
+<section class="cadastro-viatura-page">
+  <form class="viatura-shell" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <header class="viatura-header">
+      <div class="page-icon">
+        <i class="bi bi-truck-front-fill"></i>
+      </div>
+
+      <div>
+        <h1 class="page-title">Cadastrar Viatura</h1>
+        <p class="page-subtitle">Cadastre uma nova viatura usando modelos j&aacute; existentes no SIGeM.</p>
+      </div>
+    </header>
+
+    <section class="viatura-panel">
+      <div class="panel-header">
+        <i class="bi bi-diagram-3-fill"></i>
+        <h2>Modelo e Classifica&ccedil;&atilde;o</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label" for="modeloCodeq">Modelo da Viatura</label>
+          <select
+            id="modeloCodeq"
+            class="form-select form-select-lg"
+            formControlName="modeloCodeq"
+            (change)="onModeloChange()">
+            <option value="">Selecione o modelo</option>
+            <option *ngFor="let option of modeloOptions" [value]="option.codeq">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="tracao">Tra&ccedil;&atilde;o</label>
+          <input id="tracao" type="text" class="form-control form-control-lg" formControlName="tracao" placeholder="Informe a tra&ccedil;&atilde;o">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="emprego">Emprego</label>
+          <input id="emprego" type="text" class="form-control form-control-lg" formControlName="emprego" placeholder="Informe o emprego">
+        </div>
+
+        <div class="col-12">
+          <label class="form-label" for="rotinaManutencao">Rotina de Manuten&ccedil;&atilde;o</label>
+          <input
+            id="rotinaManutencao"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="rotinaManutencao"
+            placeholder="Informe a rotina de manuten&ccedil;&atilde;o">
+        </div>
+      </div>
+    </section>
+
+    <section class="viatura-panel">
+      <div class="panel-header">
+        <i class="bi bi-upc-scan"></i>
+        <h2>Identifica&ccedil;&atilde;o da Viatura</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="grupoSequencial">Grupo Sequencial</label>
+          <input
+            id="grupoSequencial"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="grupoSequencial"
+            placeholder="Informe o grupo sequencial">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="numeroRegistro">N&uacute;mero de Registro</label>
+          <input
+            id="numeroRegistro"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="numeroRegistro"
+            placeholder="Informe o n&uacute;mero de registro">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="numeroPatrimonial">N&uacute;mero Patrimonial</label>
+          <input
+            id="numeroPatrimonial"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="numeroPatrimonial"
+            placeholder="Informe o n&uacute;mero patrimonial">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="chassi">Chassi</label>
+          <input id="chassi" type="text" class="form-control form-control-lg" formControlName="chassi" placeholder="Informe o chassi">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="numeroMotor">N&uacute;mero do Motor</label>
+          <input
+            id="numeroMotor"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="numeroMotor"
+            placeholder="Informe o n&uacute;mero do motor">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="anoFabricacao">Ano de Fabrica&ccedil;&atilde;o</label>
+          <input
+            id="anoFabricacao"
+            type="number"
+            class="form-control form-control-lg"
+            formControlName="anoFabricacao"
+            placeholder="Informe o ano">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="fimCiclo">Fim do Ciclo</label>
+          <input
+            id="fimCiclo"
+            type="number"
+            class="form-control form-control-lg"
+            formControlName="fimCiclo"
+            placeholder="Informe o fim do ciclo">
+        </div>
+      </div>
+    </section>
+
+    <section class="viatura-panel">
+      <div class="panel-header">
+        <i class="bi bi-buildings-fill"></i>
+        <h2>Organiza&ccedil;&otilde;es Militares</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label" for="omAtual">OM Atual</label>
+          <input id="omAtual" type="text" class="form-control form-control-lg" formControlName="omAtual" placeholder="Informe a OM atual">
+        </div>
+
+        <div class="col-12">
+          <label class="form-label" for="omDestaque">OM de Destaque</label>
+          <input
+            id="omDestaque"
+            type="text"
+            class="form-control form-control-lg"
+            formControlName="omDestaque"
+            placeholder="Informe a OM de destaque">
+        </div>
+      </div>
+    </section>
+
+    <section class="viatura-panel">
+      <div class="panel-header">
+        <i class="bi bi-paperclip"></i>
+        <h2>Anexos e Observa&ccedil;&otilde;es</h2>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Foto da Viatura</label>
+          <label class="upload-field">
+            <span class="upload-button">
+              <i class="bi bi-image"></i>
+              Procurar
+            </span>
+            <span class="upload-name">{{ selectedFotoName }}</span>
+            <input type="file" hidden (change)="onFotoSelected($event)">
+          </label>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label">Documentos da Viatura</label>
+          <label class="upload-field">
+            <span class="upload-button">
+              <i class="bi bi-file-earmark-arrow-up"></i>
+              Procurar
+            </span>
+            <span class="upload-name">{{ selectedDocumentoName }}</span>
+            <input type="file" hidden (change)="onDocumentoSelected($event)">
+          </label>
+          <div class="upload-hint">Voc&ecirc; pode anexar documentos como CRLV, autoriza&ccedil;&atilde;o, licenciamento etc.</div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label" for="observacoes">Observa&ccedil;&otilde;es</label>
+          <textarea
+            id="observacoes"
+            class="form-control form-control-lg observation-field"
+            rows="4"
+            formControlName="observacoes"
+            placeholder="Informa&ccedil;&otilde;es adicionais relevantes..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="alert alert-success viatura-alert" *ngIf="submitMessage">
+      {{ submitMessage }}
+    </div>
+
+    <footer class="viatura-actions">
+      <button type="button" class="btn btn-outline-secondary btn-lg action-btn" (click)="clearForm()">Cancelar</button>
+      <button type="submit" class="btn btn-primary btn-lg action-btn">Cadastrar Viatura</button>
+    </footer>
+  </form>
+</section>
