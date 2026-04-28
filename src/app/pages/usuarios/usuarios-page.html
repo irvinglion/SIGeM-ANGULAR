@@ -1,0 +1,20 @@
+<section class="usuarios-page">
+  <header class="usuarios-header">
+    <div class="breadcrumb-line">
+      <a routerLink="/config/usuario/lista" class="breadcrumb-link">Usu&aacute;rios</a>
+      <span>/</span>
+      <a routerLink="/config/usuario/lista" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="breadcrumb-link">Lista</a>
+      <span>/</span>
+      <a routerLink="/config/usuario/cadastrar" routerLinkActive="active" class="breadcrumb-link">Cadastrar</a>
+    </div>
+
+    <div class="page-copy">
+      <h1 class="page-title">Usu&aacute;rios</h1>
+      <p class="page-subtitle">Gerencie os usu&aacute;rios do sistema.</p>
+    </div>
+  </header>
+
+  <div class="page-content">
+    <router-outlet></router-outlet>
+  </div>
+</section>

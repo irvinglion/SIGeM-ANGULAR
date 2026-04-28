@@ -1,0 +1,54 @@
+.usuarios-page {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.usuarios-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.breadcrumb-line {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  color: #94a3b8;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.breadcrumb-link {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+.breadcrumb-link.active,
+.breadcrumb-link:hover {
+  color: #3b82f6;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.page-subtitle {
+  margin: 0.25rem 0 0;
+  color: #64748b;
+  font-size: 0.96rem;
+}
+
+.page-content {
+  min-width: 0;
+}
+
+@media (max-width: 767.98px) {
+  .page-title {
+    font-size: 1.55rem;
+  }
+}

@@ -17,6 +17,9 @@ import { CadastrarViaturaComponent } from './pages/viaturas/cadastrar-viatura/ca
 import { HistoricoViaturaComponent } from './pages/viaturas/historico-viatura/historico-viatura';
 import { ConsultarEventosComponent } from './pages/livro/consultar-eventos/consultar-eventos';
 import { ConsultarEventosDetalheComponent } from './pages/livro/consultar-eventos/consultar-eventos-detalhe';
+import { UsuariosPageComponent } from './pages/usuarios/usuarios-page';
+import { UsuariosListaComponent } from './pages/usuarios/usuarios-lista';
+import { CadastrarUsuarioComponent } from './pages/usuarios/cadastrar-usuario';
 import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
@@ -106,9 +109,14 @@ export const routes: Routes = [
   },
   {
     path: 'config/usuario',
-    component: PlaceholderPageComponent,
+    component: UsuariosPageComponent,
     canActivate: [roleGuard],
-    data: { title: 'Configuracoes de Usuario', roles: ['gestor', 'controlador_expedicao'] }
+    data: { title: 'Configuracoes de Usuario', roles: ['gestor', 'controlador_expedicao'] },
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'lista' },
+      { path: 'lista', component: UsuariosListaComponent },
+      { path: 'cadastrar', component: CadastrarUsuarioComponent }
+    ]
   },
   {
     path: 'config/backup',

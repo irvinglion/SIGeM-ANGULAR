@@ -1,0 +1,78 @@
+<section class="usuario-form-page">
+  <div class="back-strip">
+    <button type="button" class="back-btn" (click)="voltarParaLista()">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <div class="back-copy">
+      <span>Usu&aacute;rios</span>
+      <span>/</span>
+      <span>{{ isEdicao ? 'Editar' : 'Cadastrar' }}</span>
+    </div>
+  </div>
+
+  <form class="form-card" [formGroup]="form" (ngSubmit)="salvar()">
+    <div class="form-card-header">
+      <h2>{{ isEdicao ? 'Editar Usu&aacute;rio' : 'Cadastrar Usu&aacute;rio' }}</h2>
+    </div>
+
+    <div class="form-card-body">
+      <h3 class="section-label">Dados do Usu&aacute;rio</h3>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="nip">NIP <span>*</span></label>
+          <input id="nip" type="text" class="form-control" formControlName="nip" placeholder="Digite o NIP">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="nomeCompleto">Nome Completo <span>*</span></label>
+          <input id="nomeCompleto" type="text" class="form-control" formControlName="nomeCompleto" placeholder="Digite o nome completo">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="email">Email <span>*</span></label>
+          <input id="email" type="email" class="form-control" formControlName="email" placeholder="Digite o e-mail">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="telefone">Telefone</label>
+          <input id="telefone" type="text" class="form-control" formControlName="telefone" placeholder="(00) 00000-0000">
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="perfil">Perfil <span>*</span></label>
+          <select id="perfil" class="form-select" formControlName="perfil">
+            <option value="">Selecione o perfil</option>
+            <option *ngFor="let perfil of perfis" [value]="perfil">{{ perfil }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="om">OM <span>*</span></label>
+          <select id="om" class="form-select" formControlName="om">
+            <option value="">Selecione a OM</option>
+            <option *ngFor="let om of oms" [value]="om">{{ om }}</option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label d-block">Ativo</label>
+          <label class="checkbox-field">
+            <input type="checkbox" formControlName="ativo">
+            <span>Usu&aacute;rio ativo</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="alert alert-success mt-4 mb-0" *ngIf="submitMessage">
+        {{ submitMessage }}
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline-secondary action-btn" (click)="limparFormulario()">Cancelar</button>
+      <button type="submit" class="btn btn-primary action-btn">Salvar</button>
+    </div>
+  </form>
+</section>

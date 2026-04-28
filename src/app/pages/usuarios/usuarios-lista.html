@@ -1,0 +1,106 @@
+<section class="usuarios-lista">
+  <div class="toolbar-card">
+    <div class="toolbar-top">
+      <div class="search-field">
+        <i class="bi bi-search"></i>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="termoBusca"
+          placeholder="Buscar por nome, NIP ou email...">
+      </div>
+
+      <div class="toolbar-actions">
+        <button type="button" class="btn btn-outline-secondary filter-btn" (click)="toggleFiltros()">
+          <i class="bi bi-funnel"></i>
+          Filtros
+          <i class="bi" [class.bi-chevron-down]="!exibirFiltros" [class.bi-chevron-up]="exibirFiltros"></i>
+        </button>
+
+        <button type="button" class="btn btn-primary create-btn" (click)="abrirCadastro()">
+          <i class="bi bi-person-plus"></i>
+          Cadastrar Usu&aacute;rio
+        </button>
+      </div>
+    </div>
+
+    <div class="filters-panel" *ngIf="exibirFiltros">
+      <div class="row g-3">
+        <div class="col-md-5">
+          <label class="form-label" for="perfilFiltro">Perfil</label>
+          <input id="perfilFiltro" type="text" class="form-control" [(ngModel)]="perfilFiltro" placeholder="Ex.: Motorista">
+        </div>
+
+        <div class="col-md-5">
+          <label class="form-label" for="omFiltro">OM</label>
+          <input id="omFiltro" type="text" class="form-control" [(ngModel)]="omFiltro" placeholder="Ex.: CTEC">
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+          <button type="button" class="btn btn-outline-secondary w-100" (click)="limparFiltros()">Limpar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="table-card">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0 usuarios-table">
+        <thead>
+          <tr>
+            <th>NIP</th>
+            <th>Nome Completo</th>
+            <th>Perfil</th>
+            <th>OM</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Ativo</th>
+            <th class="text-center">A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuariosFiltrados">
+            <td>{{ usuario.nip }}</td>
+            <td>{{ usuario.nomeCompleto }}</td>
+            <td>{{ usuario.perfil }}</td>
+            <td>{{ usuario.om }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.telefone }}</td>
+            <td>
+              <span class="status-badge" [class.inactive]="!usuario.ativo">
+                {{ usuario.ativo ? 'Sim' : 'N\u00e3o' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button type="button" class="icon-action" (click)="abrirCadastro(usuario)" aria-label="Editar usu&aacute;rio">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="usuariosFiltrados.length === 0">
+            <td colspan="8" class="empty-state">Nenhum usu&aacute;rio encontrado com os filtros informados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-footer">
+      <span>Mostrando 1 a {{ usuariosFiltrados.length }} de 25 usu&aacute;rios</span>
+
+      <div class="pagination-mock">
+        <button type="button" class="page-btn">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button type="button" class="page-btn active">1</button>
+        <button type="button" class="page-btn">2</button>
+        <button type="button" class="page-btn">3</button>
+        <span class="page-dots">...</span>
+        <button type="button" class="page-btn">5</button>
+        <button type="button" class="page-btn">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+</section>

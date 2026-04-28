@@ -1,117 +1,156 @@
-<main class="main-content">
-  <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-    <h2 class="fw-bold mb-0">
-      <i class="bi bi-clock-history text-primary me-2"></i>
-      Hist&oacute;rico de Ordens de Movimenta&ccedil;&atilde;o
-    </h2>
+<main class="gestor-dashboard">
+  <section class="hero-card">
+    <div class="hero-main">
+      <div class="hero-copy">
+        <p class="hero-kicker">Painel do Gestor</p>
+        <h1 class="hero-title">
+          <span class="hero-icon">
+            <i class="bi bi-clock-history"></i>
+          </span>
+          Hist&oacute;rico de Ordens de Movimenta&ccedil;&atilde;o
+        </h1>
+        <p class="hero-subtitle">Acompanhe o ciclo das ordens emitidas, filtre rapidamente os registros e abra novas movimenta&ccedil;&otilde;es.</p>
+      </div>
 
-    <button type="button" class="btn btn-success px-4" (click)="goToNovaOrdem()">
-      <i class="bi bi-plus-circle me-2"></i>
-      Nova Ordem
-    </button>
+      <button type="button" class="btn btn-success hero-action" (click)="goToNovaOrdem()">
+        <i class="bi bi-plus-circle"></i>
+        Nova Ordem
+      </button>
+    </div>
+
+    <div class="hero-chips">
+      <span class="hero-chip neutral">
+        <i class="bi bi-list-check"></i>
+        {{ totalOrdens }} ordens registradas
+      </span>
+      <span class="hero-chip success">
+        <i class="bi bi-check2-circle"></i>
+        {{ ordensConcluidas }} conclu&iacute;das
+      </span>
+      <span class="hero-chip warning">
+        <i class="bi bi-hourglass-split"></i>
+        {{ ordensPendentes }} pendentes
+      </span>
+      <span class="hero-chip danger">
+        <i class="bi bi-x-circle"></i>
+        {{ ordensCanceladas }} canceladas
+      </span>
+    </div>
+  </section>
+
+  <section class="metrics-grid">
+    <article class="metric-card">
+      <div class="metric-top">
+        <span class="metric-label">Total de Ordens</span>
+        <i class="bi bi-journal-text text-primary"></i>
+      </div>
+      <div class="metric-value text-primary">{{ totalOrdens }}</div>
+      <div class="metric-caption">Ordens registradas no per&iacute;odo</div>
+    </article>
+
+    <article class="metric-card">
+      <div class="metric-top">
+        <span class="metric-label">Ordens Conclu&iacute;das</span>
+        <i class="bi bi-check-circle text-success"></i>
+      </div>
+      <div class="metric-value text-success">{{ ordensConcluidas }}</div>
+      <div class="metric-caption">Finalizadas com encerramento</div>
+    </article>
+
+    <article class="metric-card">
+      <div class="metric-top">
+        <span class="metric-label">Ordens Pendentes</span>
+        <i class="bi bi-hourglass-split text-warning"></i>
+      </div>
+      <div class="metric-value text-warning">{{ ordensPendentes }}</div>
+      <div class="metric-caption">Em andamento ou aguardando a&ccedil;&atilde;o</div>
+    </article>
+  </section>
+
+  <section class="filter-card">
+    <div class="panel-header">
+      <h2>
+        <i class="bi bi-funnel-fill"></i>
+        Filtros de Consulta
+      </h2>
+    </div>
+
+    <div class="filter-grid">
+      <label class="search-field" for="buscaOrdens">
+        <i class="bi bi-search"></i>
+        <input
+          id="buscaOrdens"
+          type="text"
+          class="form-control"
+          placeholder="Buscar por n&uacute;mero da ordem, CFN, viatura ou respons&aacute;vel..."
+          (input)="onSearch($any($event.target).value)">
+      </label>
+
+      <select class="form-select status-select" (change)="onStatusChange($any($event.target).value)">
+        <option value="Todos">Todos os status</option>
+        <option value="Concluida">Conclu&iacute;da</option>
+        <option value="Pendente">Pendente</option>
+        <option value="Cancelada">Cancelada</option>
+      </select>
+
+      <button class="btn btn-outline-secondary filter-button" type="button">
+        <i class="bi bi-sliders"></i>
+        Aplicar Filtro
+      </button>
+    </div>
+  </section>
+
+  <div class="result-summary">
+    <i class="bi bi-check2-square"></i>
+    <span>{{ filteredOrdens.length }} ordem(ns) localizada(s) com os filtros atuais.</span>
   </div>
 
-  <div class="row g-4 mb-4">
-    <div class="col-12 col-md-4">
-      <div class="card shadow-sm border-0 text-center p-4 h-100">
-        <h6 class="text-muted">Total de Ordens</h6>
-        <h2 class="fw-bold text-primary">{{ totalOrdens }}</h2>
-        <small class="text-muted">ordens registradas</small>
-      </div>
+  <section class="table-card">
+    <div class="panel-header">
+      <h2>
+        <i class="bi bi-table"></i>
+        Ordens Registradas
+      </h2>
     </div>
 
-    <div class="col-12 col-md-4">
-      <div class="card shadow-sm border-0 text-center p-4 h-100">
-        <h6 class="text-muted">Ordens Conclu&iacute;das</h6>
-        <h2 class="fw-bold text-success">{{ ordensConcluidas }}</h2>
-        <small class="text-muted">finalizadas</small>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 gestor-table">
+        <thead>
+          <tr>
+            <th>N&ordm; Ordem</th>
+            <th>CFN</th>
+            <th>Viatura</th>
+            <th>Data</th>
+            <th>Respons&aacute;vel</th>
+            <th>Status</th>
+            <th class="text-center">A&ccedil;&otilde;es</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ordem of filteredOrdens">
+            <td><strong class="order-number">{{ ordem.numero }}</strong></td>
+            <td>{{ ordem.cfn }}</td>
+            <td>{{ ordem.viatura }}</td>
+            <td>{{ ordem.data }}</td>
+            <td>{{ ordem.responsavel }}</td>
+            <td>
+              <span [class]="getStatusClass(ordem.status)">
+                {{ ordem.status === 'Concluida' ? 'Conclu&iacute;da' : ordem.status }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-primary table-action" type="button">
+                <i class="bi bi-eye"></i>
+                Visualizar
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="filteredOrdens.length === 0">
+            <td colspan="7" class="empty-state">Nenhum registro encontrado para os filtros selecionados.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="col-12 col-md-4">
-      <div class="card shadow-sm border-0 text-center p-4 h-100">
-        <h6 class="text-muted">Ordens Pendentes</h6>
-        <h2 class="fw-bold text-warning">{{ ordensPendentes }}</h2>
-        <small class="text-muted">em andamento</small>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow-sm border-0 mb-4">
-    <div class="card-body">
-      <div class="row g-3 align-items-center">
-        <div class="col-md-6">
-          <div class="input-group">
-            <span class="input-group-text">
-              <i class="bi bi-search"></i>
-            </span>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Buscar por n&uacute;mero da ordem, placa ou respons&aacute;vel..."
-              (input)="onSearch($any($event.target).value)">
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <select class="form-select" (change)="onStatusChange($any($event.target).value)">
-            <option value="Todos">Status</option>
-            <option value="Concluida">Conclu&iacute;da</option>
-            <option value="Pendente">Pendente</option>
-            <option value="Cancelada">Cancelada</option>
-          </select>
-        </div>
-
-        <div class="col-md-3">
-          <button class="btn btn-outline-secondary w-100" type="button">
-            <i class="bi bi-funnel me-2"></i>
-            Aplicar Filtro
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card shadow-sm border-0">
-    <div class="card-body p-0">
-      <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-          <thead class="table-light">
-            <tr>
-              <th>N&ordm; Ordem</th>
-              <th>CFN</th>
-              <th>Viatura</th>
-              <th>Data</th>
-              <th>Respons&aacute;vel</th>
-              <th>Status</th>
-              <th class="text-center">A&ccedil;&otilde;es</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let ordem of filteredOrdens">
-              <td><strong>{{ ordem.numero }}</strong></td>
-              <td>{{ ordem.cfn }}</td>
-              <td>{{ ordem.viatura }}</td>
-              <td>{{ ordem.data }}</td>
-              <td>{{ ordem.responsavel }}</td>
-              <td>
-                <span class="badge bg-success" *ngIf="ordem.status === 'Concluida'">Conclu&iacute;da</span>
-                <span class="badge bg-warning text-dark" *ngIf="ordem.status === 'Pendente'">Pendente</span>
-                <span class="badge bg-danger" *ngIf="ordem.status === 'Cancelada'">Cancelada</span>
-              </td>
-              <td class="text-center">
-                <button class="btn btn-sm btn-primary px-3" type="button">
-                  <i class="bi bi-eye me-1"></i>
-                  Visualizar
-                </button>
-              </td>
-            </tr>
-            <tr *ngIf="filteredOrdens.length === 0">
-              <td colspan="7" class="text-center text-muted py-4">Nenhum registro encontrado.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  </section>
 </main>

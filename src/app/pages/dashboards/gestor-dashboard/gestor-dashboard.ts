@@ -25,7 +25,7 @@ export class GestorDashboardComponent {
   selectedStatus: 'Todos' | StatusOrdem = 'Todos';
 
   readonly ordens: OrdemMovimentacao[] = [
-    { numero: 'OMV-2026-00124', cfn: 'QMB4T21', viatura: 'VtrRbq TNE 1 1/2 Ton 2R', data: '20/02/2026', responsavel: '1º Sgt Almeida', status: 'Concluida' },
+    { numero: 'OMV-2026-00124', cfn: 'QMB4T21', viatura: 'VtrRbq TNE 1 1/2 Ton 2R', data: '20/02/2026', responsavel: '1o Sgt Almeida', status: 'Concluida' },
     { numero: 'OMV-2026-00125', cfn: 'RTH9P88', viatura: 'VtrSemi-Rbq TE 40 Ton 12R PRANCHA', data: '19/02/2026', responsavel: 'Cap Silva', status: 'Pendente' },
     { numero: 'OMV-2026-00126', cfn: 'AB1JD23', viatura: 'VtrTNE 3/4 Ton 4x4 MARRUA AM11', data: '18/02/2026', responsavel: 'Ten Oliveira', status: 'Cancelada' },
     { numero: 'OMV-2026-00127', cfn: 'JKL3H56', viatura: 'VtrTE 1 Ton 4x4 AMB UTI LAND ROVER DEFENDER 130 PUMA', data: '17/02/2026', responsavel: 'Subten Costa', status: 'Concluida' },
@@ -44,6 +44,10 @@ export class GestorDashboardComponent {
 
   get ordensPendentes(): number {
     return this.ordens.filter((o) => o.status === 'Pendente').length;
+  }
+
+  get ordensCanceladas(): number {
+    return this.ordens.filter((o) => o.status === 'Cancelada').length;
   }
 
   get filteredOrdens(): OrdemMovimentacao[] {
@@ -73,6 +77,18 @@ export class GestorDashboardComponent {
   }
 
   goToNovaOrdem(): void {
-    this.router.navigate(['/movimentacoes/criar-ordem-movimentacao']);
+    void this.router.navigate(['/movimentacoes/criar-ordem-movimentacao']);
+  }
+
+  getStatusClass(status: StatusOrdem): string {
+    if (status === 'Concluida') {
+      return 'status-badge success';
+    }
+
+    if (status === 'Pendente') {
+      return 'status-badge warning';
+    }
+
+    return 'status-badge danger';
   }
 }
