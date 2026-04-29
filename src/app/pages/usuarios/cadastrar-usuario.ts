@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { MockDatabaseService } from '../../core/services/mock-database.service';
 
 type UsuarioEdicao = {
   nip: string;
@@ -21,8 +23,8 @@ type UsuarioEdicao = {
   styleUrls: ['./cadastrar-usuario.css']
 })
 export class CadastrarUsuarioComponent {
-  readonly perfis = ['Motorista', 'Encarregado', 'Supervisor', 'Gestor'];
-  readonly oms = ['CTEC', 'CMAT', 'B Adm Ap', 'Cia Cmdo'];
+  perfis = ['Motorista', 'Encarregado', 'Supervisor', 'Gestor'];
+  oms = ['CTEC', 'CMAT', 'B Adm Ap', 'Cia Cmdo'];
   readonly form;
   readonly usuarioEdicao = history.state['usuario'] as UsuarioEdicao | undefined;
 
@@ -34,7 +36,8 @@ export class CadastrarUsuarioComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private readonly mockDb: MockDatabaseService
   ) {
     this.form = this.fb.group({
       nip: [this.usuarioEdicao?.nip ?? ''],
@@ -44,6 +47,11 @@ export class CadastrarUsuarioComponent {
       perfil: [this.usuarioEdicao?.perfil ?? ''],
       om: [this.usuarioEdicao?.om ?? ''],
       ativo: [this.usuarioEdicao?.ativo ?? true]
+    });
+
+    combineLatest([this.mockDb.getPerfis(), this.mockDb.getOms()]).subscribe(([perfis, oms]) => {
+      this.perfis = perfis.map((perfil) => perfil.nome);
+      this.oms = oms.map((om) => om.sigla);
     });
   }
 

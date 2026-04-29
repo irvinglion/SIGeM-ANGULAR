@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { MockDatabaseService, OM, Perfil, Usuario } from '../../core/services/mock-database.service';
 
 type UsuarioRegistro = {
   nip: string;
@@ -26,55 +28,26 @@ export class UsuariosListaComponent {
   omFiltro = '';
   exibirFiltros = false;
 
-  readonly usuarios: UsuarioRegistro[] = [
-    {
-      nip: '123456789',
-      nomeCompleto: 'Joao da Silva',
-      perfil: 'Motorista',
-      om: 'CTEC',
-      email: 'joao.silva@marinha.mil.br',
-      telefone: '(61) 99999-9999',
-      ativo: true
-    },
-    {
-      nip: '987654321',
-      nomeCompleto: 'Maria Oliveira',
-      perfil: 'Encarregado',
-      om: 'CMAT',
-      email: 'maria.oliveira@marinha.mil.br',
-      telefone: '(61) 98888-8888',
-      ativo: true
-    },
-    {
-      nip: '456789123',
-      nomeCompleto: 'Carlos Ferreira',
-      perfil: 'Supervisor',
-      om: 'CTEC',
-      email: 'carlos.ferreira@marinha.mil.br',
-      telefone: '(61) 97777-7777',
-      ativo: true
-    },
-    {
-      nip: '321654987',
-      nomeCompleto: 'Fernanda Costa',
-      perfil: 'Motorista',
-      om: 'CMAT',
-      email: 'fernanda.costa@marinha.mil.br',
-      telefone: '(61) 96666-6666',
-      ativo: false
-    },
-    {
-      nip: '789123456',
-      nomeCompleto: 'Bruno Almeida',
-      perfil: 'Supervisor',
-      om: 'CTEC',
-      email: 'bruno.almeida@marinha.mil.br',
-      telefone: '(61) 95555-5555',
-      ativo: true
-    }
-  ];
+  usuarios: UsuarioRegistro[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private readonly mockDb: MockDatabaseService
+  ) {
+    combineLatest([this.mockDb.getUsuarios(), this.mockDb.getPerfis(), this.mockDb.getOms()]).subscribe(
+      ([usuarios, perfis, oms]) => {
+        this.usuarios = usuarios.map((usuario: Usuario) => ({
+          nip: usuario.nip,
+          nomeCompleto: usuario.nomeCompleto,
+          perfil: this.findById(perfis, usuario.perfilId)?.nome ?? usuario.perfilId,
+          om: this.findById(oms, usuario.omId)?.sigla ?? usuario.omId,
+          email: usuario.email,
+          telefone: usuario.telefone,
+          ativo: usuario.ativo === 'true'
+        }));
+      }
+    );
+  }
 
   get usuariosFiltrados(): UsuarioRegistro[] {
     const termo = this.termoBusca.trim().toLowerCase();
@@ -106,5 +79,9 @@ export class UsuariosListaComponent {
 
   abrirCadastro(usuario?: UsuarioRegistro): void {
     void this.router.navigate(['/config/usuario/cadastrar'], usuario ? { state: { usuario } } : undefined);
+  }
+
+  private findById<T extends Perfil | OM>(items: T[], id: string): T | undefined {
+    return items.find((item) => item.id === id);
   }
 }

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MockDatabaseService, ModeloViatura } from '../../../core/services/mock-database.service';
 
 type ModeloOption = {
   codeq: string;
@@ -18,50 +19,17 @@ type ModeloOption = {
   styleUrls: ['./cadastrar-viatura.css']
 })
 export class CadastrarViaturaComponent {
-  readonly modeloOptions: ModeloOption[] = [
-    {
-      codeq: '0993160006000',
-      label: '0993160006000 - Esp 2x1 MCL POL I/H. DAVIDSON',
-      tracao: '2x1',
-      emprego: 'Policiamento',
-      rotinaManutencao: 'Rotina leve de motocicletas'
-    },
-    {
-      codeq: '0993160006002',
-      label: '0993160006002 - Esp 2x1 MCL POL ROAD KING FLHTP-I',
-      tracao: '2x1',
-      emprego: 'Policiamento ostensivo',
-      rotinaManutencao: 'Rotina de estrada'
-    },
-    {
-      codeq: '0993540003018',
-      label: '0993540003018 - VtrBldAnfEsp SL CMDO CLAnf AAV7A1-C',
-      tracao: 'Lagartas',
-      emprego: 'Comando anf\u00edbio',
-      rotinaManutencao: 'Rotina blindada anf\u00edbia'
-    },
-    {
-      codeq: '0998190004000',
-      label: '0998190004000 - VtrBldEsp 4x4 POST MET AV-ASTROS',
-      tracao: '4x4',
-      emprego: 'Artilharia ASTROS',
-      rotinaManutencao: 'Rotina de artilharia'
-    },
-    {
-      codeq: '0998190001000',
-      label: '0998190001000 - VtrBldEsp 6x6 LMU ASTROS AV-LMU',
-      tracao: '6x6',
-      emprego: 'Lan\u00e7ador m\u00faltiplo',
-      rotinaManutencao: 'Rotina pesada'
-    }
-  ];
+  modeloOptions: ModeloOption[] = [];
 
   readonly form;
   selectedFotoName = 'Nenhum arquivo selecionado.';
   selectedDocumentoName = 'Nenhum arquivo selecionado.';
   submitMessage = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private readonly mockDb: MockDatabaseService
+  ) {
     this.form = this.fb.group({
       modeloCodeq: [''],
       tracao: [''],
@@ -77,6 +45,16 @@ export class CadastrarViaturaComponent {
       omAtual: [''],
       omDestaque: [''],
       observacoes: ['']
+    });
+
+    this.mockDb.getModelosViatura().subscribe((modelos) => {
+      this.modeloOptions = modelos.map((modelo: ModeloViatura) => ({
+        codeq: modelo.codeq,
+        label: `${modelo.codeq} - ${modelo.nomenclatura}`,
+        tracao: modelo.tracao,
+        emprego: modelo.emprego,
+        rotinaManutencao: modelo.rotinaManutencao
+      }));
     });
   }
 

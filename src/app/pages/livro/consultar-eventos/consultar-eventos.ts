@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { LivroRegistroViatura, MockDatabaseService } from '../../../core/services/mock-database.service';
 
 type LivroRegistroItem = {
-  id: number;
+  id: string;
   viatura: string;
   pagina: string;
   odometro: string;
@@ -22,38 +24,23 @@ type LivroRegistroItem = {
 })
 export class ConsultarEventosComponent {
   viaturaFiltro = '';
-
-  readonly registros: LivroRegistroItem[] = [
-    {
-      id: 1,
-      viatura: 'CFN 44311552',
-      pagina: '001',
-      odometro: '117547',
-      totalHHGastosPagina: '0',
-      dataEscrituracao: '08/02/2018 11:42:08',
-      selected: false
-    },
-    {
-      id: 2,
-      viatura: 'CFN 531323000078',
-      pagina: '001',
-      odometro: '15349',
-      totalHHGastosPagina: '0',
-      dataEscrituracao: '19/02/2018 15:29:24',
-      selected: false
-    },
-    {
-      id: 3,
-      viatura: 'CFN 411323000060',
-      pagina: '001',
-      odometro: '33761',
-      totalHHGastosPagina: '0',
-      dataEscrituracao: '28/02/2018 10:35:46',
-      selected: false
-    }
-  ];
+  registros: LivroRegistroItem[] = [];
 
   readonly emptyRows = Array.from({ length: 10 });
+
+  constructor(private readonly mockDb: MockDatabaseService) {
+    combineLatest([this.mockDb.getLivroRegistroViatura(), this.mockDb.getViaturas()]).subscribe(([registros, viaturas]) => {
+      this.registros = registros.map((registro: LivroRegistroViatura) => ({
+        id: registro.id,
+        viatura: viaturas.find((viatura) => viatura.id === registro.viaturaId)?.numeroRegistro ?? registro.viaturaId,
+        pagina: registro.pagina,
+        odometro: registro.odometro,
+        totalHHGastosPagina: registro.horimetro,
+        dataEscrituracao: registro.dataEscrituracao,
+        selected: false
+      }));
+    });
+  }
 
   get selectedRegistros(): LivroRegistroItem[] {
     return this.registros.filter((registro) => registro.selected);
@@ -73,10 +60,10 @@ export class ConsultarEventosComponent {
     }
 
     if (this.selectedCount === 1) {
-      return '1 escrituração pronta para abrir';
+      return '1 escrituracao pronta para abrir';
     }
 
-    return `${this.selectedCount} escriturações selecionadas`;
+    return `${this.selectedCount} escrituracoes selecionadas`;
   }
 
   get selectionDescription(): string {
@@ -86,10 +73,10 @@ export class ConsultarEventosComponent {
 
     if (this.selectedCount === 1) {
       const [registro] = this.selectedRegistros;
-      return `A viatura ${registro.viatura} foi destacada e já está pronta para consulta detalhada.`;
+      return `A viatura ${registro.viatura} foi destacada e ja esta pronta para consulta detalhada.`;
     }
 
-    return 'As viaturas marcadas aparecem abaixo para facilitar conferência antes de abrir os detalhes.';
+    return 'As viaturas marcadas aparecem abaixo para facilitar conferencia antes de abrir os detalhes.';
   }
 
   get latestSelectionLabel(): string {

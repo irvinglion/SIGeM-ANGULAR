@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MockDatabaseService } from '../../../core/services/mock-database.service';
 
 type ModeloViaturaItemRegistro = {
   descricao: string;
@@ -18,9 +19,35 @@ type ModeloViaturaItemRegistro = {
 })
 export class ModeloViaturaItemComponent {
   private readonly route = inject(ActivatedRoute);
+  private readonly mockDb = inject(MockDatabaseService);
 
   readonly currentPath = this.route.snapshot.routeConfig?.path ?? '';
-  readonly registros: ModeloViaturaItemRegistro[] = this.buildRegistros(this.currentPath);
+  registros: ModeloViaturaItemRegistro[] = this.buildRegistros(this.currentPath);
+
+  constructor() {
+    this.mockDb.getDatabase().subscribe((database) => {
+      const modelos = database['MODELOS_VIATURA'] ?? [];
+      const fabricantes = database['FABRICANTES'] ?? [];
+      const values: string[] = [];
+
+      if (this.currentPath === 'utilizacao-especifica') {
+        values.push(...modelos.map((modelo) => modelo['emprego']));
+      } else if (this.currentPath === 'tracao') {
+        values.push(...modelos.map((modelo) => modelo['tracao']));
+      } else if (this.currentPath === 'numero-de-rodas') {
+        values.push(...modelos.map((modelo) => modelo['numeroRodas']));
+      } else if (this.currentPath === 'pais') {
+        values.push(...fabricantes.map((fabricante) => fabricante['pais']));
+      } else if (this.currentPath === 'fotografia') {
+        values.push(...modelos.map((modelo) => `Foto principal - ${modelo['nomenclatura']}`));
+      }
+
+      const uniqueValues = Array.from(new Set(values.filter(Boolean)));
+      if (uniqueValues.length) {
+        this.registros = uniqueValues.map((value) => ({ descricao: value, selected: false }));
+      }
+    });
+  }
 
   get displayTitle(): string {
     const titles: Record<string, string> = {

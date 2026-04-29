@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MockDatabaseService, ModeloViatura } from '../../../core/services/mock-database.service';
 
 type ModeloViaturaRegistro = {
   codeq: string;
@@ -41,51 +42,26 @@ export class ModelosViaturaListaComponent {
     { label: 'Versao' }
   ];
 
-  readonly registros: ModeloViaturaRegistro[] = [
-    {
-      codeq: '0993160006000',
-      neb: 'NEB-001',
-      nomenclatura: 'Esp 2x1 MCL POL I/H. DAVIDSON',
-      modeloGenerico: 'MCL POL Esp'
-    },
-    {
-      codeq: '0993160006002',
-      neb: 'NEB-014',
-      nomenclatura: 'Esp 2x1 MCL POL ROAD KING FLHTP-I',
-      modeloGenerico: 'MCL POL Esp'
-    },
-    {
-      codeq: '0993540003018',
-      neb: 'NEB-072',
-      nomenclatura: 'VtrBldAnfEsp SL CMDO CLAnf AAV7A1-C',
-      modeloGenerico: 'VtrBldAnfEsp SL CMDO'
-    },
-    {
-      codeq: '0998870001000',
-      neb: 'NEB-101',
-      nomenclatura: 'VtrBldAnfEsp SL TP CLANF AAVP - RAN/RS',
-      modeloGenerico: 'VtrBldAnfEsp SL TP'
-    },
-    {
-      codeq: '0998190004000',
-      neb: 'NEB-128',
-      nomenclatura: 'VtrBldEsp 4x4 POST MET AV-ASTROS',
-      modeloGenerico: 'VtrBldEsp POST MET'
-    },
-    {
-      codeq: '0998190001000',
-      neb: 'NEB-135',
-      nomenclatura: 'VtrBldEsp 6x6 LMU ASTROS AV-LMU',
-      modeloGenerico: 'VtrBldEsp LMU'
-    }
-  ];
+  registros: ModeloViaturaRegistro[] = [];
 
   codeq = '';
   nomenclatura = '';
   showAdvancedFilters = false;
   selectedAdvancedFilter = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private readonly mockDb: MockDatabaseService
+  ) {
+    this.mockDb.getModelosViatura().subscribe((modelos) => {
+      this.registros = modelos.map((modelo: ModeloViatura) => ({
+        codeq: modelo.codeq,
+        neb: modelo.neb,
+        nomenclatura: modelo.nomenclatura,
+        modeloGenerico: modelo.modeloGenerico
+      }));
+    });
+  }
 
   get filteredRegistros(): ModeloViaturaRegistro[] {
     const codeq = this.codeq.trim().toLowerCase();

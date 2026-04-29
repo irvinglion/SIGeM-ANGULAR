@@ -1,0 +1,101 @@
+[SIGEM_MOCK_DB]
+versao;1.0
+geradoEm;2026-04-28
+descricao;Base mock em TXT para simular dados do SIGeM Angular
+
+[PERFIS]
+id;nome;permissoes
+PERF-001;Administrador do Sistema;viaturas,usuarios,ordens,livro,checklists
+PERF-002;Controlador de Expedicao;ordens,checklists,livro
+PERF-003;Motorista;saida,retorno,checklists
+PERF-004;Gestor;viaturas,ordens,livro,checklists
+
+[OMS]
+id;codigo;sigla;descricao
+OM-001;101;1BLog;1 Batalhao Logistico
+OM-002;102;CiaMnt;Companhia de Manutencao
+OM-003;103;EsqdTransp;Esquadrao de Transporte
+
+[USUARIOS]
+id;nip;nomeCompleto;perfilId;omId;email;telefone;ativo
+USR-001;25286323;Irving da Silva Leão;PERF-001;OM-001;carlos.silva@sigem.local;(21)99999-1001;true
+USR-002;24147582;Mariana Costa Lima;PERF-002;OM-001;mariana.lima@sigem.local;(21)99999-1002;true
+USR-003;23098451;Joao Pedro Alves;PERF-003;OM-003;joao.alves@sigem.local;(21)99999-1003;true
+USR-004;22173694;Rafael Nunes Rocha;PERF-003;OM-002;rafael.rocha@sigem.local;(21)99999-1004;true
+
+[FABRICANTES]
+id;codigo;sigla;nome;pais;cnpjOuIdentificador;ativo
+FAB-001;FAB001;IVECO;Iveco Defence Vehicles;Italia;IT-IVECO-001;true
+FAB-002;FAB002;MBB;Mercedes-Benz Brasil;Brasil;00.000.000/0001-00;true
+FAB-003;FAB003;ENG;Engesa;Brasil;00.000.000/0002-00;false
+
+[MODELOS_VIATURA]
+id;codeq;neb;nomenclatura;modeloGenerico;versao;fabricanteId;tracao;numeroRodas;tipoViatura;emprego;vidaUtil;rotinaManutencao;rotinaLubrificacao
+MOD-001;VTR-001;NEB-1234;VBTP Guarani 6x6;Blindado Medio;A2;FAB-001;6x6;6;Blindada;Operacional;20;RM-01;RL-01
+MOD-002;VTR-002;NEB-2345;Caminhao 5 Ton 4x4;Caminhao Medio;B1;FAB-002;4x4;4;Administrativa;Logistico;15;RM-02;RL-02
+MOD-003;VTR-003;NEB-3456;Jeep Utilitario 4x4;Viatura Leve;C1;FAB-002;4x4;4;Leve;Apoio;12;RM-03;RL-03
+
+[VIATURAS]
+id;grupoSequencial;numeroRegistro;numeroPatrimonial;chassi;numeroMotor;anoFabricacao;fimCiclo;modeloId;omAtualId;omDestaqueId;statusUso
+VTR-001;G01;EB-1001;PAT-2024-001;9BM111111;MTR-001;2021;2041;MOD-001;OM-001;OM-003;Disponivel
+VTR-002;G02;EB-1002;PAT-2024-002;9BM222222;MTR-002;2019;2034;MOD-002;OM-002;OM-002;Em manutencao
+VTR-003;G03;EB-1003;PAT-2024-003;9BM333333;MTR-003;2022;2034;MOD-003;OM-003;OM-001;Em operacao
+
+[ORDENS_MOVIMENTACAO]
+id;numeroOrdem;tipo;descricao;dataInicio;dataTermino;omResponsavelId;registradoPorId;operacaoNome;operacaoSigla;tipoOperacao
+OMOV-001;OM-2026-001;SIMPLES;Transporte de material logistico;2026-04-20;2026-04-22;OM-001;USR-001;Apoio Logistico;APLOG;Logistica
+OMOV-002;OM-2026-002;COMPLETA;Deslocamento para exercicio operacional;2026-04-24;2026-04-28;OM-003;USR-001;Operacao Sentinela;OPSEN;Operacional
+
+[ORDENS_SAIDA]
+id;numeroOrdem;data;destino;missao;referencia;horaSaidaPlanejada;hodometroSaida;liberadoAs;motoristaId;controladorId;utilizadorId;viaturaId;ordemMovimentacaoId
+OSA-001;OS-2026-001;2026-04-20;Deposito Central;Transporte de suprimentos;OM-2026-001;08:00;12450;2026-04-20T08:10;USR-003;USR-002;USR-001;VTR-002;OMOV-001
+OSA-002;OS-2026-002;2026-04-24;Campo de Instrucao;Apoio ao exercicio;OM-2026-002;06:30;8700;2026-04-24T06:45;USR-004;USR-002;USR-001;VTR-003;OMOV-002
+
+[ORDENS_RETORNO]
+id;data;horaRetorno;hodometroRetorno;observacoesFinais;irregularidades;motoristaId;controladorId;ordemSaidaId
+ORET-001;2026-04-22;17:20;12610;Retorno concluido sem atraso;Sem irregularidades;USR-003;USR-002;OSA-001
+ORET-002;2026-04-28;15:40;8935;Retorno apos exercicio;Lanterna traseira com mau contato;USR-004;USR-002;OSA-002
+
+[CHECKLISTS]
+id;tipo;dataExecucao;ordemSaidaId;ordemRetornoId;viaturaId;motoristaId;status;irregularidades
+CHK-001;ANTES_PARTIDA;2026-04-20T07:45;OSA-001;;VTR-002;USR-003;Aprovado;
+CHK-002;RETORNO;2026-04-22T17:30;OSA-001;ORET-001;VTR-002;USR-003;Aprovado;
+CHK-003;RETORNO;2026-04-28T15:50;OSA-002;ORET-002;VTR-003;USR-004;Pendente;Lanterna traseira com mau contato
+
+[CHECKLIST_ITENS]
+id;checklistId;descricao;status;observacao
+CITEM-001;CHK-001;Extintor de incendio;OK;
+CITEM-002;CHK-001;Combustivel oleo e agua;OK;
+CITEM-003;CHK-001;Pneumaticos ou lagartas;OK;
+CITEM-004;CHK-003;Orgaos de iluminacao;NC;Lanterna traseira direita intermitente
+CITEM-005;CHK-003;Documentos;OK;
+
+[HISTORICO_VIATURA]
+id;viaturaId;data;missao;origem;destino;motoristaId;ordemSaidaId;ordemRetornoId
+HIST-001;VTR-002;2026-04-20;Transporte de suprimentos;OM-002;Deposito Central;USR-003;OSA-001;ORET-001
+HIST-002;VTR-003;2026-04-24;Apoio ao exercicio;OM-003;Campo de Instrucao;USR-004;OSA-002;ORET-002
+
+[RESPONSAVEIS_VIATURA]
+id;viaturaId;nip;postoGrad;nomeGuerra;dataInicio;dataTermino;omId
+RESP-001;VTR-001;19102837;3Sgt;Almeida;2025-01-10;;OM-001
+RESP-002;VTR-002;21450296;Cb;Ferreira;2025-03-15;2026-03-15;OM-002
+RESP-003;VTR-003;22639174;Sd;Nunes;2026-01-05;;OM-003
+
+[LIVRO_REGISTRO_VIATURA]
+id;viaturaId;pagina;odometro;horimetro;dataEscrituracao;descricaoEvento;tipoEvento;responsavelId
+LRV-001;VTR-002;001;12610;350;2026-04-22T18:00;Retorno de missao logistica;RETORNO;USR-002
+LRV-002;VTR-003;002;8935;210;2026-04-28T16:10;Registro de irregularidade em iluminacao;OCORRENCIA;USR-002
+
+[DISPONIBILIDADE]
+id;viaturaId;dataInicio;dataTermino;situacao;detalhe;registradoPorId
+DISP-001;VTR-001;2026-04-01;;Disponivel;Viatura apta para emprego;USR-002
+DISP-002;VTR-002;2026-04-23;;Indisponivel;Manutencao preventiva pendente;USR-002
+
+[RESTRICOES]
+id;viaturaId;sigla;descricao;dataInicio;dataTermino;responsavelId
+REST-001;VTR-003;ILUM;Restricao de uso noturno por falha em iluminacao;2026-04-28;;USR-002
+
+[MOBILIAMENTO_OPERATIVO]
+id;viaturaId;equipamentos;estaDisponivel;dataInicio;dataTermino;observacao;registradoPorId
+MOB-001;VTR-001;Radio VHF|Kit ferramentas|Macaco hidraulico;true;2026-01-01;;Completo;USR-002
+MOB-002;VTR-003;Kit ferramentas|Triangulo;false;2026-04-28;;Falta radio VHF;USR-002

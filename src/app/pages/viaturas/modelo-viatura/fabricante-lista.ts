@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Fabricante, MockDatabaseService } from '../../../core/services/mock-database.service';
 
 type FabricanteRegistro = {
   nome: string;
@@ -17,23 +18,16 @@ export class FabricanteListaComponent {
   showActionButtons = false;
   showAdvancedFilters = false;
 
-  readonly registros: FabricanteRegistro[] = [
-    { nome: 'CRESUMAR', pais: 'Brasil' },
-    { nome: 'CRISTANINI Decontamination Systems', pais: 'Italia' },
-    { nome: 'Cummins', pais: 'Estados Unidos' },
-    { nome: 'Daimler PUC', pais: 'Austria' },
-    { nome: 'DUMBAR', pais: 'Brasil' },
-    { nome: 'E.A. da Silva', pais: 'Brasil' },
-    { nome: 'EB', pais: 'Brasil' },
-    { nome: 'Empretec', pais: 'Brasil' },
-    { nome: 'Engesa', pais: 'Brasil' },
-    { nome: 'Ergomix', pais: 'Brasil' },
-    { nome: 'Fiat Allis', pais: 'Brasil' },
-    { nome: 'FIAT AUTOMOVEIS S.A', pais: 'Brasil' },
-    { nome: 'FMC', pais: 'Estados Unidos' },
-    { nome: 'FORD MOTOR COMPANY', pais: 'Brasil' },
-    { nome: 'Fruehauf', pais: 'Brasil' }
-  ];
+  registros: FabricanteRegistro[] = [];
+
+  constructor(private readonly mockDb: MockDatabaseService) {
+    this.mockDb.getFabricantes().subscribe((fabricantes) => {
+      this.registros = fabricantes.map((fabricante: Fabricante) => ({
+        nome: fabricante.nome,
+        pais: fabricante.pais
+      }));
+    });
+  }
 
   toggleActionButtons(): void {
     this.showActionButtons = !this.showActionButtons;

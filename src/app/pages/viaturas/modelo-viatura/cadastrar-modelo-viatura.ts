@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { combineLatest } from 'rxjs';
+import { MockDatabaseService } from '../../../core/services/mock-database.service';
 
 @Component({
   selector: 'app-cadastrar-modelo-viatura',
@@ -13,13 +15,16 @@ export class CadastrarModeloViaturaComponent {
   readonly form;
   submitMessage = '';
 
-  readonly utilizacaoEspecificaOptions = ['Sem valor', 'Administrativa', 'Operacional', 'Logistica'];
-  readonly fabricanteOptions = ['Sem valor', 'Iveco', 'Mitsubishi', 'Toyota', 'Volkswagen'];
-  readonly tracaoOptions = ['Sem valor', '4x2', '4x4', '6x6'];
-  readonly numeroRodasOptions = ['Sem valor', '2', '4', '6', '8'];
+  utilizacaoEspecificaOptions = ['Sem valor', 'Administrativa', 'Operacional', 'Logistica'];
+  fabricanteOptions = ['Sem valor', 'Iveco', 'Mitsubishi', 'Toyota', 'Volkswagen'];
+  tracaoOptions = ['Sem valor', '4x2', '4x4', '6x6'];
+  numeroRodasOptions = ['Sem valor', '2', '4', '6', '8'];
   readonly gerenciaMeiosOptions = ['Sem valor', 'Transporte', 'Blindados', 'Artilharia', 'Comando'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private readonly mockDb: MockDatabaseService
+  ) {
     this.form = this.fb.group({
       tipoEquipamento: [''],
       equipamentoRelacionado: [''],
@@ -40,6 +45,34 @@ export class CadastrarModeloViaturaComponent {
       motor: [''],
       pneu: [''],
       bateria: ['']
+    });
+
+    combineLatest([this.mockDb.getModelosViatura(), this.mockDb.getFabricantes()]).subscribe(([modelos, fabricantes]) => {
+      this.fabricanteOptions = ['Sem valor', ...fabricantes.map((fabricante) => fabricante.nome)];
+      this.tracaoOptions = ['Sem valor', ...Array.from(new Set(modelos.map((modelo) => modelo.tracao)))];
+      this.numeroRodasOptions = ['Sem valor', ...Array.from(new Set(modelos.map((modelo) => modelo.numeroRodas)))];
+      this.utilizacaoEspecificaOptions = ['Sem valor', ...Array.from(new Set(modelos.map((modelo) => modelo.emprego)))];
+
+      const modelo = modelos[0];
+      if (modelo && !this.form.dirty) {
+        const fabricante = fabricantes.find((item) => item.id === modelo.fabricanteId);
+        this.form.patchValue({
+          tipoEquipamento: modelo.tipoViatura,
+          equipamentoRelacionado: modelo.nomenclatura,
+          codeq: modelo.codeq,
+          neb: modelo.neb,
+          cicloOperativo: modelo.vidaUtil,
+          nomenclatura: modelo.nomenclatura,
+          modeloGenerico: modelo.modeloGenerico,
+          versao: modelo.versao,
+          classificacaoViatura: modelo.tipoViatura,
+          utilizacaoEspecifica: modelo.emprego,
+          fabricante: fabricante?.nome ?? 'Sem valor',
+          tracao: modelo.tracao,
+          numeroRodas: modelo.numeroRodas,
+          gerenciaMeios: 'Transporte'
+        });
+      }
     });
   }
 
