@@ -1,144 +1,224 @@
-<main class="main-content">
-  <div class="row g-4 mb-5">
-    <div class="col-12 col-sm-6 col-lg-4">
-      <div class="card h-100 border-0 shadow-sm text-center p-4 card-metric">
-        <h6 class="text-muted mb-2">CheckList para Sa&iacute;da</h6>
-        <div class="h3 fw-bold text-warning mb-1 d-flex align-items-baseline justify-content-center">
-          <span class="fs-1 me-1">{{ totalChecklistSaida }}</span>
-          <small class="text-muted fs-6">a preencher</small>
-        </div>
-        <div>
-          <a routerLink="/checklists/primeiro-escalao" class="btn btn-sm btn-outline-warning me-1">
-            <i class="bi bi-clipboard2-check"></i>
-            Checklist primeiro escal&atilde;o
-          </a>
-        </div>
+<main class="motorista-dashboard">
+  <section class="driver-hero">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div>
+        <p class="hero-kicker mb-1">Painel do Motorista</p>
+        <h2 class="hero-title mb-0">
+          <i class="bi bi-person-badge me-2"></i>
+          Pend&ecirc;ncias Operacionais
+        </h2>
       </div>
+
+      <span class="badge rounded-pill text-bg-warning border border-warning-subtle hero-badge">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        {{ totalChecklistSaida + totalChecklistRetorno + totalRetornoViatura }} pend&ecirc;ncias
+      </span>
+    </div>
+  </section>
+
+  <section class="metrics-grid">
+    <article class="metric-card pending-warning">
+      <div class="metric-top">
+        <div>
+          <h6 class="metric-label">CheckList para Sa&iacute;da</h6>
+          <span class="pending-tag">Pend&ecirc;ncias</span>
+        </div>
+        <i class="bi bi-clipboard2-check metric-icon"></i>
+      </div>
+
+      <div class="metric-value">{{ totalChecklistSaida }}</div>
+      <p class="metric-caption">checklist pendente a preencher</p>
+
+      <a routerLink="/checklists/primeiro-escalao" class="btn btn-sm btn-outline-warning metric-action">
+        <i class="bi bi-clipboard2-check"></i>
+        Checklist primeiro escal&atilde;o
+      </a>
+    </article>
+
+    <article class="metric-card pending-danger">
+      <div class="metric-top">
+        <div>
+          <h6 class="metric-label">CheckList para Retorno</h6>
+          <span class="pending-tag">Pend&ecirc;ncias</span>
+        </div>
+        <i class="bi bi-clipboard2-check metric-icon"></i>
+      </div>
+
+      <div class="metric-value">{{ totalChecklistRetorno }}</div>
+      <p class="metric-caption">checklist pendente a preencher</p>
+
+      <a routerLink="/checklists/retorno" class="btn btn-sm btn-outline-danger metric-action">
+        <i class="bi bi-clipboard2-check"></i>
+        Checklist retorno
+      </a>
+    </article>
+
+    <article class="metric-card pending-primary">
+      <div class="metric-top">
+        <div>
+          <h6 class="metric-label">Retorno de Viatura</h6>
+          <span class="pending-tag">Pend&ecirc;ncias</span>
+        </div>
+        <i class="bi bi-arrow-repeat metric-icon"></i>
+      </div>
+
+      <div class="metric-value">{{ totalRetornoViatura }}</div>
+      <p class="metric-caption">retorno pendente a emitir</p>
+
+      <a routerLink="/movimentacoes/registrar-retorno" class="btn btn-sm btn-outline-primary metric-action">
+        <i class="bi bi-arrow-repeat"></i>
+        Emitir retorno de viatura
+      </a>
+    </article>
+  </section>
+
+  <section class="panel-card">
+    <div class="panel-header">
+      <h5 class="fw-semibold mb-0">
+        <i class="bi bi-clipboard2-check text-warning me-2"></i>
+        Pend&ecirc;ncias - CheckList de Sa&iacute;da de Viaturas
+      </h5>
+      <span class="badge rounded-pill text-bg-warning">{{ totalChecklistSaida }} pendente(s)</span>
     </div>
 
-    <div class="col-12 col-sm-6 col-lg-4">
-      <div class="card h-100 border-0 shadow-sm text-center p-4 card-metric">
-        <h6 class="text-muted mb-2">CheckList para Retorno</h6>
-        <div class="h3 fw-bold text-danger mb-1 d-flex align-items-baseline justify-content-center">
-          <span class="fs-1 me-1">{{ totalChecklistRetorno }}</span>
-          <small class="text-muted fs-6">a preencher</small>
-        </div>
-        <div>
-          <a routerLink="/checklists/retorno" class="btn btn-sm btn-outline-danger me-1">
-            <i class="bi bi-clipboard2-check"></i>
-            Checklist retorno
-          </a>
-        </div>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 motorista-table">
+        <colgroup>
+          <col class="col-index">
+          <col class="col-cfn">
+          <col class="col-modelo">
+          <col class="col-atividade">
+          <col class="col-status">
+          <col class="col-acao">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>N&uacute;mero do CFN</th>
+            <th>Modelo</th>
+            <th>Atividade</th>
+            <th>Status</th>
+            <th class="text-center">A&ccedil;&atilde;o</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itensChecklistSaida">
+            <th>{{ item.id }}</th>
+            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
+            <td><span class="model-chip">{{ item.modelo }}</span></td>
+            <td>
+              <span class="activity-name">{{ item.atividade }}</span>
+            </td>
+            <td><span class="status-badge warning">Pendente</span></td>
+            <td class="text-center">
+              <a routerLink="/checklists/primeiro-escalao" class="btn btn-sm btn-outline-warning table-action">
+                <i class="bi bi-clipboard2-check"></i>
+                Preencher
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel-card">
+    <div class="panel-header">
+      <h5 class="fw-semibold mb-0">
+        <i class="bi bi-clipboard2-check text-danger me-2"></i>
+        Pend&ecirc;ncias - CheckList de Retorno de Viaturas
+      </h5>
+      <span class="badge rounded-pill text-bg-danger">{{ totalChecklistRetorno }} pendente(s)</span>
     </div>
 
-    <div class="col-12 col-sm-6 col-lg-4">
-      <div class="card h-100 border-0 shadow-sm text-center p-4 card-metric">
-        <h6 class="text-muted mb-2">Retorno de Viatura</h6>
-        <div class="h3 fw-bold text-primary mb-1 d-flex align-items-baseline justify-content-center">
-          <span class="fs-1 me-1">{{ totalRetornoViatura }}</span>
-          <small class="text-muted fs-6">a emitir</small>
-        </div>
-        <div>
-          <a routerLink="/movimentacoes/registrar-retorno" class="btn btn-sm btn-outline-primary me-1">
-            <i class="bi bi-arrow-repeat"></i>
-            Emitir retorno de viatura
-          </a>
-        </div>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 motorista-table">
+        <colgroup>
+          <col class="col-index">
+          <col class="col-cfn">
+          <col class="col-modelo">
+          <col class="col-atividade">
+          <col class="col-status">
+          <col class="col-acao">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>N&uacute;mero do CFN</th>
+            <th>Modelo</th>
+            <th>Atividade</th>
+            <th>Status</th>
+            <th class="text-center">A&ccedil;&atilde;o</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itensChecklistRetorno">
+            <th>{{ item.id }}</th>
+            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
+            <td><span class="model-chip">{{ item.modelo }}</span></td>
+            <td>
+              <span class="activity-name">{{ item.atividade }}</span>
+            </td>
+            <td><span class="status-badge danger">Pendente</span></td>
+            <td class="text-center">
+              <a routerLink="/checklists/retorno" class="btn btn-sm btn-outline-danger table-action">
+                <i class="bi bi-clipboard2-check"></i>
+                Preencher
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+  </section>
 
-  <h5 class="fw-semibold mb-4 pb-2 border-bottom">
-    <i class="bi bi-clipboard2-check"></i>
-    CheckList de Sa&iacute;da de Viaturas
-  </h5>
-  <div class="table-responsive mb-4">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>N&uacute;mero do CFN</th>
-          <th>Modelo</th>
-          <th>Atividade</th>
-          <th>A&ccedil;&atilde;o</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of itensChecklistSaida">
-          <th>{{ item.id }}</th>
-          <td>{{ item.cfn }}</td>
-          <td>{{ item.modelo }}</td>
-          <td>{{ item.atividade }}</td>
-          <td>
-            <a routerLink="/checklists/primeiro-escalao" class="btn btn-sm btn-outline-warning me-1">
-              <i class="bi bi-clipboard2-check"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <section class="panel-card">
+    <div class="panel-header">
+      <h5 class="fw-semibold mb-0">
+        <i class="bi bi-arrow-repeat text-primary me-2"></i>
+        Pend&ecirc;ncias - Emitir Retorno de Viatura
+      </h5>
+      <span class="badge rounded-pill text-bg-primary">{{ totalRetornoViatura }} pendente(s)</span>
+    </div>
 
-  <h5 class="fw-semibold mb-4 pb-2 border-bottom">
-    <i class="bi bi-clipboard2-check"></i>
-    CheckList de Retorno de Viaturas
-  </h5>
-  <div class="table-responsive mb-4">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>N&uacute;mero do CFN</th>
-          <th>Modelo</th>
-          <th>Atividade</th>
-          <th>A&ccedil;&atilde;o</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of itensChecklistRetorno">
-          <th>{{ item.id }}</th>
-          <td>{{ item.cfn }}</td>
-          <td>{{ item.modelo }}</td>
-          <td>{{ item.atividade }}</td>
-          <td>
-            <a routerLink="/checklists/retorno" class="btn btn-sm btn-outline-danger me-1">
-              <i class="bi bi-clipboard2-check"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h5 class="fw-semibold mb-4 pb-2 border-bottom">
-    <i class="bi bi-arrow-repeat"></i>
-    Emitir Retorno de Viatura
-  </h5>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>N&uacute;mero do CFN</th>
-          <th>Modelo</th>
-          <th>Atividade</th>
-          <th>A&ccedil;&atilde;o</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of itensRetornoViatura">
-          <th>{{ item.id }}</th>
-          <td>{{ item.cfn }}</td>
-          <td>{{ item.modelo }}</td>
-          <td>{{ item.atividade }}</td>
-          <td>
-            <a routerLink="/movimentacoes/registrar-retorno" class="btn btn-sm btn-outline-primary me-1">
-              <i class="bi bi-arrow-repeat"></i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0 motorista-table">
+        <colgroup>
+          <col class="col-index">
+          <col class="col-cfn">
+          <col class="col-modelo">
+          <col class="col-atividade">
+          <col class="col-status">
+          <col class="col-acao">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>N&uacute;mero do CFN</th>
+            <th>Modelo</th>
+            <th>Atividade</th>
+            <th>Status</th>
+            <th class="text-center">A&ccedil;&atilde;o</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itensRetornoViatura">
+            <th>{{ item.id }}</th>
+            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
+            <td><span class="model-chip">{{ item.modelo }}</span></td>
+            <td>
+              <span class="activity-name">{{ item.atividade }}</span>
+            </td>
+            <td><span class="status-badge primary">Pendente</span></td>
+            <td class="text-center">
+              <a routerLink="/movimentacoes/registrar-retorno" class="btn btn-sm btn-outline-primary table-action">
+                <i class="bi bi-arrow-repeat"></i>
+                Emitir
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </main>
