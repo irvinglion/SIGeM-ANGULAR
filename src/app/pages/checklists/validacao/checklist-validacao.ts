@@ -86,6 +86,30 @@ export class ChecklistValidacaoComponent {
     return !!focoId && item.id === focoId;
   }
 
+  getStatusLabel(status: string): string {
+    if (status === 'Aguardando Conferencia') {
+      return 'Aguardando Conferencia';
+    }
+
+    if (status === 'Inconsistencia Detectada') {
+      return 'Inconsistencia Detectada';
+    }
+
+    return status;
+  }
+
+  getStatusClass(status: string): string {
+    if (status === 'Aprovado') {
+      return 'success';
+    }
+
+    if (status === 'Inconsistencia Detectada') {
+      return 'danger';
+    }
+
+    return 'warning';
+  }
+
   private setStatus(id: string, status: string): void {
     this.statusOverrides$.next({ ...this.statusOverrides$.value, [id]: status });
   }

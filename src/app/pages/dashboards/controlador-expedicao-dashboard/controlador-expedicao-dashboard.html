@@ -1,5 +1,5 @@
-<main class="main-content" *ngIf="dashboardData$ | async as dashboard">
-  <div class="controller-hero mb-4">
+<main class="controller-dashboard" *ngIf="dashboardData$ | async as dashboard">
+  <section class="controller-hero">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
       <div>
         <p class="hero-kicker mb-1">Centro Operacional</p>
@@ -9,91 +9,95 @@
         </h2>
       </div>
       <div class="d-flex align-items-center gap-2 flex-wrap">
-        <span class="badge text-bg-light border">Atualiza&ccedil;&atilde;o em tempo real</span>
-        <a routerLink="/movimentacoes/registrar-saida" class="btn btn-primary btn-sm px-3">
+        <span class="hero-badge">
+          <i class="bi bi-broadcast me-1"></i>
+          Atualiza&ccedil;&atilde;o em tempo real
+        </span>
+        <a routerLink="/movimentacoes/registrar-saida" class="btn btn-primary btn-sm hero-action">
           <i class="bi bi-plus-circle me-1"></i>
           Registrar Sa&iacute;da
         </a>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="row g-3 mb-4">
-    <div class="col-12 col-md-6 col-lg-3">
-      <div class="metric-card border-0 shadow-sm h-100">
-        <div class="d-flex justify-content-between align-items-start">
-          <h6 class="metric-label">Ordens Pendentes</h6>
-          <i class="bi bi-clock-history metric-icon text-primary"></i>
-        </div>
-        <div class="metric-value text-primary">{{ dashboard.ordensPendentes }}</div>
-        <small class="metric-caption">Aguardando emiss&atilde;o</small>
+  <section class="metrics-grid">
+    <article class="metric-card pending-primary">
+      <div class="metric-top">
+        <h6 class="metric-label">Ordens Pendentes</h6>
+        <i class="bi bi-clock-history metric-icon"></i>
       </div>
-    </div>
+      <div class="metric-value">{{ dashboard.ordensPendentes }}</div>
+      <p class="metric-caption">aguardando emiss&atilde;o</p>
+    </article>
 
-    <div class="col-12 col-md-6 col-lg-3">
-      <div class="metric-card border-0 shadow-sm h-100">
-        <div class="d-flex justify-content-between align-items-start">
-          <h6 class="metric-label">Checklists 1&ordm; Escal&atilde;o</h6>
-          <i class="bi bi-clipboard-check metric-icon text-warning"></i>
-        </div>
-        <div class="metric-value text-warning">{{ dashboard.checklistsPrimeiroEscalao }}</div>
-        <small class="metric-caption">Aguardando valida&ccedil;&atilde;o</small>
+    <article class="metric-card pending-warning">
+      <div class="metric-top">
+        <h6 class="metric-label">Checklists 1&ordm; Escal&atilde;o</h6>
+        <i class="bi bi-clipboard-check metric-icon"></i>
       </div>
-    </div>
+      <div class="metric-value">{{ dashboard.checklistsPrimeiroEscalao }}</div>
+      <p class="metric-caption">aguardando valida&ccedil;&atilde;o</p>
+    </article>
 
-    <div class="col-12 col-md-6 col-lg-3">
-      <div class="metric-card border-0 shadow-sm h-100">
-        <div class="d-flex justify-content-between align-items-start">
-          <h6 class="metric-label">Em Miss&atilde;o</h6>
-          <i class="bi bi-sign-turn-right metric-icon text-info"></i>
-        </div>
-        <div class="metric-value text-info">{{ dashboard.emMissao }}</div>
-        <small class="metric-caption">Atualmente em opera&ccedil;&atilde;o</small>
+    <article class="metric-card pending-info">
+      <div class="metric-top">
+        <h6 class="metric-label">Em Miss&atilde;o</h6>
+        <i class="bi bi-sign-turn-right metric-icon"></i>
       </div>
-    </div>
+      <div class="metric-value">{{ dashboard.emMissao }}</div>
+      <p class="metric-caption">atualmente em opera&ccedil;&atilde;o</p>
+    </article>
 
-    <div class="col-12 col-md-6 col-lg-3">
-      <div class="metric-card border-0 shadow-sm h-100">
-        <div class="d-flex justify-content-between align-items-start">
-          <h6 class="metric-label">Viaturas Dispon&iacute;veis</h6>
-          <i class="bi bi-check2-circle metric-icon text-success"></i>
-        </div>
-        <div class="metric-value text-success">{{ dashboard.viaturasDisponiveis }}</div>
-        <small class="metric-caption">Liberadas para uso</small>
+    <article class="metric-card pending-success">
+      <div class="metric-top">
+        <h6 class="metric-label">Viaturas Dispon&iacute;veis</h6>
+        <i class="bi bi-check2-circle metric-icon"></i>
       </div>
-    </div>
-  </div>
+      <div class="metric-value">{{ dashboard.viaturasDisponiveis }}</div>
+      <p class="metric-caption">liberadas para uso</p>
+    </article>
+  </section>
 
-  <section class="panel-card card border-0 shadow-sm p-0 mb-4">
+  <section class="panel-card">
     <div class="panel-header">
       <h5 class="fw-semibold mb-0">
         <i class="bi bi-arrow-repeat text-primary me-2"></i>
         Retornos Aguardando Valida&ccedil;&atilde;o
       </h5>
+      <span class="badge rounded-pill text-bg-primary">{{ dashboard.retornosAguardandoValidacao.length }} item(ns)</span>
     </div>
     <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
+      <table class="table table-hover align-middle mb-0 controller-table compact-table">
+        <colgroup>
+          <col class="col-cfn">
+          <col class="col-modelo">
+          <col class="col-atividade">
+          <col class="col-status">
+          <col class="col-acoes">
+        </colgroup>
+        <thead>
           <tr>
             <th>CFN</th>
             <th>Modelo</th>
             <th>&Uacute;ltima Miss&atilde;o</th>
             <th>Status</th>
-            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+            <th class="text-center">A&ccedil;&otilde;es</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let retorno of dashboard.retornosAguardandoValidacao">
-            <td><strong>{{ retorno.cfn }}</strong></td>
-            <td>{{ retorno.modelo }}</td>
-            <td>{{ retorno.ultimaMissao }}</td>
-            <td><span class="badge rounded-pill text-bg-warning">Aguardando Valida&ccedil;&atilde;o</span></td>
-            <td>
-              <div class="d-flex gap-2 flex-wrap">
+            <td><strong class="cfn-code">{{ retorno.cfn }}</strong></td>
+            <td><span class="model-chip">{{ retorno.modelo }}</span></td>
+            <td><span class="activity-name">{{ retorno.ultimaMissao }}</span></td>
+            <td><span class="status-badge warning">Aguardando Valida&ccedil;&atilde;o</span></td>
+            <td class="text-center">
+              <div class="action-group">
                 <a
                   [routerLink]="['/checklists/validacao']"
                   [queryParams]="{ tipo: 'retorno', id: retorno.id }"
-                  class="btn btn-sm btn-outline-primary">
+                  class="btn btn-sm btn-outline-primary table-action">
+                  <i class="bi bi-eye"></i>
                   Visualizar
                 </a>
               </div>
@@ -104,45 +108,55 @@
     </div>
   </section>
 
-  <section class="panel-card card border-0 shadow-sm p-0 mb-4">
+  <section class="panel-card">
     <div class="panel-header">
       <h5 class="fw-semibold mb-0">
         <i class="bi bi-clipboard-check text-warning me-2"></i>
         Checklists 1&ordm; Escal&atilde;o - Aguardando Valida&ccedil;&atilde;o
       </h5>
+      <span class="badge rounded-pill text-bg-warning">{{ dashboard.checklistsAguardandoValidacao.length }} item(ns)</span>
     </div>
     <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
+      <table class="table table-hover align-middle mb-0 controller-table">
+        <colgroup>
+          <col class="col-cfn">
+          <col class="col-modelo">
+          <col class="col-motorista">
+          <col class="col-data">
+          <col class="col-status">
+          <col class="col-acoes">
+        </colgroup>
+        <thead>
           <tr>
             <th>CFN</th>
             <th>Modelo</th>
             <th>Motorista</th>
             <th>Data</th>
             <th>Status</th>
-            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+            <th class="text-center">A&ccedil;&otilde;es</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let checklist of dashboard.checklistsAguardandoValidacao">
-            <td><strong>{{ checklist.cfn }}</strong></td>
-            <td>{{ checklist.modelo }}</td>
-            <td>{{ checklist.motorista }}</td>
-            <td>{{ checklist.data }}</td>
+            <td><strong class="cfn-code">{{ checklist.cfn }}</strong></td>
+            <td><span class="model-chip">{{ checklist.modelo }}</span></td>
+            <td><span class="driver-name">{{ checklist.motorista }}</span></td>
+            <td><span class="date-value">{{ checklist.data }}</span></td>
             <td>
-              <span *ngIf="checklist.status === 'Aguardando Conferencia'" class="badge rounded-pill text-bg-warning">
+              <span *ngIf="checklist.status === 'Aguardando Conferencia'" class="status-badge warning">
                 Aguardando Confer&ecirc;ncia
               </span>
-              <span *ngIf="checklist.status === 'Inconsistencia Detectada'" class="badge rounded-pill text-bg-danger">
+              <span *ngIf="checklist.status === 'Inconsistencia Detectada'" class="status-badge danger">
                 Inconsist&ecirc;ncia Detectada
               </span>
             </td>
-            <td>
-              <div class="d-flex gap-2 flex-wrap">
+            <td class="text-center">
+              <div class="action-group">
                 <a
                   [routerLink]="['/checklists/validacao']"
                   [queryParams]="{ tipo: 'primeiro_escalao', id: checklist.id }"
-                  class="btn btn-sm btn-outline-primary">
+                  class="btn btn-sm btn-outline-primary table-action">
+                  <i class="bi bi-eye"></i>
                   Visualizar
                 </a>
               </div>
@@ -153,38 +167,48 @@
     </div>
   </section>
 
-  <section class="panel-card card border-0 shadow-sm p-0 mb-4">
+  <section class="panel-card">
     <div class="panel-header">
       <h5 class="fw-semibold mb-0">
         <i class="bi bi-clipboard2-check text-secondary me-2"></i>
         Checklists de Retorno - Aguardando Valida&ccedil;&atilde;o
       </h5>
+      <span class="badge rounded-pill text-bg-secondary">{{ dashboard.checklistsRetornoAguardandoValidacao.length }} item(ns)</span>
     </div>
     <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
+      <table class="table table-hover align-middle mb-0 controller-table">
+        <colgroup>
+          <col class="col-cfn">
+          <col class="col-modelo">
+          <col class="col-motorista">
+          <col class="col-data">
+          <col class="col-status">
+          <col class="col-acoes">
+        </colgroup>
+        <thead>
           <tr>
             <th>CFN</th>
             <th>Modelo</th>
             <th>Motorista</th>
             <th>Data</th>
             <th>Status</th>
-            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+            <th class="text-center">A&ccedil;&otilde;es</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let checklistRetorno of dashboard.checklistsRetornoAguardandoValidacao">
-            <td><strong>{{ checklistRetorno.cfn }}</strong></td>
-            <td>{{ checklistRetorno.modelo }}</td>
-            <td>{{ checklistRetorno.motorista }}</td>
-            <td>{{ checklistRetorno.data }}</td>
-            <td><span class="badge rounded-pill text-bg-warning">Aguardando Confer&ecirc;ncia</span></td>
-            <td>
-              <div class="d-flex gap-2 flex-wrap">
+            <td><strong class="cfn-code">{{ checklistRetorno.cfn }}</strong></td>
+            <td><span class="model-chip">{{ checklistRetorno.modelo }}</span></td>
+            <td><span class="driver-name">{{ checklistRetorno.motorista }}</span></td>
+            <td><span class="date-value">{{ checklistRetorno.data }}</span></td>
+            <td><span class="status-badge warning">Aguardando Confer&ecirc;ncia</span></td>
+            <td class="text-center">
+              <div class="action-group">
                 <a
                   [routerLink]="['/checklists/validacao']"
                   [queryParams]="{ tipo: 'retorno', id: checklistRetorno.id }"
-                  class="btn btn-sm btn-outline-primary">
+                  class="btn btn-sm btn-outline-primary table-action">
+                  <i class="bi bi-eye"></i>
                   Visualizar
                 </a>
               </div>
@@ -195,32 +219,41 @@
     </div>
   </section>
 
-  <section class="panel-card card border-0 shadow-sm p-0">
+  <section class="panel-card">
     <div class="panel-header">
       <h5 class="fw-semibold mb-0">
         <i class="bi bi-check-circle text-success me-2"></i>
         Viaturas Dispon&iacute;veis
       </h5>
+      <span class="badge rounded-pill text-bg-success">{{ dashboard.viaturas.length }} item(ns)</span>
     </div>
     <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0">
-        <thead class="table-light">
+      <table class="table table-hover align-middle mb-0 controller-table compact-table">
+        <colgroup>
+          <col class="col-cfn">
+          <col class="col-modelo">
+          <col class="col-atividade">
+          <col class="col-status">
+          <col class="col-acoes">
+        </colgroup>
+        <thead>
           <tr>
             <th>CFN</th>
             <th>Modelo</th>
             <th>Atividade</th>
             <th>Status</th>
-            <th style="width: 280px;">A&ccedil;&otilde;es</th>
+            <th class="text-center">A&ccedil;&otilde;es</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let viatura of dashboard.viaturas">
-            <td><strong>{{ viatura.cfn }}</strong></td>
-            <td>{{ viatura.modelo }}</td>
-            <td>{{ viatura.atividade }}</td>
-            <td><span class="badge rounded-pill text-bg-success">Dispon&iacute;vel</span></td>
-            <td>
-              <a routerLink="/movimentacoes/registrar-saida" class="btn btn-sm btn-outline-primary">
+            <td><strong class="cfn-code">{{ viatura.cfn }}</strong></td>
+            <td><span class="model-chip">{{ viatura.modelo }}</span></td>
+            <td><span class="activity-name">{{ viatura.atividade }}</span></td>
+            <td><span class="status-badge success">Dispon&iacute;vel</span></td>
+            <td class="text-center">
+              <a routerLink="/movimentacoes/registrar-saida" class="btn btn-sm btn-outline-primary table-action wide-action">
+                <i class="bi bi-file-earmark-plus"></i>
                 Emitir Ordem de Sa&iacute;da
               </a>
             </td>
