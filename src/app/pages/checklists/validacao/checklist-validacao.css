@@ -38,13 +38,7 @@
   font-weight: 600;
 }
 
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.metric-card,
+.validation-metric-card,
 .panel-card {
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -52,7 +46,7 @@
   box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
 }
 
-.metric-card {
+.validation-metric-card {
   padding: 1rem;
 }
 
@@ -272,10 +266,6 @@
 }
 
 @media (max-width: 991.98px) {
-  .metrics-grid {
-    grid-template-columns: 1fr;
-  }
-
   .hero-title {
     font-size: 1.2rem;
   }
@@ -287,7 +277,7 @@
 
 @media (max-width: 767.98px) {
   .validation-hero,
-  .metric-card {
+  .validation-metric-card {
     padding: 1rem;
   }
 

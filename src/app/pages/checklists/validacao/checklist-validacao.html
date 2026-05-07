@@ -17,38 +17,44 @@
 
   <ng-container *ngIf="checklistsPrimeiroEscalao$ | async as primeiroResumo">
     <ng-container *ngIf="checklistsRetorno$ | async as retornoResumo">
-      <section class="metrics-grid">
-        <article class="metric-card pending-warning">
-          <div class="metric-top">
-            <h6 class="metric-label">1&ordm; Escal&atilde;o</h6>
-            <i class="bi bi-clipboard-check metric-icon"></i>
-          </div>
-          <div class="metric-value">{{ primeiroResumo.length }}</div>
-          <p class="metric-caption">checklists para confer&ecirc;ncia</p>
-        </article>
+      <section class="row g-3">
+        <div class="col-12 col-md-4">
+          <article class="card border-0 shadow-sm validation-metric-card pending-warning h-100">
+            <div class="metric-top">
+              <h6 class="metric-label">1&ordm; Escal&atilde;o</h6>
+              <i class="bi bi-clipboard-check metric-icon"></i>
+            </div>
+            <div class="metric-value">{{ primeiroResumo.length }}</div>
+            <p class="metric-caption">checklists para confer&ecirc;ncia</p>
+          </article>
+        </div>
 
-        <article class="metric-card pending-primary">
-          <div class="metric-top">
-            <h6 class="metric-label">Retorno</h6>
-            <i class="bi bi-clipboard2-check metric-icon"></i>
-          </div>
-          <div class="metric-value">{{ retornoResumo.length }}</div>
-          <p class="metric-caption">retornos aguardando valida&ccedil;&atilde;o</p>
-        </article>
+        <div class="col-12 col-md-4">
+          <article class="card border-0 shadow-sm validation-metric-card pending-primary h-100">
+            <div class="metric-top">
+              <h6 class="metric-label">Retorno</h6>
+              <i class="bi bi-clipboard2-check metric-icon"></i>
+            </div>
+            <div class="metric-value">{{ retornoResumo.length }}</div>
+            <p class="metric-caption">retornos aguardando valida&ccedil;&atilde;o</p>
+          </article>
+        </div>
 
-        <article class="metric-card pending-total">
-          <div class="metric-top">
-            <h6 class="metric-label">Total pendente</h6>
-            <i class="bi bi-hourglass-split metric-icon"></i>
-          </div>
-          <div class="metric-value">{{ primeiroResumo.length + retornoResumo.length }}</div>
-          <p class="metric-caption">itens na fila da controladoria</p>
-        </article>
+        <div class="col-12 col-md-4">
+          <article class="card border-0 shadow-sm validation-metric-card pending-total h-100">
+            <div class="metric-top">
+              <h6 class="metric-label">Total pendente</h6>
+              <i class="bi bi-hourglass-split metric-icon"></i>
+            </div>
+            <div class="metric-value">{{ primeiroResumo.length + retornoResumo.length }}</div>
+            <p class="metric-caption">itens na fila da controladoria</p>
+          </article>
+        </div>
       </section>
     </ng-container>
   </ng-container>
 
-  <section class="panel-card">
+  <section class="card border-0 shadow-sm panel-card">
     <div class="panel-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0">
         <i class="bi bi-clipboard-check text-warning me-2"></i>
@@ -81,12 +87,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of primeiroEscalao" [class.row-focus]="isItemEmFoco(item, (focoId$ | async))">
-            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
-            <td><span class="model-chip">{{ item.modelo }}</span></td>
+            <td><strong class="badge text-bg-light border cfn-code">{{ item.cfn }}</strong></td>
+            <td><span class="badge rounded-pill text-bg-light border model-chip">{{ item.modelo }}</span></td>
             <td><span class="driver-name">{{ item.motorista }}</span></td>
             <td><span class="date-value">{{ item.data }}</span></td>
             <td>
-              <span class="status-badge" [ngClass]="getStatusClass(item.status)">
+              <span class="badge rounded-pill status-badge" [ngClass]="getStatusClass(item.status)">
                 {{ getStatusLabel(item.status) }}
               </span>
             </td>
@@ -111,7 +117,7 @@
     </div>
   </section>
 
-  <section class="panel-card">
+  <section class="card border-0 shadow-sm panel-card">
     <div class="panel-header d-flex justify-content-between align-items-center">
       <h5 class="mb-0">
         <i class="bi bi-clipboard2-check text-secondary me-2"></i>
@@ -144,12 +150,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of retorno" [class.row-focus]="isItemEmFoco(item, (focoId$ | async))">
-            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
-            <td><span class="model-chip">{{ item.modelo }}</span></td>
+            <td><strong class="badge text-bg-light border cfn-code">{{ item.cfn }}</strong></td>
+            <td><span class="badge rounded-pill text-bg-light border model-chip">{{ item.modelo }}</span></td>
             <td><span class="driver-name">{{ item.motorista }}</span></td>
             <td><span class="date-value">{{ item.data }}</span></td>
             <td>
-              <span class="status-badge" [ngClass]="getStatusClass(item.status)">
+              <span class="badge rounded-pill status-badge" [ngClass]="getStatusClass(item.status)">
                 {{ getStatusLabel(item.status) }}
               </span>
             </td>
