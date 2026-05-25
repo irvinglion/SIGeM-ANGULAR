@@ -1,224 +1,131 @@
 <main class="motorista-dashboard">
-  <section class="driver-hero">
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+  <section class="driver-summary">
+    <article class="welcome-panel">
+      <div class="summary-icon">
+        <i class="bi bi-truck"></i>
+      </div>
+
       <div>
-        <p class="hero-kicker mb-1">Painel do Motorista</p>
-        <h2 class="hero-title mb-0">
-          <i class="bi bi-person-badge me-2"></i>
-          Pend&ecirc;ncias Operacionais
-        </h2>
+        <h1>Olá, Motorista do Batalhão Naval</h1>
+        <p>Veja abaixo suas ordens de movimentação atribuídas.</p>
       </div>
-
-      <span class="badge rounded-pill text-bg-warning border border-warning-subtle hero-badge">
-        <i class="bi bi-exclamation-triangle me-1"></i>
-        {{ totalChecklistSaida + totalChecklistRetorno + totalRetornoViatura }} pend&ecirc;ncias
-      </span>
-    </div>
-  </section>
-
-  <section class="metrics-grid">
-    <article class="metric-card pending-warning">
-      <div class="metric-top">
-        <div>
-          <h6 class="metric-label">CheckList para Sa&iacute;da</h6>
-          <span class="pending-tag">Pend&ecirc;ncias</span>
-        </div>
-        <i class="bi bi-clipboard2-check metric-icon"></i>
-      </div>
-
-      <div class="metric-value">{{ totalChecklistSaida }}</div>
-      <p class="metric-caption">checklist pendente a preencher</p>
-
-      <a routerLink="/checklists/primeiro-escalao" class="btn btn-sm btn-outline-warning metric-action">
-        <i class="bi bi-clipboard2-check"></i>
-        Checklist primeiro escal&atilde;o
-      </a>
     </article>
 
-    <article class="metric-card pending-danger">
-      <div class="metric-top">
-        <div>
-          <h6 class="metric-label">CheckList para Retorno</h6>
-          <span class="pending-tag">Pend&ecirc;ncias</span>
-        </div>
-        <i class="bi bi-clipboard2-check metric-icon"></i>
-      </div>
-
-      <div class="metric-value">{{ totalChecklistRetorno }}</div>
-      <p class="metric-caption">checklist pendente a preencher</p>
-
-      <a routerLink="/checklists/retorno" class="btn btn-sm btn-outline-danger metric-action">
-        <i class="bi bi-clipboard2-check"></i>
-        Checklist retorno
-      </a>
-    </article>
-
-    <article class="metric-card pending-primary">
-      <div class="metric-top">
-        <div>
-          <h6 class="metric-label">Retorno de Viatura</h6>
-          <span class="pending-tag">Pend&ecirc;ncias</span>
-        </div>
-        <i class="bi bi-arrow-repeat metric-icon"></i>
-      </div>
-
-      <div class="metric-value">{{ totalRetornoViatura }}</div>
-      <p class="metric-caption">retorno pendente a emitir</p>
-
-      <a routerLink="/movimentacoes/registrar-retorno" class="btn btn-sm btn-outline-primary metric-action">
-        <i class="bi bi-arrow-repeat"></i>
-        Emitir retorno de viatura
-      </a>
+    <article class="active-orders-card">
+      <span>Ordens ativas</span>
+      <strong>{{ ordens.length }}</strong>
+      <small>atribuídas a você</small>
     </article>
   </section>
 
-  <section class="panel-card">
-    <div class="panel-header">
-      <h5 class="fw-semibold mb-0">
-        <i class="bi bi-clipboard2-check text-warning me-2"></i>
-        Pend&ecirc;ncias - CheckList de Sa&iacute;da de Viaturas
-      </h5>
-      <span class="badge rounded-pill text-bg-warning">{{ totalChecklistSaida }} pendente(s)</span>
+  <section class="orders-panel">
+    <div class="orders-header">
+      <h2>Minhas Ordens de Movimentação</h2>
+
+      <label class="search-field">
+        <i class="bi bi-search"></i>
+        <input
+          type="search"
+          name="buscaOrdem"
+          [(ngModel)]="termoBusca"
+          placeholder="Pesquisar por OM, destino ou atividade..."
+          aria-label="Pesquisar ordens de movimentação">
+      </label>
     </div>
 
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0 motorista-table">
-        <colgroup>
-          <col class="col-index">
-          <col class="col-cfn">
-          <col class="col-modelo">
-          <col class="col-atividade">
-          <col class="col-status">
-          <col class="col-acao">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>N&uacute;mero do CFN</th>
-            <th>Modelo</th>
-            <th>Atividade</th>
-            <th>Status</th>
-            <th class="text-center">A&ccedil;&atilde;o</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of itensChecklistSaida">
-            <th>{{ item.id }}</th>
-            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
-            <td><span class="model-chip">{{ item.modelo }}</span></td>
-            <td>
-              <span class="activity-name">{{ item.atividade }}</span>
-            </td>
-            <td><span class="status-badge warning">Pendente</span></td>
-            <td class="text-center">
-              <a routerLink="/checklists/primeiro-escalao" class="btn btn-sm btn-outline-warning table-action">
-                <i class="bi bi-clipboard2-check"></i>
-                Preencher
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section class="panel-card">
-    <div class="panel-header">
-      <h5 class="fw-semibold mb-0">
-        <i class="bi bi-clipboard2-check text-danger me-2"></i>
-        Pend&ecirc;ncias - CheckList de Retorno de Viaturas
-      </h5>
-      <span class="badge rounded-pill text-bg-danger">{{ totalChecklistRetorno }} pendente(s)</span>
+    <div class="status-tabs" role="tablist" aria-label="Filtrar ordens por status">
+      <button
+        type="button"
+        *ngFor="let filtro of filtros"
+        class="status-tab"
+        [class.active]="filtroStatus === filtro.value"
+        (click)="filtroStatus = filtro.value">
+        {{ filtro.label }}
+        <span>{{ totalPorStatus(filtro.value) }}</span>
+      </button>
     </div>
 
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0 motorista-table">
-        <colgroup>
-          <col class="col-index">
-          <col class="col-cfn">
-          <col class="col-modelo">
-          <col class="col-atividade">
-          <col class="col-status">
-          <col class="col-acao">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>N&uacute;mero do CFN</th>
-            <th>Modelo</th>
-            <th>Atividade</th>
-            <th>Status</th>
-            <th class="text-center">A&ccedil;&atilde;o</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of itensChecklistRetorno">
-            <th>{{ item.id }}</th>
-            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
-            <td><span class="model-chip">{{ item.modelo }}</span></td>
-            <td>
-              <span class="activity-name">{{ item.atividade }}</span>
-            </td>
-            <td><span class="status-badge danger">Pendente</span></td>
-            <td class="text-center">
-              <a routerLink="/checklists/retorno" class="btn btn-sm btn-outline-danger table-action">
-                <i class="bi bi-clipboard2-check"></i>
-                Preencher
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+    <div class="orders-list" *ngIf="ordensFiltradas.length; else semOrdens">
+      <article class="order-card" *ngFor="let ordem of ordensFiltradas">
+        <div class="order-main">
+          <div class="order-icon" [class.return]="ordem.checklist === 'retorno'">
+            <i class="bi" [ngClass]="iconeOrdem(ordem)"></i>
+          </div>
 
-  <section class="panel-card">
-    <div class="panel-header">
-      <h5 class="fw-semibold mb-0">
-        <i class="bi bi-arrow-repeat text-primary me-2"></i>
-        Pend&ecirc;ncias - Emitir Retorno de Viatura
-      </h5>
-      <span class="badge rounded-pill text-bg-primary">{{ totalRetornoViatura }} pendente(s)</span>
+          <div class="order-identity">
+            <div class="order-title-row">
+              <h3>{{ ordem.numero }}</h3>
+              <span
+                class="status-badge"
+                [class.progress]="ordem.status === 'Em andamento'"
+                [class.done]="ordem.status === 'Concluída'">
+                {{ ordem.status }}
+              </span>
+            </div>
+
+            <dl class="order-facts">
+              <div>
+                <dt>Atividade</dt>
+                <dd>{{ ordem.atividade }}</dd>
+              </div>
+
+              <div>
+                <dt>Veículo</dt>
+                <dd>{{ ordem.veiculo }}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="route-details">
+          <div class="route-line">
+            <i class="bi bi-geo-alt"></i>
+            <div>
+              <span>Origem</span>
+              <strong>{{ ordem.origem }}</strong>
+            </div>
+          </div>
+
+          <div class="route-line">
+            <i class="bi bi-geo-alt-fill"></i>
+            <div>
+              <span>Destino</span>
+              <strong>{{ ordem.destino }}</strong>
+            </div>
+          </div>
+
+          <div class="route-line">
+            <i class="bi bi-calendar-event"></i>
+            <div>
+              <span>Data/Hora prevista</span>
+              <strong>{{ ordem.dataPrevista }} às {{ ordem.horaPrevista }}</strong>
+            </div>
+          </div>
+        </div>
+
+        <a class="checklist-action" [routerLink]="rotaChecklist(ordem)">
+          <i class="bi bi-clipboard-check"></i>
+          {{ textoAcao(ordem) }}
+          <i class="bi bi-chevron-right"></i>
+        </a>
+      </article>
     </div>
 
-    <div class="table-responsive">
-      <table class="table table-hover align-middle mb-0 motorista-table">
-        <colgroup>
-          <col class="col-index">
-          <col class="col-cfn">
-          <col class="col-modelo">
-          <col class="col-atividade">
-          <col class="col-status">
-          <col class="col-acao">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>N&uacute;mero do CFN</th>
-            <th>Modelo</th>
-            <th>Atividade</th>
-            <th>Status</th>
-            <th class="text-center">A&ccedil;&atilde;o</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of itensRetornoViatura">
-            <th>{{ item.id }}</th>
-            <td><strong class="cfn-code">{{ item.cfn }}</strong></td>
-            <td><span class="model-chip">{{ item.modelo }}</span></td>
-            <td>
-              <span class="activity-name">{{ item.atividade }}</span>
-            </td>
-            <td><span class="status-badge primary">Pendente</span></td>
-            <td class="text-center">
-              <a routerLink="/movimentacoes/registrar-retorno" class="btn btn-sm btn-outline-primary table-action">
-                <i class="bi bi-arrow-repeat"></i>
-                Emitir
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <ng-template #semOrdens>
+      <div class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <strong>Nenhuma ordem encontrada</strong>
+        <span>Ajuste os filtros ou a pesquisa para consultar outras movimentações.</span>
+      </div>
+    </ng-template>
+
+    <footer class="orders-footer">
+      <span>Exibindo {{ ordensFiltradas.length }} de {{ ordens.length }} ordens</span>
+      <nav aria-label="Paginação das ordens">
+        <button type="button" disabled><i class="bi bi-chevron-left"></i></button>
+        <strong>1</strong>
+        <button type="button" disabled><i class="bi bi-chevron-right"></i></button>
+      </nav>
+    </footer>
   </section>
 </main>

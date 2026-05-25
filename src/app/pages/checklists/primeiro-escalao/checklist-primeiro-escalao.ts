@@ -31,11 +31,7 @@ export class ChecklistPrimeiroEscalaoComponent {
     'Particularidades das VtrAnf'
   ];
 
-  aprovar(): void {
-    this.submitMessage = 'Checklist aprovado com sucesso.';
-  }
-
-  reprovar(): void {
-    this.submitMessage = 'Checklist reprovado. Revise os itens pendentes.';
+  iniciarMovimentacao(): void {
+    this.submitMessage = 'Checklist de saida registrado. Movimentacao iniciada com sucesso.';
   }
 }

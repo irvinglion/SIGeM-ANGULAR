@@ -1,5 +1,5 @@
 <main class="checklist-page">
-  <form class="checklist-shell">
+  <form class="checklist-shell" (ngSubmit)="iniciarMovimentacao()">
     <header class="checklist-header">
       <div class="page-icon">
         <i class="bi bi-clipboard2-check-fill"></i>
@@ -31,14 +31,9 @@
     </div>
 
     <footer class="checklist-actions">
-      <button type="button" class="btn btn-outline-danger btn-lg action-btn" (click)="reprovar()">
-        <i class="bi bi-x-circle"></i>
-        Reprovar
-      </button>
-
-      <button type="button" class="btn btn-success btn-lg action-btn" (click)="aprovar()">
-        <i class="bi bi-check-circle"></i>
-        Aprovar
+      <button type="submit" class="btn btn-success btn-lg action-btn">
+        <i class="bi bi-play-circle"></i>
+        Iniciar movimenta&ccedil;&atilde;o
       </button>
     </footer>
   </form>

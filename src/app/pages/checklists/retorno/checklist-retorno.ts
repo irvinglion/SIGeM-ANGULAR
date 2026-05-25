@@ -35,7 +35,7 @@ export class ChecklistRetornoComponent {
     'Particularidades das VtrAnf'
   ];
 
-  gravarChecklist(): void {
-    this.submitMessage = 'Checklist de retorno gravado com sucesso.';
+  finalizarMovimentacao(): void {
+    this.submitMessage = 'Checklist de retorno registrado. Movimentacao finalizada com sucesso.';
   }
 }
